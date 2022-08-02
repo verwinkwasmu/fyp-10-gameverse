@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    container_name: simple-python-server
+    container_name: quiz-microservice
     command: uvicorn main:app --host 127.0.0.1 --port 80 --reload
     ports:
       - 8080:80

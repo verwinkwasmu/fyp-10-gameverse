@@ -13,7 +13,7 @@ Build and run the Docker image locally, as follows:
 ```
 docker build -t <name> .
 docker run -d -p 8080:80 <name> 
-(fyi -d is detached mode)
+*(fyi -d is detached mode)*
 ```
 In order to run the server with docker compose, use this:
 ```

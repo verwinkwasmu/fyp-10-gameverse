@@ -24,7 +24,8 @@ class QuizRepository:
             return None
 
     def get_quizzes(self):
-            quizzes = self.session.exec(select(Quiz)).all()
+        with Session(self.database) as session:
+            quizzes = session.exec(select(Quiz)).all()
 
             if quizzes != []:
                 return quizzes

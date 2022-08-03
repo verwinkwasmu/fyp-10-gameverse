@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from entity.QuizEntity import Quiz
 from repository.QuizRepository import QuizRepository
 
+
 @dataclass
 class QuizService:
     repository: QuizRepository
@@ -11,9 +12,9 @@ class QuizService:
 
         if result != None:
             return result
-        
+
         return None
-    
+
     def get_quizzes(self):
         result = self.repository.get_quizzes()
 
@@ -21,27 +22,27 @@ class QuizService:
             return result
 
         return None
-    
+
     def get_quiz(self, quiz_id: int):
         result = self.repository.get_quiz(quiz_id)
 
         if result != None:
             return result
-        
+
         return None
-    
+
     def update_quiz(self, quiz: Quiz):
         result = self.repository.update_quiz(quiz)
 
         if result != None:
             return result
-        
+
         return None
-        
+
     def delete_quiz(self, quiz_id: int):
         result = self.repository.delete_quiz(quiz_id)
-        
+
         if result != None:
             return result
-        
+
         return None

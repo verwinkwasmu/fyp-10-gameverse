@@ -1,9 +1,10 @@
 from sqlmodel import Column, Field, SQLModel, JSON
 from typing import Dict, Optional
 
+
 class Quiz(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    title: str 
+    title: str
     category: str
     questions: Dict = Field(default={}, sa_column=Column(JSON))
 

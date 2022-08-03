@@ -19,6 +19,7 @@ def get_session():
     with Session(engine) as session:
         yield session
 
+
 app = FastAPI()
 
 # set up classes
@@ -43,14 +44,17 @@ async def get_quizzes():
 
     return quizzes
 
+
 @app.get("/api/quiz/{quiz_id}", response_model=Quiz)
 async def get_quiz(quiz_id: int):
     quiz = quizService.get_quiz(quiz_id)
 
     if quiz is None:
-        raise HTTPException(status_code=404, detail=f"quiz with id: {quiz_id} not found")
+        raise HTTPException(
+            status_code=404, detail=f"quiz with id: {quiz_id} not found")
 
     return quiz
+
 
 @app.post("/api/create/", response_model=Quiz)
 async def create_quiz(quiz: Quiz):
@@ -62,14 +66,17 @@ async def create_quiz(quiz: Quiz):
 
     return result
 
+
 @app.put("/api/update/", response_model=Quiz)
 async def update_quiz(quiz: Quiz):
     result = quizService.update_quiz(quiz)
 
     if result is None:
-        raise HTTPException(status_code=500, detail=f"Unable to update quiz with id: {quiz.id}")
+        raise HTTPException(
+            status_code=500, detail=f"Unable to update quiz with id: {quiz.id}")
 
     return result
+
 
 @app.delete("/api/delete/{quiz_id}", response_model=Quiz)
 async def delete_quiz(quiz_id: int):

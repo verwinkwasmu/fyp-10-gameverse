@@ -6,6 +6,7 @@ class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     email: str
+    # check if can check it to a computed value from the other fields?
     total_points: int
     # category_points: Dict = Field(default={}, sa_column=Column(JSON))
     categories_played: Dict = Field(default={}, sa_column=Column(JSON))
@@ -20,6 +21,7 @@ class Player(SQLModel, table=True):
                 "id": 1,
                 "name": "Toh Wei",
                 "email": "tohwei@xiang.com",
+                "total_points": 70,
                 "categories_played": {
                     "Movies": {"count": 5, "points": 50},
                     "Kdrama": {"count": 2, "points": 20},

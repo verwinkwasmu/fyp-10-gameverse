@@ -1,6 +1,6 @@
 # fyp-10-gameverse
 
-### Usage
+### Usage - Backend
 
 As a first step, install the requirements:
 
@@ -31,6 +31,16 @@ docker-compose up --build
 To run tests
 ```
 python3 -m pytest -v tests/
+```
+
+### Usage - Frontend
+As a first step, install the node modules (make sure you have node installed into your system):
+```
+npm install
+```
+This is how you run the code locally:
+```
+npm run dev
 ```
 
 ### Misc

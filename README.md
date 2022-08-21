@@ -34,6 +34,7 @@ python3 -m pytest -v tests/
 ```
 
 ### Usage - Frontend
+#### Created with Vite + Vue 3 with libraries (vue-router, vue query, tailwind css, flowbite, axios)
 As a first step, install the node modules (make sure you have node installed into your system):
 ```
 npm install

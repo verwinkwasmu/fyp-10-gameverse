@@ -5,7 +5,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: "/chat",
+            path: "/room/:room_id",
             component: Chat
         }
     ]

@@ -3,6 +3,8 @@ import { useDark, useToggle } from "@vueuse/core";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
+// need to set this as a dynamic variable
+const room_id = 1
 </script>
 
 <template>
@@ -17,7 +19,7 @@ const toggleDark = useToggle(isDark);
         Change Mode
       </button>
     </div>
-    <router-link to="/chat">Chat</router-link>
+    <router-link :to="`/room/${room_id}`">Join Chat</router-link>
     <router-view />
   </div>
 </template>

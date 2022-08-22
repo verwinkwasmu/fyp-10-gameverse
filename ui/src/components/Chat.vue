@@ -1,13 +1,15 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 // use with vue query
 import Chat from "../services/Chat";
 
+const route = useRoute();
 const client_id = Date.now();
 const text = ref("");
 const messages = ref([]);
-const connection = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+const connection = new WebSocket(`ws://localhost:8080/ws/${route.params.room_id}/${client_id}`);
 
 connection.onopen = () => {
   console.log("connection established");

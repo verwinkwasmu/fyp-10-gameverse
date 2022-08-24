@@ -1,0 +1,1 @@
+{"id":"8bc066b0-fdcf-418f-aa26-59c2ce452bfe","space":28189,"runtime":"python3.9","name":"Quiz","path":"n08yph","project":"c00mug7j","account":"144798365827","region":"ap-southeast-1","deps":["fastapi","uvicorn","sqlmodel","psycopg2-binary","requests","pytest","pytest-cov"],"envs":null,"public":true,"log_level":"off","cron":""}

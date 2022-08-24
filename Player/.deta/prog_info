@@ -1,0 +1,1 @@
+{"id":"a802f863-c5cd-4918-894a-dddd117a97f9","space":28189,"runtime":"python3.9","name":"Player","path":"yhb9zv","project":"c00mug7j","account":"144798365827","region":"ap-southeast-1","deps":["fastapi","uvicorn","sqlmodel","psycopg2-binary","requests","pytest","pytest-cov"],"envs":null,"public":true,"log_level":"off","cron":""}

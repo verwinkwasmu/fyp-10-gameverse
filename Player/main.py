@@ -2,6 +2,7 @@ import logging
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from fastapi.middleware.cors import CORSMiddleware
 
 from repository.PlayerRepository import PlayerRepository
 from service.PlayerService import PlayerService
@@ -21,6 +22,15 @@ def get_session():
 
 
 app = FastAPI()
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # set up classes
 playerRepository = PlayerRepository(engine)

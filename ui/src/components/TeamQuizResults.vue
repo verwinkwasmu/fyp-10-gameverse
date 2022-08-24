@@ -1,4 +1,4 @@
-<template>
+<template lang="">
   <p class="text-5xl text-white pt-10 pl-20 font-light">
       Gameverse Quiz
   </p>

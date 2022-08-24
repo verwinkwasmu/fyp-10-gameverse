@@ -1,13 +1,15 @@
-<template>
+<template lang="">
     <p class="text-5xl text-white pt-10 pl-20 font-light">
       Gameverse Quiz
     </p>
     <div class="flex items-center justify-center pt-40 mb-0">
     <p class="text-2xl text-white font-bold">
       You have been invited to play the Movies Quiz!
-    </br>
-    </br>
-    </br>
+    </p>
+    <br/>
+    <br/>
+    <br/>
+    <p class="text-2xl text-white font-bold">
       Select Team
     </p>
     </div>

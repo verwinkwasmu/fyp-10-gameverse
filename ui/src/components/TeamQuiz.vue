@@ -32,3 +32,9 @@
     </button>
     </div>
 </template>
+
+<style>
+  body {
+    background-image: url('background.jpeg');
+  }
+</style>

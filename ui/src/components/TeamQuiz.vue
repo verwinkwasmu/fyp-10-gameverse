@@ -35,6 +35,6 @@
 
 <style>
   body {
-    background-image: url('background.jpeg');
+    background-image: url('../assets/background.jpeg');
   }
 </style>

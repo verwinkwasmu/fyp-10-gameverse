@@ -1,14 +1,14 @@
 <template lang="">
-    <p class="text-5xl text-white pt-10 pl-20 font-light">
+
+    <p class="flex justify-left text-5xl text-white pt-10 pl-20 font-light">
       Gameverse Quiz
     </p>
     <div class="flex items-center justify-center pt-40 mb-0">
-    <p class="text-2xl text-white font-bold">
+    <p class="text-2xl text-white font-bold pb-5">
       You have been invited to play the Movies Quiz!
     </p>
-    <br/>
-    <br/>
-    <br/>
+    </div>
+    <div class="flex items-center justify-center pt-10 pb-0 mb-0">
     <p class="text-2xl text-white font-bold">
       Select Team
     </p>
@@ -31,10 +31,13 @@
       30s till start!
     </button>
     </div>
+
 </template>
 
 <style>
   body {
     background-image: url('../assets/background.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 </style>

@@ -5,7 +5,7 @@
   <div class="flex items-center justify-center pt-40 mb-0">
   </div>
   <div class="flex items-center justify-center space-x-20 m-0 pb-0 pr-30 pl-30">
-    <img src="winner.png" class="w-24">
+    <img src="../assets/winner.png" class="w-24">
 
   </div>
   <div class="flex items-center justify-center">

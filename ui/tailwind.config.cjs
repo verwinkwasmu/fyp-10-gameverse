@@ -1,15 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
-  ],
+  content: ["./*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'quiz':"url('/img/bg.png')",
+      },
+      fontFamily: {
+        'sans':['Poppins'],
+      },
+    },
   },
-  plugins: [
-    require('flowbite/plugin')
-  ]
+  plugins: [],
 }

@@ -1,5 +1,6 @@
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
+import { VueQueryDevTools } from "vue-query/devtools";
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
@@ -9,7 +10,7 @@ const room_id = 1
 
 <template>
   <div>
-    <div>
+    <!-- <div>
       <p>isDark: {{ isDark }}</p>
       <button
         type="button"
@@ -18,8 +19,9 @@ const room_id = 1
       >
         Change Mode
       </button>
-    </div>
-    <router-link :to="`/room/${room_id}`">Join Chat</router-link>
+    </div> -->
+    <!-- <router-link :to="`/room/${room_id}`">Join Chat</router-link>
+    <router-link :to="`/testRoom/`">Join Test Room</router-link> -->
     <router-view />
   </div>
 </template>

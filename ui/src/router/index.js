@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Chat from "../components/Chat.vue"
 import Room from "../pages/Room.vue"
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
@@ -8,7 +7,7 @@ import ScoreBoard from '../components/ScoreBoard.vue'
 import TeamQuiz from '../components/TeamQuiz.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
 
-
+import { QuizCreation, Chat } from "../components"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -43,7 +42,11 @@ const router = createRouter({
         },
         {
             path: "/TeamQuizResults",
-            component: TeamQuiz
+            component: TeamQuizResults
+        },
+        {
+            path: "/QuizCreation",
+            component: QuizCreation
         }
     ]
 })

@@ -51,7 +51,7 @@ const count = ref(0)
           </div>
           <div class="basis-1/3">
               <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-7">
+                <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">
                   Add Question</a>
               </div>
           </div>
@@ -84,7 +84,7 @@ const count = ref(0)
         </div>
         <div class="flex justify-center pt-10">
           <div class="pr-4">
-          <button class="bg-fuchsia-400 hover:bg-fuchsia-300 text-black font-bold py-2 px-4 rounded">
+          <button class="bg-fuchsia-400 hover:bg-fuchsia-300 text-white font-bold py-2 px-4 rounded">
             Back to Quizzes
             </button> 
           </div> 

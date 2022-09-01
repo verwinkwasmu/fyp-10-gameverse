@@ -39,12 +39,12 @@ const count = ref(0)
         </div>
         <div class="basis-1/4 pr-4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-3">Questions: 19</a>
+              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 md:py-1 md:px-3">Questions: 19</a>
             </div>
         </div>
         <div class="basis-1/4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-7">Open</a>
+              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
             </div>
         </div>
         </div>
@@ -56,12 +56,12 @@ const count = ref(0)
         </div>
         <div class="basis-1/4 pr-4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-3">Questions: 13</a>
+              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 md:py-1 md:px-3">Questions: 13</a>
             </div>
         </div>
         <div class="basis-1/4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-7">Open</a>
+              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
             </div>
         </div>
         </div>

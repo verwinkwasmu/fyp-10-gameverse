@@ -44,7 +44,7 @@ const count = ref(0)
         </div>
         <div class="basis-1/4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
+              <a href="/addquestionfrombank" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
             </div>
         </div>
         </div>
@@ -61,7 +61,7 @@ const count = ref(0)
         </div>
         <div class="basis-1/4">
             <div class="rounded-md shadow">
-              <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
+              <a href="/addquestionfrombank" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">Open</a>
             </div>
         </div>
         </div>

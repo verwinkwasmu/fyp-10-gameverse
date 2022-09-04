@@ -43,16 +43,16 @@ const count = ref(0)
           <p>Q1.</p>
         </div>
         <div class = "flex flex-row">
-          <div class="basis-2/3 pr-3">
+          <div class="basis-3/4 pr-3">
               <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-10">
+                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-10">
                   What is Singapore's National Flower</a>
               </div>
           </div>
-          <div class="basis-1/3">
+          <div class="basis-1/4">
               <div class="rounded-md shadow">
-                <a href="/AddedQuestionFromBank" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">
-                  Add Question</a>
+                <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 md:py-1 md:px-7">
+                  Remove</a>
               </div>
           </div>
         </div>

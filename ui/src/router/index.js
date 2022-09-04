@@ -9,6 +9,7 @@ import TeamQuiz from '../components/TeamQuiz.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
 import Quizbank from '../components/AllQuizQuestionBank.vue'
 import QuizQuestionBank from '../components/AddQuestionFromBank.vue'
+import AddedQuizQuestionBank from '../components/AddedQuestionFromBank.vue'
 
 
 
@@ -54,7 +55,11 @@ const router = createRouter({
         {
             path: "/AddQuestionFromBank",
             component: QuizQuestionBank
-        }
+        },
+        {
+            path: "/AddedQuestionFromBank",
+            component: AddedQuizQuestionBank
+        },
     ]
 })
 

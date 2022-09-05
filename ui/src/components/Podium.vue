@@ -14,7 +14,7 @@ const count = ref(0)
 
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        <div class="text-4xl font-semibold col-span-2">GameVerse</div>
         <div class="text-2xl col-span-2">Quiz Category</div>
       </div>
 

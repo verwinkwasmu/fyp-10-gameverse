@@ -13,7 +13,7 @@ const count = ref(0);
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        <div class="text-4xl font-semibold col-span-2">GameVerse</div>
         <div class="text-2xl col-span-2">Quiz Category</div>
         <div class="text-sm row-span-2 flow-root">
           <p class="float-right mt-10">Question 1 of 3</p>
@@ -22,7 +22,7 @@ const count = ref(0);
 
       <!--Scoreboard-->
       <div
-        class="mx-auto p-4 mt-16 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
+        class="mx-auto my-auto mt-4 2xl:mt-20 p-4 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
       >
         <div class="flex text-lg mb-2">
           <div class="w-4/6">Player</div>
@@ -39,6 +39,29 @@ const count = ref(0);
           </div>
           <p class="w-2/6 text-lg sm:text-xl">123</p>
         </div>
+
+        <div class="flex items-center py-4">
+          <div class="w-4/6 flex">
+            <img
+              class="w-6 sm:w-10 mr-2 self-center"
+              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+            />
+            <p class="pt-2 pl-2">User 1234567</p>
+          </div>
+          <p class="w-2/6 text-lg sm:text-xl">123</p>
+        </div>
+
+        <div class="flex items-center py-4">
+          <div class="w-4/6 flex">
+            <img
+              class="w-6 sm:w-10 mr-2 self-center"
+              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+            />
+            <p class="pt-2 pl-2">User 1234567</p>
+          </div>
+          <p class="w-2/6 text-lg sm:text-xl">123</p>
+        </div>
+
 
         <div class="flex items-center py-4">
           <div class="w-4/6 flex">

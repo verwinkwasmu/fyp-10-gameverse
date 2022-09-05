@@ -13,22 +13,22 @@ const count = ref(0);
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        <div class="text-4xl font-semibold col-span-2">GameVerse</div>
         <div class="text-2xl col-span-2">Quiz Category</div>
         <div class="text-sm row-span-2 flow-root">
           <p class="float-right mt-10">Question 1 of 3</p>
         </div>
       </div>
 
-      <div class="grid grid-flow-row grid-col-1 gap-1">
+      <div class="grid grid-flow-row grid-col-1 gap-1 mx-auto my-auto">
         <div class="flex justify-center mt-24 mb-5">
           <img
             src="../assets/correct.png"
             style="width: 170px; height: 175px"
           />
         </div>
-        <div class="text-lg font-bold text-center">That's correct!</div>
-        <div class="text-center">+10 points</div>
+        <div class="text-lg 2xl:text-2xl font-bold text-center">That's correct!</div>
+        <div class="text-center 2xl:text-lg">+10 points</div>
       </div>
     </div>
 

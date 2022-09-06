@@ -34,30 +34,30 @@ const joinRoomId = () => {
       </div>
       
 
-      <div class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4">
+      <div class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center">
         <div class="grid grid-flow-col auto-cols-max gap-4">
           <div class="font-bold text-gray-700 rounded-full bg-white flex items-center justify-center w-12 h-12 align-middle	">1</div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Title</div>
-          <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-8 mx-2 rounded">Questions</button>
-          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded">Start Game</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white py-2 px-8 mx-2 rounded">Delete</button>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Trivia 101</div>
+          <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
+          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
+          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
         <div class="grid grid-flow-col auto-cols-max gap-4">
           <div class="font-bold text-gray-700 rounded-full bg-white flex items-center justify-center w-12 h-12 align-middle	">2</div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Title</div>
-          <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-8 mx-2 rounded">Questions</button>
-          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded">Start Game</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white py-2 px-8 mx-2 rounded">Delete</button>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Geography</div>
+          <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
+          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
+          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
         <div class="grid grid-flow-col auto-cols-max gap-4">
           <div class="font-bold text-gray-700 rounded-full bg-white flex items-center justify-center w-12 h-12 align-middle	">3</div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Title</div>
-          <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-8 mx-2 rounded">Questions</button>
-          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded">Start Game</button>
-          <button class="bg-red-500 hover:bg-red-700 text-white py-2 px-8 mx-2 rounded">Delete</button>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Greatest Rock Hits</div>
+          <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
+          <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
+          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
       </div>
       

@@ -41,14 +41,14 @@ const joinRoomId = () => {
           type="text"
           id="room_id"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-96"
-          placeholder="Enter Room ID!"
+          placeholder="Room ID"
           required
         />
         </div>
         <div class="my-3">
           <button
             type="button"
-            class="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-8 mx-2 rounded"
+            class="bg-lime-400 hover:bg-lime-600 text-black hover:text-white font-bold py-4 px-8 mx-2 rounded"
             @click="joinRoomId"
           >
             Join Game

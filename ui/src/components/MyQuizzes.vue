@@ -40,7 +40,7 @@ const joinRoomId = () => {
           <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Trivia 101</div>
           <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
           <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
           <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
         <div class="grid grid-flow-col auto-cols-max gap-4">
@@ -48,7 +48,7 @@ const joinRoomId = () => {
           <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Geography</div>
           <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
           <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white hover:text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
           <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
         <div class="grid grid-flow-col auto-cols-max gap-4">
@@ -56,7 +56,7 @@ const joinRoomId = () => {
           <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded">Greatest Rock Hits</div>
           <div class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">9 Questions</div>
           <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold">Edit Game</button>
-          <button class="bg-green-500 hover:bg-green-700 text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
+          <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 mx-2 rounded font-bold">Start Game</button>
           <button class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold">Delete</button>
         </div>
       </div>

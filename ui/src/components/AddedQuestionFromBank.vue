@@ -51,8 +51,7 @@ const count = ref(0)
           </div>
           <div class="basis-1/4">
               <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 md:py-1 md:px-7">
-                  Remove</a>
+                <router-link class="flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 md:py-1 md:px-7" :to="{path: '/AddQuestionFromBank'}">Remove</router-link>
               </div>
           </div>
         </div>
@@ -82,54 +81,9 @@ const count = ref(0)
               </div>
           </div>
         </div>
-         <div class="text-sm pt-8">
-          <p>Q2.</p>
-        </div>
-          <div class = "flex flex-row pt-3">
-          <div class="basis-2/3 pr-3">
-              <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-10">
-                  Who is Singapore's President</a>
-              </div>
-          </div>
-          <div class="basis-1/3">
-              <div class="rounded-md shadow">
-                <a href="/AddedQuestionFromBank" class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7">
-                  Add Question</a>
-              </div>
-          </div>
-        </div>
-        <div class ="flex flex-row pt-3">
-          <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-green-500 px-8 py-3 text-base font-medium text-white hover:bg-green-600 md:py-1 md:px-10">
-                  P1</a>
-              </div>
-          </div>
-           <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-blue-900 px-8 py-3 text-base font-medium text-white hover:bg-blue-800 md:py-1 md:px-10">
-                  P2</a>
-              </div>
-          </div>
-          <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-blue-900 px-8 py-3 text-base font-medium text-white hover:bg-blue-800 md:py-1 md:px-10">
-                  P3</a>
-              </div>
-          </div>
-          <div class="basis-1/4">
-              <div class="rounded-md shadow">
-                <a href="#" class="flex w-full items-center justify-left rounded-md border border-transparent bg-blue-900 px-8 py-3 text-base font-medium text-white hover:bg-blue-800 md:py-1 md:px-10">
-                  P4</a>
-              </div>
-          </div>
-        </div>
         <div class="flex justify-center pt-10">
-          <div class="pr-4">
-          <button class="bg-fuchsia-400 hover:bg-fuchsia-300 text-white font-bold py-2 px-4 rounded">
-            Back to Quizzes
-            </button> 
+          <div class="pr-4 pt-2">             
+            <router-link class="bg-fuchsia-400 hover:bg-fuchsia-300 text-white font-bold py-2 px-4 rounded" :to="{path: '/AllQuizQuestionBank'}">Back to Quizzes</router-link>
           </div> 
             <button class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
             Back to Quiz Creation

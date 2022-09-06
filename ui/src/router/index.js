@@ -7,6 +7,10 @@ import PodiumLoading from '../components/PodiumLoading.vue'
 import ScoreBoard from '../components/ScoreBoard.vue'
 import TeamQuiz from '../components/TeamQuiz.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
+import Home from '../components/Home.vue'
+import JoinGame from '../components/JoinGame.vue'
+import CreateQuiz from '../components/CreateQuiz.vue'
+import MyQuizzes from '../components/MyQuizzes.vue'
 
 
 
@@ -44,7 +48,23 @@ const router = createRouter({
         {
             path: "/TeamQuizResults",
             component: TeamQuiz
-        }
+        },
+        {
+            path: "/Home",
+            component: Home
+        },
+        {
+            path: "/JoinGame",
+            component: JoinGame
+        },
+        {
+            path: "/CreateQuiz",
+            component: CreateQuiz
+        },
+        {
+            path: "/MyQuizzes",
+            component: MyQuizzes
+        },
     ]
 })
 

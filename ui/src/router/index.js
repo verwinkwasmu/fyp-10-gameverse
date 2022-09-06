@@ -13,6 +13,7 @@ import CreateQuiz from '../components/CreateQuiz.vue'
 import MyQuizzes from '../components/MyQuizzes.vue'
 
 
+import { QuizCreation, Chat, QuizCreationSummary } from "../components";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -50,6 +51,15 @@ const router = createRouter({
             component: TeamQuiz
         },
         {
+            path: "/QuizCreation",
+            component: QuizCreation,
+            props: (route) => ({ query: route.query }),
+        },
+        {
+            path: "/QuizCreationSummary",
+            component: QuizCreationSummary,
+        },
+        {
             path: "/Home",
             component: Home
         },
@@ -66,6 +76,6 @@ const router = createRouter({
             component: MyQuizzes
         },
     ]
-})
+});
 
-export default router
+export default router;

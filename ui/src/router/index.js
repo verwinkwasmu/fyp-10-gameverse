@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Chat from "../components/Chat.vue"
 import Room from "../pages/Room.vue"
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'

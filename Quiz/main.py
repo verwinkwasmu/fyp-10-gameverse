@@ -10,7 +10,7 @@ from entity.QuizEntity import Quiz
 
 # test db as of now, there are present issues connecting to db from docker container
 # engine = create_engine("postgresql://postgres@localhost:5432/testDB")
-engine = create_engine("postgresql://lgmcmlinxnxscx:b82b8644e80fb385cc86b178f883927ff6558d4dc9b4097ea7a475639e7875dd@ec2-34-253-119-24.eu-west-1.compute.amazonaws.com:5432/drnj22t938aj3")
+engine = create_engine("postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway")
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)

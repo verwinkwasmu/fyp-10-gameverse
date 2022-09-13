@@ -23,7 +23,7 @@
     </div>
     <div class="flex items-center justify-center space-x-20 mt-10 mb-20 pr-20 pl-20">
   
-    <button class="w-full h-40 text-indigo-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400">
+    <button @onclick ="JoinBlue" class="w-full h-40 text-indigo-100 transition-colors duration-150 bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400">
       <div class="font-bold">
       Join Blue Team
       </div>
@@ -35,7 +35,7 @@
         </ul>
       </div>
     </button>
-    <button class="w-full h-40 text-indigo-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-pink-400">
+    <button @onclick ="JoinRed" class="w-full h-40 text-indigo-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-pink-400">
       <div class="font-bold">
       Join Red Team
       </div>
@@ -50,10 +50,10 @@
     </div>
     <div class="flex items-center justify-between space-x-40 m-20 pt-0">
   
-    <button class="items-centre pl-20 pr-20 h-20 text-indigo-100 border border-black bg-pink-300 rounded-none focus:shadow-outline">
+    <button class="items-centre pl-20 pr-20 h-20 text-black border border-black bg-pink-300 rounded-lg focus:shadow-outline">
       Exit Game
     </button>
-    <button class="items-centre pl-20 pr-20 h-20 text-black bg-green-300 rounded-none focus:shadow-outline">
+    <button class="items-centre pl-20 pr-20 h-20 text-black bg-green-300 rounded-lg focus:shadow-outline">
       30s till start!
     </button>
     </div>
@@ -68,21 +68,22 @@
   }
 </style>
 
-// <script>
-// import { TeamQuiz } from '@vue/composition-api'
+<script>
+export default {
+  watch: {
+    timerCount: {
+      handler(value) {
+        if (value > 0 && this.timerEnabled) {
+          setTimeout(() => {
+            this.timerCount = this.timerCount - 1;
+          }, 3000);
+        } else {
+          // this.$router.push(TeamQuizStart) // run your function here *build start page first then comment back in
+        }
+      },
+      immediate: true
+    },
+  },
+}
+</script>
 
-// export default defineComponent({
-//   setup() {
-    
-//   },
-// })
-// var example1 = new Vue({
-//   el: '#example-1',
-//   data: {
-//     items: [
-//       { message: 'Foo' },
-//       { message: 'Bar' }
-//     ]
-//   }
-// })
-// </script>

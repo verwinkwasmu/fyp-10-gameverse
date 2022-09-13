@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Chat from "../components/Chat.vue"
 import Room from "../pages/Room.vue"
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
@@ -11,8 +10,13 @@ import Quizbank from '../components/AllQuizQuestionBank.vue'
 import QuizQuestionBank from '../components/AddQuestionFromBank.vue'
 import AddedQuizQuestionBank from '../components/AddedQuestionFromBank.vue'
 import TeamQuizHomepageHost from '../components/TeamQuizHomepageHost.vue'
+import Home from '../components/Home.vue'
+import JoinGame from '../components/JoinGame.vue'
+import CreateQuiz from '../components/CreateQuiz.vue'
+import MyQuizzes from '../components/MyQuizzes.vue'
 
 
+import { QuizCreation, Chat, QuizCreationSummary } from "../components";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -65,7 +69,32 @@ const router = createRouter({
             path: "/TeamQuizHomepageHost",
             component: TeamQuizHomepageHost
         },
+        {
+            path: "/QuizCreation",
+            component: QuizCreation,
+            props: (route) => ({ query: route.query }),
+        },
+        {
+            path: "/QuizCreationSummary",
+            component: QuizCreationSummary,
+        },
+        {
+            path: "/Home",
+            component: Home
+        },
+        {
+            path: "/JoinGame",
+            component: JoinGame
+        },
+        {
+            path: "/CreateQuiz",
+            component: CreateQuiz
+        },
+        {
+            path: "/MyQuizzes",
+            component: MyQuizzes
+        },
     ]
-})
+});
 
-export default router
+export default router;

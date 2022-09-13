@@ -5,7 +5,7 @@ const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
 // need to set this as a dynamic variable
-const room_id = 1
+const room_id = 1;
 </script>
 
 <template>

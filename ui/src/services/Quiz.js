@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = () => {
   return axios.create({
-    baseURL: "https://n08yph.deta.dev/api",
+    baseURL: "http://127.0.0.1:8080/api",
   });
 };
 
@@ -19,8 +19,13 @@ export default {
   getQuiz(quiz_id) {
     return API().get(`/quiz/${quiz_id}`);
   },
-  createQuiz(payload) {
-    return API().post("/create", payload);
+  async createQuiz(payload) {
+    try {
+      const response = await API().post("/create", payload);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
   },
   updateQuiz(payload) {
     return API().put("/update", payload);

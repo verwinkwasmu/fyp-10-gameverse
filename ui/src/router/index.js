@@ -10,6 +10,7 @@ import TeamQuizResults from '../components/TeamQuizResults.vue'
 import Quizbank from '../components/AllQuizQuestionBank.vue'
 import QuizQuestionBank from '../components/AddQuestionFromBank.vue'
 import AddedQuizQuestionBank from '../components/AddedQuestionFromBank.vue'
+import TeamQuizHomepageHost from '../components/TeamQuizHomepageHost.vue'
 
 
 
@@ -59,6 +60,10 @@ const router = createRouter({
         {
             path: "/AddedQuestionFromBank",
             component: AddedQuizQuestionBank
+        },
+        {
+            path: "/TeamQuizHomepageHost",
+            component: TeamQuizHomepageHost
         },
     ]
 })

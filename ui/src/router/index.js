@@ -10,6 +10,7 @@ import Home from '../components/Home.vue'
 import JoinGame from '../components/JoinGame.vue'
 import CreateQuiz from '../components/CreateQuiz.vue'
 import MyQuizzes from '../components/MyQuizzes.vue'
+import SoloQuiz from '../components/SoloQuiz.vue'
 
 
 import { QuizCreation, Chat, QuizCreationSummary } from "../components";
@@ -74,6 +75,10 @@ const router = createRouter({
             path: "/MyQuizzes",
             component: MyQuizzes
         },
+        {
+            path: "/SoloQuiz",
+            component: SoloQuiz
+        }
     ]
 });
 

@@ -10,6 +10,7 @@ import Home from '../components/Home.vue'
 import JoinGame from '../components/JoinGame.vue'
 import CreateQuiz from '../components/CreateQuiz.vue'
 import MyQuizzes from '../components/MyQuizzes.vue'
+import RoomLobby from '../components/RoomLobby.vue'
 
 
 import { QuizCreation, Chat, QuizCreationSummary } from "../components";
@@ -59,7 +60,7 @@ const router = createRouter({
             component: QuizCreationSummary,
         },
         {
-            path: "/Home",
+            path: "/",
             component: Home
         },
         {
@@ -73,6 +74,10 @@ const router = createRouter({
         {
             path: "/MyQuizzes",
             component: MyQuizzes
+        },
+        {
+            path: "/RoomLobby/:room_id",
+            component: RoomLobby
         },
     ]
 });

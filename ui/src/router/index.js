@@ -11,6 +11,7 @@ import JoinGame from '../components/JoinGame.vue'
 import CreateQuiz from '../components/CreateQuiz.vue'
 import MyQuizzes from '../components/MyQuizzes.vue'
 import RoomLobby from '../components/RoomLobby.vue'
+import SoloQuiz from '../components/SoloQuiz.vue'
 
 
 import { QuizCreation, Chat, QuizCreationSummary } from "../components";
@@ -78,6 +79,9 @@ const router = createRouter({
         {
             path: "/RoomLobby/:room_id",
             component: RoomLobby
+        },
+            path: "/SoloQuiz",
+            component: SoloQuiz
         },
     ]
 });

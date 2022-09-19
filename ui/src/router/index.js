@@ -80,6 +80,7 @@ const router = createRouter({
             path: "/RoomLobby/:room_id",
             component: RoomLobby
         },
+        {
             path: "/SoloQuiz",
             component: SoloQuiz
         },

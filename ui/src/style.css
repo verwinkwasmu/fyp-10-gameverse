@@ -33,6 +33,37 @@ body {
   padding: 0;
 }
 
+.button{
+  background-color:#4652BC;
+}
+
+button.rightAnswer {
+  color: black;
+  background: linear-gradient(
+    210deg,
+    rgba(0, 178, 72, 0.25),
+    rgba(0, 178, 72, 0.5)
+  );
+}
+
+button.wrongAnswer {
+  color: black;
+  background: linear-gradient(
+    210deg,
+    rgba(245, 0, 87, 0.25),
+    rgba(245, 0, 87, 0.5)
+  );
+}
+
+button.showRightAnswer {
+  color: black;
+  background: linear-gradient(
+    210deg,
+    rgba(0, 178, 72, 0.25),
+    rgba(0, 178, 72, 0.5)
+  );
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

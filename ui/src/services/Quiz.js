@@ -16,13 +16,8 @@ export default {
       return err;
     }
   },
-  async getQuiz(quiz_id) {
-    try {
-      const response = await API().get(`/quiz/${quiz_id}`);
-      return response.data
-    } catch (err) {
-      return err;
-    }
+  getQuiz(quiz_id) {
+    return API().get(`/quiz/${quiz_id}`);
   },
   async createQuiz(payload) {
     try {

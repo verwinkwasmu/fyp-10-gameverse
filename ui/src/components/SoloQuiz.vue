@@ -1,38 +1,25 @@
-<script setup>
-import Quiz from "../services/Quiz";
-import { useQuizObjectStore } from "../stores/quizObject";
-
-const data = await Quiz.getQuiz(1)
-
-const store = useQuizObjectStore()
-store.quiz = data
-
-console.log(store.quiz)
-
-</script>
-
 <template>
   <div id="Quiz">
     <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
       <div class="p-10 ml-6 mr-6">
-
         <!--Header-->
         <div class="grid grid-rows-2 grid-flow-col gap-2">
           <div class="text-4xl font-semibold col-span-2">GameVerse</div>
           <div class="text-2xl col-span-2">Quiz Category</div>
           <div class="text-sm row-span-2 flow-root">
-            <p class="float-right mt-10">Question {{index+1}} of 3</p>
+            <p class="float-right mt-10">Question {{ index + 1 }} of 3</p>
           </div>
         </div>
 
-
-
-        <div class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center">
+        <!-- <div
+          class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center"
+        >
           <div class="text-4xl">
-            <div v-html="isLoading ? 'Loading...' : currentQuestion.question"></div>
+            <div
+              v-html="isLoading ? 'Loading...' : currentQuestion.question"
+            ></div>
           </div>
         </div>
-
 
         <div class="grid grid-cols-6 gap-4">
           <span class="font-mono text-5xl countdown">
@@ -40,25 +27,31 @@ console.log(store.quiz)
           </span>
 
           <div class="col-start-2 col-span-4 mb-6">
-            <img class="card rounded-lg object-fill w-full h-64 flex"
-              src="https://images.unsplash.com/photo-1543158015-04650a9d832a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2833&q=80" />
+            <img
+              class="card rounded-lg object-fill w-full h-64 flex"
+              src="https://images.unsplash.com/photo-1543158015-04650a9d832a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2833&q=80"
+            />
           </div>
         </div>
-
 
         <div class="grid grid-cols-6 gap-4">
           <div class="col-start-2 col-span-4">
             <form v-if="currentQuestion">
-              <div class="grid grid-rows-2 grid-cols-2 gap-0 place-content-stretch">
-                <button class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
-                  v-for="answer in currentQuestion.answers" :index="currentQuestion.key" :key="answer" v-html="answer"
-                  @click.prevent="ButtonClick"></button>
-
+              <div
+                class="grid grid-rows-2 grid-cols-2 gap-0 place-content-stretch"
+              >
+                <button
+                  class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
+                  v-for="answer in currentQuestion.answers"
+                  :index="currentQuestion.key"
+                  :key="answer"
+                  v-html="answer"
+                  @click.prevent="ButtonClick"
+                ></button>
               </div>
             </form>
           </div>
-        </div>
-
+        </div> -->
 
         <!-- <div class="loader" v-if="isLoading" message="Answer's locked in! Waiting for all players">
           <div role="status">
@@ -68,17 +61,12 @@ console.log(store.quiz)
             </svg>
           </div>
       </div> -->
-
-
-
-
-
       </div>
     </div>
   </div>
 </template>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 import axios from "axios";
 var timeleft = 15;
 var downloadTimer = setInterval(function () {
@@ -200,4 +188,21 @@ export default {
   }
 }
 
+</script> -->
+
+<script setup>
+import Quiz from '../services/Quiz'
+import {ref, onMounted} from 'vue'
+
+const quiz = ref()
+
+onMounted(() => {
+  getData()
+})
+
+const getData = async () => {
+  const response = await Quiz.getQuiz(1)
+  quiz.value = response.data
+  console.log(quiz.value)
+}
 </script>

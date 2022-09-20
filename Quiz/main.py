@@ -3,19 +3,22 @@ from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
+from entity.QuestionEntity import Question
 
 from repository.QuizRepository import QuizRepository
 from service.QuizService import QuizService
 from entity.QuizEntity import Quiz
 
-# test db as of now, there are present issues connecting to db from docker container
-# engine = create_engine("postgresql://postgres@localhost:5432/testDB")
-engine = create_engine("postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway")
+engine = create_engine(
+    "postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway")
+
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 # can only be used in fastapi routes.. so not sure if its a wise design to pass through this every layer
+
+
 def get_session():
     with Session(engine) as session:
         yield session
@@ -26,7 +29,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -95,5 +98,16 @@ async def delete_quiz(quiz_id: int):
     if result is None:
         raise HTTPException(
             status_code=500, detail=f"Unable to delete quiz for id: {quiz_id}")
+
+    return result
+
+
+@app.get("/api/questions/{category}", response_model=List[Question])
+async def get_questions(category: str):
+    result = quizService.get_questions(category)
+
+    if result is None:
+        raise HTTPException(
+            status_code=500, detail=f"questions with category {category} not found")
 
     return result

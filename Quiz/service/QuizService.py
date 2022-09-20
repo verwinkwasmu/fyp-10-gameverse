@@ -46,3 +46,11 @@ class QuizService:
             return result
 
         return None
+
+    def get_questions(self, category: str):
+        result = self.repository.get_questions(category)
+
+        if result != None:
+            return result
+
+        return None

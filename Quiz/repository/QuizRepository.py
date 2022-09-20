@@ -3,6 +3,7 @@ import logging
 from typing import Any
 
 from sqlmodel import Session, select
+from entity.QuestionEntity import Question
 from entity.QuizEntity import Quiz
 
 
@@ -16,6 +17,7 @@ class QuizRepository:
             result = session.exec(statement).first()
 
             if result == None:
+                self.save_questions(quiz, session)
                 session.add(quiz)
                 session.commit()
                 session.refresh(quiz)
@@ -70,3 +72,19 @@ class QuizRepository:
             session.commit()
 
             return quiz
+
+    def save_questions(self, quiz: Quiz, session: Session):
+        for question in quiz.questions:
+            data = Question(title=question.get('question'), option_1=question.get('option_1'), option_2=question.get('option_2'),
+                            option_3=question.get('option_3'), option_4=question.get('option_4'), answer=question.get('answer'), timer=question.get('timer'), category=quiz.category)
+            session.add(data)
+
+    def get_questions(self, category: str):
+        with Session(self.database) as session:
+            questions = session.exec(select(Question).where(
+                Question.category == category)).all()
+
+            if questions != []:
+                return questions
+
+            return None

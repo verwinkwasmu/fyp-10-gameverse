@@ -75,8 +75,10 @@ class QuizRepository:
 
     def save_questions(self, quiz: Quiz, session: Session):
         for question in quiz.questions:
-            data = Question(title=question.get('question'), option_1=question.get('option_1'), option_2=question.get('option_2'),
-                            option_3=question.get('option_3'), option_4=question.get('option_4'), answer=question.get('answer'), timer=question.get('timer'), category=quiz.category)
+            option = question.get('options')
+            print(option)
+            data = Question(title=question.get('question'), option_1=option.get('option_1'), option_2=option.get('option_2'),
+                            option_3=option.get('option_3'), option_4=option.get('option_4'), answer=question.get('answer'), timer=question.get('timer'), category=quiz.category)
             session.add(data)
 
     def get_questions(self, category: str):

@@ -1,5 +1,6 @@
-from sqlmodel import Field, SQLModel
-from typing import Optional
+from sqlalchemy import Column
+from sqlmodel import ARRAY, Field, SQLModel, String
+from typing import List, Optional
 
 
 class Question(SQLModel, table=True):
@@ -9,7 +10,7 @@ class Question(SQLModel, table=True):
     option_2: str
     option_3: str
     option_4: str
-    answer: str
+    answer: List = Field(default=[], sa_column=Column(ARRAY(String)))
     timer: int
     category: str
 

@@ -6,6 +6,10 @@ import PodiumLoading from '../components/PodiumLoading.vue'
 import ScoreBoard from '../components/ScoreBoard.vue'
 import TeamQuiz from '../components/TeamQuiz.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
+import Quizbank from '../components/AllQuizQuestionBank.vue'
+import QuizQuestionBank from '../components/AddQuestionFromBank.vue'
+import AddedQuizQuestionBank from '../components/AddedQuestionFromBank.vue'
+import TeamQuizHomepageHost from '../components/TeamQuizHomepageHost.vue'
 import Home from '../components/Home.vue'
 import JoinGame from '../components/JoinGame.vue'
 import CreateQuiz from '../components/CreateQuiz.vue'
@@ -51,6 +55,22 @@ const router = createRouter({
         {
             path: "/TeamQuizResults",
             component: TeamQuiz
+        },
+        {
+            path: "/AllQuizQuestionBank",
+            component: Quizbank
+        },
+        {
+            path: "/AddQuestionFromBank",
+            component: QuizQuestionBank
+        },
+        {
+            path: "/AddedQuestionFromBank",
+            component: AddedQuizQuestionBank
+        },
+        {
+            path: "/TeamQuizHomepageHost",
+            component: TeamQuizHomepageHost
         },
         {
             path: "/QuizCreation",

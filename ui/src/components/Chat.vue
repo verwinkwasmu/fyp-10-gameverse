@@ -17,6 +17,7 @@ connection.onopen = () => {
   console.log("connection established");
 };
 connection.onmessage = (event) => {
+  console.log(JSON.parse(event.data))
   messages.value.push(event.data);
 };
 

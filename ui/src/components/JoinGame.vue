@@ -29,7 +29,9 @@ const joinRoomId = () => {
 
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        <router-link to="/">
+          <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        </router-link>
         <div class="text-2xl col-span-2">Join Game</div>
       </div>
       

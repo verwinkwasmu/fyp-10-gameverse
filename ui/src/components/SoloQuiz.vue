@@ -11,16 +11,16 @@
           </div>
         </div>
 
-        
+
         <div v-if="!qnAnswered">
-        
+
           <div class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center">
             <div class="text-4xl">
               <div>{{store.quiz.questions[qnNumStore.qnNum].question}}</div>
             </div>
           </div>
-  
-  
+
+
           <div class="grid grid-cols-6 gap-4">
 
             <span class="font-mono text-5xl countdown">
@@ -29,16 +29,11 @@
 
             <div class="col-start-2 col-span-4">
               <div class="grid grid-rows-2 grid-cols-2 gap-0 place-content-stretch">
-  
-                <button
-                  class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
-                  v-for="option,index in store.quiz.questions[qnNumStore.qnNum].options"
-                  :key="index"
-                  :value="option"
-                  v-html="option"
-                  @click="checkAnswers(option)"
-                ></button>
-  
+
+                <button class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
+                  v-for="option,index in store.quiz.questions[qnNumStore.qnNum].options" :key="index" :value="option"
+                  v-html="option" @click="checkAnswers(option)"></button>
+
               </div>
             </div>
           </div>
@@ -47,10 +42,7 @@
         <div v-else-if="qnCorrect && qnAnswered">
           <div class="grid grid-flow-row grid-col-1 gap-1">
             <div class="flex justify-center mt-24 mb-5">
-              <img
-                src="../assets/correct.png"
-                style="width: 170px; height: 175px"
-              />
+              <img src="../assets/correct.png" style="width: 170px; height: 175px" />
             </div>
             <div class="text-lg font-bold text-center">That's correct!</div>
             <div class="text-center">+10 points</div>
@@ -60,10 +52,7 @@
         <div v-else-if="!qnCorrect && qnAnswered">
           <div class="grid grid-flow-row grid-col-1 gap-1">
             <div class="flex justify-center mt-24 mb-5">
-              <img
-                src="../assets/incorrect.png"
-                style="width: 170px; height: 175px"
-              />
+              <img src="../assets/incorrect.png" style="width: 170px; height: 175px" />
             </div>
             <div class="text-lg font-bold text-center">That's wrong :(</div>
             <div class="text-center">0 points</div>
@@ -79,10 +68,27 @@
 
 <script setup>
 import Quiz from '../services/Quiz'
-import {ref, onMounted, onBeforeMount} from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { useQuizCreationStore } from '../stores/quizCreation';
 import { useQnNumberStore } from '../stores/qnNumber';
 import ScoreboardVue from './Scoreboard.vue';
+import { useRouter, useRoute } from "vue-router";
+
+const route = useRoute();
+const client_id = Date.now();
+
+//TODO get actual ids properly
+const connection = new WebSocket(
+  `ws://localhost:8080/ws/${route.params.room_id}/${client_id}`
+);
+
+connection.onopen = () => {
+  console.log("connection established");
+};
+
+connection.onmessage = (event) => {
+  console.log(JSON.parse(event.data))
+};
 
 const store = useQuizCreationStore()
 const qnNumStore = useQnNumberStore()
@@ -91,23 +97,23 @@ const qnAnswered = ref(false)
 const timer = ref()
 
 
-onBeforeMount(() => { 
+onBeforeMount(() => {
   getData();
 
 })
 
-onMounted(()=>{
+onMounted(() => {
   timer.value = store.quiz.questions[qnNumStore.qnNum].timer
   console.log(timer.value)
 
-  setTimeout(checkAnswers,timer.value*1000)
+  setTimeout(checkAnswers, timer.value * 1000)
 
-  var timerCountdown = setInterval(()=>{
+  var timerCountdown = setInterval(() => {
     timer.value--
-    if (timer.value == 0){
+    if (timer.value == 0) {
       clearInterval(timerCountdown)
     }
-  },1000)
+  }, 1000)
 })
 
 const getData = async () => {
@@ -118,7 +124,7 @@ const getData = async () => {
 
 function checkAnswers(event) {
 
-  if (event == null){
+  if (event == null) {
     event = ""
   }
 
@@ -126,19 +132,27 @@ function checkAnswers(event) {
   // console.log(answer_key)
   console.log(store.quiz.questions[qnNumStore.qnNum].timer)
 
-  if (store.quiz.questions[qnNumStore.qnNum].options[answer_key] == event){
+  if (store.quiz.questions[qnNumStore.qnNum].options[answer_key] == event) {
     qnCorrect.value = true
     qnAnswered.value = true
     qnNumStore.score += 10
     console.log("correct")
   }
-  else{
+  else {
     qnCorrect.value = false
     qnAnswered.value = true
     console.log("wrong lol")
   }
   console.log(qnNumStore.score)
-  return qnNumStore.qnNum+=1
+
+  const response = {
+    'command': 'Done',
+    'name': 'Andrew',
+    'user_id': client_id,
+    'score': qnNumStore.score
+  }
+  connection.send(JSON.stringify(response));
+  return qnNumStore.qnNum += 1
 }
 
 </script>

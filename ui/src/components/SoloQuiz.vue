@@ -5,7 +5,7 @@
         <!--Header-->
         <div class="grid grid-rows-2 grid-flow-col gap-2">
           <div class="text-4xl font-semibold col-span-2">GameVerse</div>
-          <div class="text-2xl col-span-2">Quiz Category</div>
+          <div class="text-2xl col-span-2">{{store.quiz.category}}</div>
           <div v-if="!qnAnswered" class="text-sm row-span-2 flow-root">
             <p class="float-right mt-10">Question {{ qnNumStore.qnNum + 1 }} of 3</p>
           </div>
@@ -99,8 +99,9 @@ onBeforeMount(() => {
 onMounted(()=>{
   timer.value = store.quiz.questions[qnNumStore.qnNum].timer
   console.log(timer.value)
-  // setTimer(timer.value)
+
   setTimeout(checkAnswers,timer.value*1000)
+
   var timerCountdown = setInterval(()=>{
     timer.value--
     if (timer.value == 0){
@@ -127,24 +128,17 @@ function checkAnswers(event) {
 
   if (store.quiz.questions[qnNumStore.qnNum].options[answer_key] == event){
     qnCorrect.value = true
-    // console.log(qnCorrect.value)
-
     qnAnswered.value = true
-    // console.log(qnAnswered.value)
+    qnNumStore.score += 10
     console.log("correct")
   }
   else{
     qnCorrect.value = false
-    // console.log(qnCorrect.value)
-
     qnAnswered.value = true
-    // console.log(qnAnswered.value)
-
     console.log("wrong lol")
   }
-  // console.log(store.quiz)
+  console.log(qnNumStore.score)
   return qnNumStore.qnNum+=1
 }
-
 
 </script>

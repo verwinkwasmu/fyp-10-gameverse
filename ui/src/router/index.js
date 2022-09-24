@@ -81,7 +81,7 @@ const router = createRouter({
             component: RoomLobby
         },
         {
-            path: "/SoloQuiz",
+            path: "/SoloQuiz/:room_id",
             component: SoloQuiz
         },
     ]

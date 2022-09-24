@@ -69,10 +69,10 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int):
 
     try:
         while True:
-            data = await websocket.receive_text()
+            data = await websocket.receive_json()
 
             # if data received is 'Done'
-            if data == "Done":
+            if data["command"] == "Done":
                 manager.currentCount += 1
 
                 if manager.currentCount == len(manager.active_connections):

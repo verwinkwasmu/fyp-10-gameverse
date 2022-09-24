@@ -6,27 +6,33 @@
         <div class="grid grid-rows-2 grid-flow-col gap-2">
           <div class="text-4xl font-semibold col-span-2">GameVerse</div>
           <div class="text-2xl col-span-2">Quiz Category</div>
-          <div class="text-sm row-span-2 flow-root">
-            <p class="float-right mt-10">Question {{ qnNum + 1 }} of 3</p>
+          <div v-if="!qnAnswered" class="text-sm row-span-2 flow-root">
+            <p class="float-right mt-10">Question {{ qnNumStore.qnNum + 1 }} of 3</p>
           </div>
         </div>
+
+        
         <div v-if="!qnAnswered">
         
           <div class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center">
-            <!-- <div class="text-4xl" v-for="question in store.quiz.questions" :key="question"> -->
             <div class="text-4xl">
-              <div>{{store.quiz.questions[qnNum].question}}</div>
+              <div>{{store.quiz.questions[qnNumStore.qnNum].question}}</div>
             </div>
           </div>
   
   
           <div class="grid grid-cols-6 gap-4">
+
+            <span class="font-mono text-5xl countdown">
+              {{timer}}
+            </span>
+
             <div class="col-start-2 col-span-4">
               <div class="grid grid-rows-2 grid-cols-2 gap-0 place-content-stretch">
   
                 <button
                   class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
-                  v-for="option,index in store.quiz.questions[qnNum].options"
+                  v-for="option,index in store.quiz.questions[qnNumStore.qnNum].options"
                   :key="index"
                   :value="option"
                   v-html="option"
@@ -71,19 +77,36 @@
 </template>
 
 
-
 <script setup>
 import Quiz from '../services/Quiz'
 import {ref, onMounted, onBeforeMount} from 'vue'
 import { useQuizCreationStore } from '../stores/quizCreation';
+import { useQnNumberStore } from '../stores/qnNumber';
+import ScoreboardVue from './Scoreboard.vue';
 
 const store = useQuizCreationStore()
-const qnNum = ref(0)
+const qnNumStore = useQnNumberStore()
 const qnCorrect = ref(null)
 const qnAnswered = ref(false)
+const timer = ref()
 
-onBeforeMount(() => {
+
+onBeforeMount(() => { 
   getData();
+
+})
+
+onMounted(()=>{
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
+  console.log(timer.value)
+  // setTimer(timer.value)
+  setTimeout(checkAnswers,timer.value*1000)
+  var timerCountdown = setInterval(()=>{
+    timer.value--
+    if (timer.value == 0){
+      clearInterval(timerCountdown)
+    }
+  },1000)
 })
 
 const getData = async () => {
@@ -94,29 +117,33 @@ const getData = async () => {
 
 function checkAnswers(event) {
 
-  var answer_key = store.quiz.questions[qnNum.value].answer
-  console.log(answer_key)
+  if (event == null){
+    event = ""
+  }
 
-  console.log(event)
+  var answer_key = store.quiz.questions[qnNumStore.qnNum].answer
+  // console.log(answer_key)
+  console.log(store.quiz.questions[qnNumStore.qnNum].timer)
 
-  if (store.quiz.questions[qnNum.value].options[answer_key] == event){
+  if (store.quiz.questions[qnNumStore.qnNum].options[answer_key] == event){
     qnCorrect.value = true
-    console.log(qnCorrect.value)
+    // console.log(qnCorrect.value)
+
     qnAnswered.value = true
-    console.log(qnAnswered.value)
+    // console.log(qnAnswered.value)
     console.log("correct")
   }
   else{
     qnCorrect.value = false
-    console.log(qnCorrect.value)
+    // console.log(qnCorrect.value)
 
     qnAnswered.value = true
-    console.log(qnAnswered.value)
+    // console.log(qnAnswered.value)
 
     console.log("wrong lol")
   }
-  console.log(store.quiz)
-  return qnNum.value+=1
+  // console.log(store.quiz)
+  return qnNumStore.qnNum+=1
 }
 
 

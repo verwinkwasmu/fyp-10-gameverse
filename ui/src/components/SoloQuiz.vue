@@ -117,8 +117,8 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer/4
-  console.log(timer.value)
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
+  // console.log(timer.value)
 
   setTimeout(checkAnswers, timer.value * 1000)
 

@@ -1,40 +1,29 @@
-from dataclasses import asdict, dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import asdict
 
-from typing import List
+from typing import Dict, List
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+
+from entities import MessageResponse, User
 
 app = FastAPI()
-
-# responses
-@dataclass
-class User:
-    name: str
-    user_id: int
-    score: int
-
-
-@dataclass
-class MessageResponse:
-    command: str
-    message: str
-    current_users: List[User]
 
 
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
-        self.current_users: List[User] = []
+        # self.current_users: List[User] = []
+        self.current_users: Dict[int, User] = {}
         self.currentCount: int = 0
 
-    async def connect(self, websocket: WebSocket):
+    async def connect(self, websocket: WebSocket, user_id: int, user: User):
         await websocket.accept()
         self.active_connections.append(websocket)
+        self.current_users[user_id] = user
 
-    def disconnect(self, websocket: WebSocket):
+    def disconnect(self, websocket: WebSocket, user_id: str):
         self.active_connections.remove(websocket)
+        del self.current_users[user_id]
 
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)
@@ -49,16 +38,17 @@ currentConnections = {}
 
 
 @app.websocket("/ws/{room_id}/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int):
+async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
 
     manager = currentConnections.get(room_id)
 
-    await manager.connect(websocket)
+    # create user entity
+    user = User(name="", score=0)
 
-    manager.current_users.append(User(user_id=user_id, name="", score=0))
+    await manager.connect(websocket, user_id, user)
 
     messageResponse = MessageResponse(
         command="Join",
@@ -84,14 +74,15 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int):
                     )
                     await manager.broadcast(messageResponse)
 
-                # await manager.send_personal_message(f"You wrote: {data}", websocket)
-                # await manager.broadcast(f"User #{user_id} says: {data}")
-
     except WebSocketDisconnect:
-        manager.disconnect(websocket)
+        manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(
             command="Leave",
             message=f"User #{user_id} left the game room",
             current_users=manager.current_users,
         )
         await manager.broadcast(messageResponse)
+
+        # remove current websocket connection from Connection Channel
+        if not manager.active_connections:
+            del currentConnections[room_id]

@@ -1,11 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import {ref} from 'vue'
+import {useRoute} from 'vue-router'
 
-defineProps({
-  msg: String,
-});
+const route = useRoute()
 
-const count = ref(0);
+const users = ref({})
+
+const response = {
+  command: 'Scoreboard',
+}
+
+window.websocket.send(JSON.stringify(response))
+
+window.websocket.onmessage = (event) => {
+  users.value = JSON.parse(event.data).current_users
+  console.log(JSON.parse(event.data))
+}
 </script>
 
 <template>
@@ -29,60 +39,11 @@ const count = ref(0);
           <div class="w-2/6">Score</div>
         </div>
 
-        <div class="flex items-center py-4">
+        <div class="flex items-center py-4" v-for="(value, key) in users">
           <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
+            <p class="pt-2 pl-2">User {{ key }}</p>
           </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
-
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
-          </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
-
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
-          </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
-
-
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
-          </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
-
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
-          </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
+          <p class="w-2/6 text-lg sm:text-xl">{{ value.score }}</p>
         </div>
       </div>
 
@@ -93,9 +54,15 @@ const count = ref(0);
         >
           Exit Game
         </button>
+        <router-link
+          :to="{
+            path: `/SoloQuiz/${route.params.lobby_id}/${route.params.client_id}`,
+          }"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          move to quiz
+        </router-link>
       </footer>
     </div>
   </div>
 </template>
-
-<style></style>

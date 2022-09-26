@@ -56,6 +56,14 @@
             </div>
             <div class="text-lg font-bold text-center">That's correct!</div>
             <div class="text-center">+10 points</div>
+            <router-link
+              :to="{
+                path: `/Scoreboard/${route.params.lobby_id}/${route.params.client_id}`,
+              }"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              move to scoreboard
+            </router-link>
           </div>
         </div>
 
@@ -69,6 +77,14 @@
             </div>
             <div class="text-lg font-bold text-center">That's wrong :(</div>
             <div class="text-center">0 points</div>
+            <router-link
+              :to="{
+                path: `/Scoreboard/${route.params.lobby_id}/${route.params.client_id}`,
+              }"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              move to scoreboard
+            </router-link>
           </div>
         </div>
 
@@ -133,7 +149,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer / 4
   // console.log(timer.value)
 
   setTimeout(checkAnswers, timer.value * 1000)

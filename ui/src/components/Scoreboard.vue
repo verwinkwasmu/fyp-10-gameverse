@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref } from "vue";
 
 defineProps({
@@ -6,7 +6,7 @@ defineProps({
 });
 
 const count = ref(0);
-</script>
+</script> -->
 
 <template>
   <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
@@ -29,7 +29,18 @@ const count = ref(0);
           <div class="w-2/6">Score</div>
         </div>
 
-        <div class="flex items-center py-4">
+        <div v-for="user in sortUsers" class="flex items-center py-4">
+          <div class="w-4/6 flex">
+            <img
+              class="w-6 sm:w-10 mr-2 self-center"
+              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+            />
+            <p class="pt-2 pl-2">{{user[0]}}</p>
+          </div>
+          <p class="w-2/6 text-lg sm:text-xl">{{user[1]}}</p>
+        </div>
+
+        <!-- <div class="flex items-center py-4">
           <div class="w-4/6 flex">
             <img
               class="w-6 sm:w-10 mr-2 self-center"
@@ -51,17 +62,6 @@ const count = ref(0);
           <p class="w-2/6 text-lg sm:text-xl">123</p>
         </div>
 
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p class="pt-2 pl-2">User 1234567</p>
-          </div>
-          <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
-
 
         <div class="flex items-center py-4">
           <div class="w-4/6 flex">
@@ -83,7 +83,7 @@ const count = ref(0);
             <p class="pt-2 pl-2">User 1234567</p>
           </div>
           <p class="w-2/6 text-lg sm:text-xl">123</p>
-        </div>
+        </div> -->
       </div>
 
       <!--Exit game button-->
@@ -99,3 +99,39 @@ const count = ref(0);
 </template>
 
 <style></style>
+
+<script setup>
+
+  function sortPlayers() {
+
+      let current_users = {
+        "01": {
+          "name": "name1",
+          "score": 100
+        },
+        "02": {
+          "name": "name2",
+          "score": 200
+        },
+        "03":{
+          "name": "name3",
+          "score": 140
+        }
+      }
+
+      let sortUsers = [];
+      for (var user in current_users) {
+          sortUsers.push([ current_users[user]["name"], current_users[user]["score"] ]);
+      }
+
+      sortUsers.sort(function(a, b) {
+        return b[1] - a[1];
+      });
+
+    
+
+    }
+  
+
+
+</script>

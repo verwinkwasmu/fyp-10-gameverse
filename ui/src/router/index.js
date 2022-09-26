@@ -17,6 +17,7 @@ import MyQuizzes from '../components/MyQuizzes.vue'
 import RoomLobby from '../components/RoomLobby.vue'
 import SoloQuiz from '../components/SoloQuiz.vue'
 import QuizLobby from '../components/QuizLobby.vue'
+import TeamQuizLobby from '../components/TeamQuizLobby.vue'
 
 
 import { QuizCreation, Chat, QuizCreationSummary } from "../components";
@@ -108,7 +109,11 @@ const router = createRouter({
         {
             path: "/QuizLobby",
             component: QuizLobby
-        }
+        },
+        {
+            path: "/TeamQuizLobby",
+            component: TeamQuizLobby
+        },
     ]
 });
 

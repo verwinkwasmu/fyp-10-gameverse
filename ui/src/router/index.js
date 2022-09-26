@@ -102,7 +102,7 @@ const router = createRouter({
             component: RoomLobby
         },
         {
-            path: "/SoloQuiz/:room_id",
+            path: "/SoloQuiz/:lobby_id/:client_id",
             component: SoloQuiz
         },
         {

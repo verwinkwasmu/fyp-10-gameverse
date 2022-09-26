@@ -7,15 +7,15 @@ const client_id = Date.now()
 
 const users = ref({})
 
-const connection = new WebSocket(
+window.websocket = new WebSocket(
   `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}`,
 )
 
-connection.onopen = () => {
+window.websocket.onopen = () => {
   console.log('connection established')
 }
 
-connection.onmessage = (event) => {
+window.websocket.onmessage = (event) => {
   users.value = JSON.parse(event.data)
   console.log(users.value.current_users)
 }
@@ -62,6 +62,22 @@ connection.onmessage = (event) => {
         >
           Exit Game
         </button>
+        <router-link
+          :to="{
+            path: `/SoloQuiz/${route.params.lobby_id}/${client_id}`,
+          }"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          move to quiz
+        </router-link>
+        <router-link
+          :to="{
+            path: `/Podium`,
+          }"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          move to podium
+        </router-link>
       </footer>
     </div>
   </div>

@@ -106,7 +106,7 @@ const router = createRouter({
             component: SoloQuiz
         },
         {
-            path: "/QuizLobby",
+            path: "/QuizLobby/:lobby_id",
             component: QuizLobby
         }
     ]

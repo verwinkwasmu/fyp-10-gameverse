@@ -1,18 +1,24 @@
 <script setup>
-import { ref } from "vue";
+import {ref} from 'vue'
+import {useRoute} from 'vue-router'
 
-const participants = ref([
-      {id: 0, name: 'Paul'},
-      {id: 1, name: 'Richard'},
-      {id: 2, name: 'William'},
-      {id: 2, name: 'John'},
-    ])
+const route = useRoute()
+const client_id = Date.now()
 
-defineProps({
-  msg: String,
-});
+const users = ref({})
 
-const count = ref(0);
+const connection = new WebSocket(
+  `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}`,
+)
+
+connection.onopen = () => {
+  console.log('connection established')
+}
+
+connection.onmessage = (event) => {
+  users.value = JSON.parse(event.data)
+  console.log(users.value.current_users)
+}
 </script>
 
 <template>
@@ -26,7 +32,7 @@ const count = ref(0);
           <p class="float-right mt-10">Waiting for host to start the quiz</p>
         </div>
       </div>
-      <!--Scoreboard--> 
+      <!--Scoreboard-->
       <div
         class="mx-auto p-4 mt-16 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
       >
@@ -34,15 +40,17 @@ const count = ref(0);
           <div class="w-4/6">Players in Quiz</div>
         </div>
 
-        <div class="flex items-center py-4" v-for="participant in participants" :key="participant._id">
-          
+        <div
+          class="flex items-center py-4"
+          v-for="(value, user_id) in users.current_users"
+          :key="user_id"
+        >
           <div class="w-4/6 flex">
-            
             <img
               class="w-6 sm:w-10 mr-2 self-center"
               src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
             />
-            <p>{{ participant.name }}</p>
+            <p>{{ user_id }}</p>
           </div>
         </div>
       </div>

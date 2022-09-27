@@ -39,7 +39,7 @@
             class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
           >
             <div class="flex text-lg mb-2">
-              <div class="w-4/6">Players in Quiz (Blue Team)</div>
+              <div class="w-4/6 text-blue-600">Players in Quiz (Blue Team)</div>
             </div>
     
             <div class="flex items-center py-4" v-for="participantR in participantsRED" :key="participantR._id">
@@ -58,7 +58,7 @@
             class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
           >
             <div class="flex text-lg mb-2">
-              <div class="w-4/6">Players in Quiz (Red Team)</div>
+              <div class="w-4/6 text-red-600">Players in Quiz (Red Team)</div>
             </div>
     
             <div class="flex items-center py-4" v-for="participantB in participantsBLUE" :key="participantB._id">

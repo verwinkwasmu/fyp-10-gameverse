@@ -56,7 +56,7 @@ const count = ref(0);
         </button>
       </footer>
     </div>
-  </div>
+  </div> 
 </template>
 
 <style></style>

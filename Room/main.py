@@ -65,6 +65,9 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
             if data["command"] == "Done":
                 manager.currentCount += 1
 
+                # update the scores
+                manager.current_users[user_id].score += data['score']
+                
                 if manager.currentCount == len(manager.active_connections):
                     manager.currentCount = 0
                     messageResponse = MessageResponse(

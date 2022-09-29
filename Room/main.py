@@ -46,7 +46,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
     manager = currentConnections.get(room_id)
 
     # create user entity
-    user = User(name="", score=0)
+    user = User(name=user_id, score=0)
 
     await manager.connect(websocket, user_id, user)
 

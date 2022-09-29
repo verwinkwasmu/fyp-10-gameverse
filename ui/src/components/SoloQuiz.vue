@@ -57,6 +57,15 @@
             <div class="text-lg font-bold text-center">That's correct!</div>
             <div class="text-center">+10 points</div>
           </div>
+          <!-- just for the host to use -->
+          <router-link
+            :to="{
+              path: `/Scoreboard`,
+            }"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            move to scoreboard
+          </router-link>
         </div>
 
         <div v-else-if="!qnCorrect && qnAnswered && timer == 0">
@@ -111,10 +120,6 @@ import {useRoute} from 'vue-router'
 
 const users = ref({})
 const route = useRoute()
-
-window.websocket.onopen = () => {
-  console.log('connection established')
-}
 
 window.websocket.onmessage = (event) => {
   users.value = JSON.parse(event.data).current_users

@@ -1,13 +1,3 @@
-<!-- <script setup>
-import { ref } from "vue";
-
-defineProps({
-  msg: String,
-});
-
-const count = ref(0);
-</script> -->
-
 <template>
   <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
     <div class="p-10 ml-6 mr-6">
@@ -29,15 +19,18 @@ const count = ref(0);
           <div class="w-2/6">Score</div>
         </div>
 
-        <div v-for="user in sortUsers" class="flex items-center py-4">
+        <div
+          v-for="(name, score) in sortPlayers(users)"
+          class="flex items-center py-4"
+        >
           <div class="w-4/6 flex">
             <img
               class="w-6 sm:w-10 mr-2 self-center"
               src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
             />
-            <p class="pt-2 pl-2">{{user[0]}}</p>
+            <p class="pt-2 pl-2">{{ name }}</p>
           </div>
-          <p class="w-2/6 text-lg sm:text-xl">{{user[1]}}</p>
+          <p class="w-2/6 text-lg sm:text-xl">{{ score }}</p>
         </div>
 
         <!-- <div class="flex items-center py-4">
@@ -98,40 +91,33 @@ const count = ref(0);
   </div>
 </template>
 
-<style></style>
-
 <script setup>
+import {ref, onMounted} from 'vue'
+const users = ref({})
+onMounted(() => {
+  const response = {
+    command: 'Scoreboard',
+    message: '',
+    score: 0,
+  }
+  console.log(response)
+  window.websocket.send(JSON.stringify(response))
+})
 
-  function sortPlayers() {
+window.websocket.onmessage = (event) => {
+  users.value = JSON.parse(event.data)
+  console.log(JSON.parse(event.data))
+}
 
-      let current_users = {
-        "01": {
-          "name": "name1",
-          "score": 100
-        },
-        "02": {
-          "name": "name2",
-          "score": 200
-        },
-        "03":{
-          "name": "name3",
-          "score": 140
-        }
-      }
+const sortPlayers = (users) => {
+  let sortUsers = []
 
-      let sortUsers = [];
-      for (var user in current_users) {
-          sortUsers.push([ current_users[user]["name"], current_users[user]["score"] ]);
-      }
+  for (let user in users) {
+    sortUsers.push([users[user]['name'], users[user]['score']])
+  }
 
-      sortUsers.sort(function(a, b) {
-        return b[1] - a[1];
-      });
-
-    
-
-    }
-  
-
-
+  sortUsers.sort(function (a, b) {
+    return b[1] - a[1]
+  })
+}
 </script>

@@ -82,7 +82,12 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
                     message="show scoreboard",
                     current_users=manager.current_users
                 )
-
+            elif data['command'] == 'Start':
+                messageResponse = MessageResponse(
+                    command="Start Game",
+                    message="move to questions",
+                    current_users=manager.current_users
+                )
             await manager.broadcast(messageResponse)
 
     except WebSocketDisconnect:

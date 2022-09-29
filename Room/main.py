@@ -67,7 +67,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
 
                 # update the scores
                 manager.current_users[user_id].score += data['score']
-                
+
                 if manager.currentCount == len(manager.active_connections):
                     manager.currentCount = 0
                     messageResponse = MessageResponse(
@@ -77,6 +77,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
                     )
                     await manager.broadcast(messageResponse)
 
+            elif data['command'] == "Scoreboard":
+                await manager.broadcast(messageResponse)
     except WebSocketDisconnect:
         manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(

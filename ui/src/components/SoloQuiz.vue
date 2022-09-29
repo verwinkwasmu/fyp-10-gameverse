@@ -8,7 +8,7 @@
           <div class="text-2xl col-span-2">{{ store.quiz.category }}</div>
           <div v-if="!qnAnswered" class="text-sm row-span-2 flow-root">
             <p class="float-right mt-10">
-              Question {{ qnNumStore.qnNum + 1 }} of 3
+              Question {{ qnNumStore.qnNum + 1 }} of {{totalQn}}
             </p>
           </div>
         </div>
@@ -39,7 +39,7 @@
                   :key="index"
                   :value="option"
                   v-html="option"
-                  @click="showAnswer(option)"
+                  @click.stop="showAnswer(option)"
                 ></button>
               </div>
             </div>
@@ -143,34 +143,42 @@ const qnCorrect = ref(null)
 const qnAnswered = ref(false)
 const timer = ref()
 const answer_input = ref(null)
+const totalQn = ref()
 
 onBeforeMount(() => {
   getData()
 })
 
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer / 4
+  getData()
+
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer/2
   // console.log(timer.value)
 
-  setTimeout(checkAnswers, timer.value * 1000)
-
+  // setTimeout(checkAnswers, timer.value * 1000)
+  
   var timerCountdown = setInterval(() => {
     timer.value--
     if (timer.value == 0) {
       clearInterval(timerCountdown)
+      if (!qnAnswered.value){
+        checkAnswers()
+      }
     }
   }, 1000)
 })
-
 const getData = async () => {
   const response = await Quiz.getQuiz(1)
   store.quiz = response.data
+  console.log(store.quiz.questions)
+  totalQn.value = store.quiz.questions.length
 }
 
 function showAnswer(event) {
   qnAnswered.value = true
   answer_input.value = event
-  setTimeout(checkAnswers, timer.value * 1000)
+  checkAnswers()
+  // setTimeout(checkAnswers, timer.value * 1000)
 }
 
 function checkAnswers() {
@@ -203,6 +211,9 @@ function checkAnswers() {
   }
   window.websocket.send(JSON.stringify(response))
 
-  return (qnNumStore.qnNum += 1)
+  qnNumStore.qnNum += 1
+  // qnCorrect.value = null
+  // qnAnswered.value = false
+  // answer_input.value = null
 }
 </script>

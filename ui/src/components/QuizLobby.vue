@@ -19,11 +19,10 @@ window.websocket.onopen = () => {
 }
 
 window.websocket.onmessage = (event) => {
-  if (JSON.parse(event.data).command == "Start Game") {
-    console.log("start game")
+  if (JSON.parse(event.data).command == 'Start Game') {
+    console.log('start game')
     moveToQuestion()
-  }
-  else {
+  } else {
     users.value = JSON.parse(event.data)
     console.log(users.value.current_users)
   }
@@ -32,27 +31,25 @@ window.websocket.onmessage = (event) => {
 const clicker = ref(false)
 const timer = ref()
 
-function countdownstart(){
-  window.websocket.send(JSON.stringify({command:"Start"}))
+function countdownstart() {
+  window.websocket.send(JSON.stringify({command: 'Start'}))
 }
 
 function moveToQuestion() {
-  clicker.value = true;
+  clicker.value = true
 
-  setTimeout(routenext, 3000);
+  setTimeout(routenext, 3000)
 
-  var timerCountdown = setInterval(() => {
-  countdowntimer.value--
-  if (countdowntimer.value == 0) {
-    clearInterval(timerCountdown)
-  }
-}, 1000)
+  let timerCountdown = setInterval(() => {
+    countdowntimer.value--
+    if (countdowntimer.value == 0) {
+      clearInterval(timerCountdown)
+    }
+  }, 1000)
 }
-function routenext(){
-  // window.location.replace("http://localhost:5173/Podium");
-  router.push({path: `/SoloQuiz/${route.params.lobby_id}/${client_id}`})
+function routenext() {
+  router.push({path: '/SoloQuiz'})
 }
-
 </script>
 
 <template>
@@ -68,35 +65,35 @@ function routenext(){
       </div>
       <!--Scoreboard-->
       <div v-if="!clicker">
-      <div 
-        class="mx-auto p-4 mt-16 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
-      >
-        <div class="flex text-lg mb-2">
-          <div class="w-4/6">Players in Quiz</div>
-        </div>
-
         <div
-          class="flex items-center py-4"
-          v-for="(value, user_id) in users.current_users"
-          :key="user_id"
+          class="mx-auto p-4 mt-16 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
         >
-          <div class="w-4/6 flex">
-            <img
-              class="w-6 sm:w-10 mr-2 self-center"
-              src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-            />
-            <p>{{ user_id }}</p>
+          <div class="flex text-lg mb-2">
+            <div class="w-4/6">Players in Quiz</div>
+          </div>
+
+          <div
+            class="flex items-center py-4"
+            v-for="(value, user_id) in users.current_users"
+            :key="user_id"
+          >
+            <div class="w-4/6 flex">
+              <img
+                class="w-6 sm:w-10 mr-2 self-center"
+                src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+              />
+              <p>{{ user_id }}</p>
+            </div>
           </div>
         </div>
       </div>
-      </div>
 
-    <div v-else-if="clicker">
-      <div class="text-7xl mt-12 text-center">
-        <div>Are you ready? </div>
-        <div class="text-9xl mt-20">{{countdowntimer}}</div>
+      <div v-else-if="clicker">
+        <div class="text-7xl mt-12 text-center">
+          <div>Are you ready?</div>
+          <div class="text-9xl mt-20">{{ countdowntimer }}</div>
+        </div>
       </div>
-    </div>
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
@@ -105,25 +102,10 @@ function routenext(){
         >
           Exit Game
         </button>
-        <router-link
-          :to="{
-            path: `/SoloQuiz/${route.params.lobby_id}/${client_id}`,
-          }"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          move to quiz
-        </router-link>
-        <router-link
-          :to="{
-            path: `/Podium`,
-          }"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          move to podium
-        </router-link>
       </footer>
 
       <footer class="fixed right-10 bottom-10 flex ml-6">
+        <!-- button is just for host to use -->
         <button
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           @click="countdownstart()"
@@ -131,9 +113,6 @@ function routenext(){
           Start Game
         </button>
       </footer>
-
-
-
     </div>
   </div>
 </template>

@@ -90,6 +90,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
                 )
             await manager.broadcast(messageResponse)
 
+            elif data['command'] == "Scoreboard":
+                await manager.broadcast(messageResponse)
     except WebSocketDisconnect:
         manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(

@@ -3,7 +3,6 @@ import Room from '../pages/Room.vue'
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
 import PodiumLoading from '../components/PodiumLoading.vue'
-import ScoreBoard from '../components/ScoreBoard.vue'
 import TeamQuiz from '../components/TeamQuiz.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
 import Quizbank from '../components/AllQuizQuestionBank.vue'
@@ -17,6 +16,7 @@ import MyQuizzes from '../components/MyQuizzes.vue'
 import RoomLobby from '../components/RoomLobby.vue'
 import SoloQuiz from '../components/SoloQuiz.vue'
 import QuizLobby from '../components/QuizLobby.vue'
+import NotScoreboard from '../components/NotScoreboard.vue'
 
 import {QuizCreation, Chat, QuizCreationSummary} from '../components'
 
@@ -44,8 +44,8 @@ const router = createRouter({
       component: PodiumLoading,
     },
     {
-      path: '/Scoreboard/:lobby_id/:client_id',
-      component: ScoreBoard,
+      path: '/Scoreboard',
+      component: NotScoreboard,
     },
     {
       path: '/TeamQuiz',
@@ -101,7 +101,7 @@ const router = createRouter({
       component: RoomLobby,
     },
     {
-      path: '/SoloQuiz/:lobby_id/:client_id',
+      path: '/SoloQuiz',
       component: SoloQuiz,
     },
     {

@@ -46,7 +46,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
     manager = currentConnections.get(room_id)
 
     # create user entity
-    user = User(name="", score=0)
+    user = User(name=user_id, score=0)
 
     await manager.connect(websocket, user_id, user)
 
@@ -66,19 +66,32 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
                 manager.currentCount += 1
 
                 # update the scores
-                manager.current_users[user_id].score += data['score']
+                manager.current_users[user_id].score += data["score"]
 
-                if manager.currentCount == len(manager.active_connections):
-                    manager.currentCount = 0
-                    messageResponse = MessageResponse(
-                        command="Next Question",
-                        message="Moving to the next question...",
-                        current_users=manager.current_users,
-                    )
-                    await manager.broadcast(messageResponse)
-
-            elif data['command'] == "Scoreboard":
+            elif data["command"] == "Next Question":
+                messageResponse = MessageResponse(
+                    command="Next Question",
+                    message="Next Question",
+                    current_users=manager.current_users,
+                )
                 await manager.broadcast(messageResponse)
+
+            elif data["command"] == "Scoreboard":
+                messageResponse = MessageResponse(
+                    command="Show Scoreboard",
+                    message="show scoreboard",
+                    current_users=manager.current_users,
+                )
+                await manager.broadcast(messageResponse)
+
+            elif data["command"] == "Start":
+                messageResponse = MessageResponse(
+                    command="Start Game",
+                    message="move to questions",
+                    current_users=manager.current_users,
+                )
+                await manager.broadcast(messageResponse)
+
     except WebSocketDisconnect:
         manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(

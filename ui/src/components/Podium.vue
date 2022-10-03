@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import {ref, onMounted} from 'vue'
 
-defineProps({
-  msg: String,
-});
+const users = ref({})
 
-const count = ref(0);
+onMounted(() => {
+  window.websocket.send(JSON.stringify({command: 'To Podium'}))
+})
+
+window.websocket.onmessage = (event) => {
+  users.value = JSON.parse(event.data).current_users
+  console.log(JSON.parse(event.data))
+}
 </script>
 
 <template>

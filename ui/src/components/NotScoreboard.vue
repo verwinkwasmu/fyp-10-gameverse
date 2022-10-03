@@ -16,6 +16,8 @@ onMounted(() => {
 window.websocket.onmessage = (event) => {
   if (JSON.parse(event.data).command == 'Next Question') {
     router.push({path: '/SoloQuiz'})
+  } else if (JSON.parse(event.data).command == 'To Podium') {
+    router.push({path: '/Podium'})
   } else {
     users.value = JSON.parse(event.data).current_users
     console.log(JSON.parse(event.data))
@@ -24,6 +26,10 @@ window.websocket.onmessage = (event) => {
 
 const nextQuestion = () => {
   window.websocket.send(JSON.stringify({command: 'Next Question'}))
+}
+
+const moveToPodium = () => {
+  window.websocket.send(JSON.stringify({command: 'To Podium'}))
 }
 
 const sortPlayers = (users) => {
@@ -88,10 +94,18 @@ const sortPlayers = (users) => {
           Exit Game
         </button>
         <button
+          v-if="qnNumStore.qnNum < quizStore.quiz.questions.length"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          @click="nextQuestion()"
+          @click="nextQuestion"
         >
           Next Question
+        </button>
+        <button
+          v-else
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          @click="moveToPodium"
+        >
+          To Podium
         </button>
       </footer>
     </div>

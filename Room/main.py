@@ -12,9 +12,7 @@ app = FastAPI()
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
-        # self.current_users: List[User] = []
         self.current_users: Dict[int, User] = {}
-        self.currentCount: int = 0
 
     async def connect(self, websocket: WebSocket, user_id: int, user: User):
         await websocket.accept()
@@ -52,7 +50,6 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
 
     messageResponse = MessageResponse(
         command="Join",
-        message=f"User #{user_id} has entered the game room #{room_id}!",
         current_users=manager.current_users,
     )
     await manager.broadcast(messageResponse)
@@ -61,42 +58,42 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
         while True:
             data = await websocket.receive_json()
 
-            # if data received is 'Done'
-            if data["command"] == "Done":
-                manager.currentCount += 1
+            match data["command"]:
+                case "Done":
+                    manager.current_users[user_id].score += data["score"]
 
-                # update the scores
-                manager.current_users[user_id].score += data["score"]
+                case "Next Question":
+                    messageResponse = MessageResponse(
+                        command="Next Question",
+                        current_users=manager.current_users,
+                    )
+                    await manager.broadcast(messageResponse)
 
-            elif data["command"] == "Next Question":
-                messageResponse = MessageResponse(
-                    command="Next Question",
-                    message="Next Question",
-                    current_users=manager.current_users,
-                )
-                await manager.broadcast(messageResponse)
+                case "Scoreboard":
+                    messageResponse = MessageResponse(
+                        command="Show Scoreboard",
+                        current_users=manager.current_users,
+                    )
+                    await manager.broadcast(messageResponse)
 
-            elif data["command"] == "Scoreboard":
-                messageResponse = MessageResponse(
-                    command="Show Scoreboard",
-                    message="show scoreboard",
-                    current_users=manager.current_users,
-                )
-                await manager.broadcast(messageResponse)
+                case "Start":
+                    messageResponse = MessageResponse(
+                        command="Start Game",
+                        current_users=manager.current_users,
+                    )
+                    await manager.broadcast(messageResponse)
 
-            elif data["command"] == "Start":
-                messageResponse = MessageResponse(
-                    command="Start Game",
-                    message="move to questions",
-                    current_users=manager.current_users,
-                )
-                await manager.broadcast(messageResponse)
+                case "To Podium":
+                    messageResponse = MessageResponse(
+                        command="To Podium",
+                        current_users=manager.current_users,
+                    )
+                    await manager.broadcast(messageResponse)
 
     except WebSocketDisconnect:
         manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(
             command="Leave",
-            message=f"User #{user_id} left the game room",
             current_users=manager.current_users,
         )
         await manager.broadcast(messageResponse)

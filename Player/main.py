@@ -1,8 +1,10 @@
+from distutils.command.install_egg_info import safe_name
 import logging
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
+from entity.PlayerEntity import QuizResult
 
 from repository.PlayerRepository import PlayerRepository
 from service.PlayerService import PlayerService
@@ -10,10 +12,14 @@ from entity.PlayerEntity import Player
 
 # test db as of now, there are present issues connecting to db from docker container
 # engine = create_engine("postgresql://postgres@localhost:5432/testDB")
-engine = create_engine("postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway")
+engine = create_engine(
+    "postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway"
+)
+
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
 
 # can only be used in fastapi routes.. so not sure if its a wise design to pass through this every layer
 def get_session():
@@ -50,7 +56,7 @@ async def get_players():
     players = playerService.get_players()
 
     if players is None:
-        raise HTTPException(status_code=404, detail="No quizzes found")
+        raise HTTPException(status_code=404, detail="No players found")
 
     return players
 
@@ -61,7 +67,8 @@ async def get_player(player_id: int):
 
     if player is None:
         raise HTTPException(
-            status_code=404, detail=f"player with id: {player_id} not found")
+            status_code=404, detail=f"player with id: {player_id} not found"
+        )
 
     return player
 
@@ -72,7 +79,8 @@ async def create_player(player: Player):
 
     if result == None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to create player for id: {player.id}")
+            status_code=500, detail=f"Unable to create player for id: {player.id}"
+        )
 
     return result
 
@@ -83,7 +91,8 @@ async def update_player(player: Player):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to update player with id: {player.id}")
+            status_code=500, detail=f"Unable to update player with id: {player.id}"
+        )
 
     return result
 
@@ -94,6 +103,19 @@ async def delete_player(player_id: int):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to delete player for id: {player_id}")
+            status_code=500, detail=f"Unable to delete player for id: {player_id}"
+        )
+
+    return result
+
+
+@app.put("/api/addQuizResults/", response_model=Player)
+async def input_quiz_results(quizResults: QuizResult):
+    result = playerService.input_quiz_results(quizResults)
+
+    if result is None:
+        raise HTTPException(
+            status_code=500, detail=f"Unable to delete player for id: {quizResults.id}"
+        )
 
     return result

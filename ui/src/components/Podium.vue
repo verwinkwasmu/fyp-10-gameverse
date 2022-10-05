@@ -23,22 +23,18 @@ window.websocket.onmessage = (event) => {
       </div>
 
       <!--Podium help idk how to move the names w the podium if screen is stretched-->
-
-      <div id="first">First</div>
-      <div id="second">Second</div>
-      <div id="third">Third</div>
-
       <div class="flex justify-center items-center mt-32">
         <img src="../assets/podium.png" style="width: 500px" />
       </div>
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
+        <router-link
+          to="/"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         >
           Exit Game
-        </button>
+        </router-link>
       </footer>
     </div>
   </div>

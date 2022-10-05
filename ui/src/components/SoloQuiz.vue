@@ -7,6 +7,7 @@ import {useRoute, useRouter} from 'vue-router'
 
 const users = ref({})
 const router = useRouter()
+const route = useRoute()
 
 window.websocket.onmessage = (event) => {
   if (JSON.parse(event.data).command == 'Show Scoreboard') {
@@ -43,7 +44,7 @@ onMounted(() => {
   }, 1000)
 })
 const getData = async () => {
-  const response = await Quiz.getQuiz(1)
+  const response = await Quiz.getQuiz(qnNumStore.quiz_id)
   store.quiz = response.data
   console.log(store.quiz.questions)
   totalQn.value = store.quiz.questions.length

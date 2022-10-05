@@ -1,6 +1,13 @@
+from dataclasses import dataclass
+from unicodedata import category
 from sqlmodel import Column, Field, SQLModel, JSON
 from typing import Dict, Optional
 
+@dataclass
+class QuizResult:
+    id: int
+    score: int
+    category: str
 
 class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

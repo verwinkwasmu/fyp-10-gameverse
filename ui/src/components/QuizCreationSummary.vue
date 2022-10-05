@@ -90,13 +90,14 @@ const {
         >
           Exit
         </button>
-
+        <router-link to="/MyQuizzes" tag="button">
         <button
           class="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-2xl px-5 py-2.5"
           @click="createQuiz"
         >
           Create Quiz
         </button>
+      </router-link>
       </div>
     </div>
   </div>

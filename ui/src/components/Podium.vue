@@ -3,14 +3,31 @@ import {ref, onMounted} from 'vue'
 
 const users = ref({})
 
+
 onMounted(() => {
   window.websocket.send(JSON.stringify({command: 'To Podium'}))
 })
 
 window.websocket.onmessage = (event) => {
   users.value = JSON.parse(event.data).current_users
-  console.log(JSON.parse(event.data))
+  // console.log(JSON.parse(event.data))
+  console.log(users.value)
 }
+
+const sortPlayers = (users) => {
+  let sortUsers = []
+
+  for (let user in users) {
+    sortUsers.push([users[user]['name'], users[user]['score']])
+  }
+
+  sortUsers.sort(function (a, b) {
+    return b[1] - a[1]
+  })
+  return sortUsers.slice(0, 3)
+
+}
+
 </script>
 
 <template>
@@ -22,9 +39,14 @@ window.websocket.onmessage = (event) => {
         <div class="text-2xl col-span-2">Quiz Category</div>
       </div>
 
-      <!--Podium help idk how to move the names w the podium if screen is stretched-->
-      <div class="flex justify-center items-center mt-32">
-        <img src="../assets/podium.png" style="width: 500px" />
+      <div class="grid grid-flow-row flex justify-center items-center mt-20 gap-2">
+        <div v-for="user in sortPlayers(users)" :key="user">
+            <p class="flex justify-center items-center font-semibold text-2xl">{{ user[0] }}</p>
+            <p class="flex justify-center items-center">{{ user[1] }} Points</p>
+        </div>
+        <div class="col-span-3">
+          <img src="../assets/podium_new.png" style="width: 500px" />
+        </div>
       </div>
 
       <!--Exit game button-->
@@ -39,21 +61,3 @@ window.websocket.onmessage = (event) => {
     </div>
   </div>
 </template>
-
-<style scoped>
-#first {
-  position: absolute;
-  margin-left: 640px;
-  margin-top: 80px;
-}
-#second {
-  position: absolute;
-  margin-left: 460px;
-  margin-top: 140px;
-}
-#third {
-  position: absolute;
-  margin-left: 800px;
-  margin-top: 170px;
-}
-</style>

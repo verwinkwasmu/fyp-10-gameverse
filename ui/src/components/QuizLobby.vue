@@ -5,11 +5,14 @@ import {useQnNumberStore} from '../stores/qnNumber'
 
 const route = useRoute()
 const router = useRouter()
-const client_id = Date.now()
+const client_id = route.query.isHost
+  ? 'Host' + Date.now()
+  : Date.now().toString()
 const quiz_id = ref()
 const users = ref({})
 const qnNumStore = useQnNumberStore()
-
+qnNumStore.user_id = client_id
+const url = `http://localhost:5173/QuizLobby/${route.params.lobby_id}`
 const countdowntimer = ref(3)
 
 window.websocket = new WebSocket(
@@ -69,6 +72,8 @@ function routenext() {
         <div class="text-5xl font-semibold col-span-2">GameVerse</div>
         <div class="text-2xl col-span-2">
           Quiz Lobby ID: {{ route.params.lobby_id }}
+          <br />
+          Share Lobby Link: {{ url }}
         </div>
         <div class="text-sm row-span-2 flow-root">
           <p class="float-right mt-10">Waiting for host to start the quiz</p>
@@ -118,6 +123,7 @@ function routenext() {
       <footer class="fixed right-10 bottom-10 flex ml-6">
         <!-- button is just for host to use -->
         <button
+          v-if="client_id.toString().includes('Host')"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           @click="countdownstart()"
         >

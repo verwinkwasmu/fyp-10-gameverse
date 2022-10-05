@@ -133,13 +133,21 @@ const moveToScoreboard = () => {
                   :value="option"
                   v-html="option"
                   @click.stop="showAnswer(option)"
+                  :disabled="qnNumStore.user_id.includes('Host')"
                 ></button>
               </div>
             </div>
           </div>
         </div>
 
-        <div v-else-if="qnCorrect && qnAnswered && timer == 0">
+        <div
+          v-else-if="
+            qnCorrect &&
+            qnAnswered &&
+            timer == 0 &&
+            !qnNumStore.user_id.includes('Host')
+          "
+        >
           <div class="grid grid-flow-row grid-col-1 gap-1">
             <div class="flex justify-center mt-24 mb-5">
               <img
@@ -149,17 +157,17 @@ const moveToScoreboard = () => {
             </div>
             <div class="text-lg font-bold text-center">That's correct!</div>
             <div class="text-center">+10 points</div>
-            <!-- just for the host to use -->
-            <button
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              @click="moveToScoreboard()"
-            >
-              move to scoreboard
-            </button>
           </div>
         </div>
 
-        <div v-else-if="!qnCorrect && qnAnswered && timer == 0">
+        <div
+          v-else-if="
+            !qnCorrect &&
+            qnAnswered &&
+            timer == 0 &&
+            !qnNumStore.user_id.includes('Host')
+          "
+        >
           <div class="grid grid-flow-row grid-col-1 gap-1">
             <div class="flex justify-center mt-24 mb-5">
               <img
@@ -169,17 +177,14 @@ const moveToScoreboard = () => {
             </div>
             <div class="text-lg font-bold text-center">That's wrong :(</div>
             <div class="text-center">0 points</div>
-            <!-- just for the host to use -->
-            <button
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              @click="moveToScoreboard()"
-            >
-              move to scoreboard
-            </button>
           </div>
         </div>
 
-        <div v-else-if="qnAnswered && timer != 0">
+        <div
+          v-else-if="
+            qnAnswered && timer != 0 && !qnNumStore.user_id.includes('Host')
+          "
+        >
           <div class="grid grid-flow-row grid-col-1 gap-1">
             <div class="flex justify-center mt-24 mb-5">
               <svg
@@ -202,6 +207,17 @@ const moveToScoreboard = () => {
             <div class="text-lg font-bold text-center">
               Waiting for other users to respond...
             </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="grid grid-flow-row grid-col-1 gap-1">
+            <!-- just for the host to use -->
+            <button
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-52"
+              @click="moveToScoreboard()"
+            >
+              move to scoreboard
+            </button>
           </div>
         </div>
       </div>

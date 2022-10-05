@@ -17,7 +17,10 @@ const getData = async () => {
 
 const startGame = (quizId) => {
   let lobby_id = Math.floor(100000 + Math.random() * 900000)
-  router.push({path: `/QuizLobby/${lobby_id}`, query: {quiz_id: quizId}})
+  router.push({
+    path: `/QuizLobby/${lobby_id}`,
+    query: {quiz_id: quizId, isHost: true},
+  })
 }
 </script>
 

@@ -6,6 +6,7 @@ export const useQnNumberStore = defineStore('qnNumber', {
       qnNum: 0,
       score: 0,
       quiz_id: 0,
+      user_id: 0,
     }
   },
 

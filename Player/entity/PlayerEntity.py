@@ -3,19 +3,19 @@ from unicodedata import category
 from sqlmodel import Column, Field, SQLModel, JSON
 from typing import Dict, Optional
 
+
 @dataclass
 class QuizResult:
     id: int
     score: int
     category: str
 
+
 class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     email: str
-    # check if can check it to a computed value from the other fields?
     total_points: int
-    # category_points: Dict = Field(default={}, sa_column=Column(JSON))
     categories_played: Dict = Field(default={}, sa_column=Column(JSON))
 
     # Needed for Column(JSON)

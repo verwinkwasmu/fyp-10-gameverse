@@ -18,7 +18,9 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket, user_id: int, user: User):
         await websocket.accept()
         self.active_connections.append(websocket)
-        self.current_users[user_id] = user
+
+        if "Host" not in user_id:
+            self.current_users[user_id] = user
 
     def disconnect(self, websocket: WebSocket, user_id: str):
         self.active_connections.remove(websocket)
@@ -37,7 +39,7 @@ currentConnections = {}
 
 
 @app.websocket("/ws/{room_id}/{user_id}/{quiz_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int, quiz_id):
+async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, quiz_id):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
@@ -66,7 +68,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int, q
 
             match data["command"]:
                 case "Done":
-                    manager.current_users[user_id].score += data["score"]
+                    if "Host" not in user_id:
+                        manager.current_users[user_id].score += data["score"]
 
                 case "Next Question":
                     messageResponse = MessageResponse(

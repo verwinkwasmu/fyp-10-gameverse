@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from entity.PlayerEntity import QuizResult
 from entity.PlayerEntity import Player
 from repository.PlayerRepository import PlayerRepository
 
@@ -41,6 +42,14 @@ class PlayerService:
 
     def delete_player(self, player_id: int):
         result = self.repository.delete_player(player_id)
+
+        if result != None:
+            return result
+
+        return None
+
+    def input_quiz_results(self, quizResults: QuizResult):
+        result = self.repository.input_quiz_results(quizResults)
 
         if result != None:
             return result

@@ -107,6 +107,7 @@ const router = createRouter({
     {
       path: '/QuizLobby/:lobby_id',
       component: QuizLobby,
+      props: (route) => ({query: route.query}),
     },
   ],
 })

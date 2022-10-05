@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from typing import Any
+from unicodedata import category
 
 from sqlmodel import Session, select
+from entity.PlayerEntity import QuizResult
 from entity.PlayerEntity import Player
 
 
@@ -68,4 +70,42 @@ class PlayerRepository:
             session.delete(player)
             session.commit()
 
+            return player
+
+    def input_quiz_results(self, quizResults: QuizResult):
+        with Session(self.database) as session:
+            player = session.get(Player, quizResults.id)
+
+            if not player:
+                return None
+
+            player.total_points += quizResults.score
+
+            categories_played = player.categories_played
+
+            ## try the hero.dict(exclude_unset=True)
+            player_data = player.dict()
+            for key, value in player_data.items():
+                print(key)
+            if quizResults.category not in player.categories_played:
+                categories_played[quizResults.category] = {
+                    "count": 1,
+                    "points": quizResults.score,
+                }
+                # setattr(
+                #     player,
+                #     "categories_played",
+                #     categories_played,
+                # )
+                player.categories_played = categories_played
+            else:
+                categories_played[quizResults.category]["count"] += 1
+                categories_played[quizResults.category]["points"] += quizResults.score
+                setattr(player, "categories_played", categories_played)
+
+            print(player)
+            session.add(player)
+            session.commit()
+            session.refresh(player)
+            print("updated hero:", player)
             return player

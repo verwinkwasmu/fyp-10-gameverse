@@ -1,17 +1,22 @@
 <script setup>
 import {ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
+import {useQnNumberStore} from '../stores/qnNumber'
 
 const route = useRoute()
 const router = useRouter()
-const client_id = Date.now()
-
+const client_id = route.query.isHost
+  ? 'Host' + Date.now()
+  : Date.now().toString()
+const quiz_id = ref()
 const users = ref({})
-
+const qnNumStore = useQnNumberStore()
+qnNumStore.user_id = client_id
+const url = `http://localhost:5173/QuizLobby/${route.params.lobby_id}`
 const countdowntimer = ref(3)
 
 window.websocket = new WebSocket(
-  `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}`,
+  `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}/${route.query.quiz_id}`,
 )
 
 window.websocket.onopen = () => {
@@ -19,6 +24,11 @@ window.websocket.onopen = () => {
 }
 
 window.websocket.onmessage = (event) => {
+  if (!isNaN(event.data)) {
+    quiz_id.value = event.data
+    console.log(quiz_id.value)
+  }
+
   if (JSON.parse(event.data).command == 'Start Game') {
     console.log('start game')
     moveToQuestion()
@@ -48,7 +58,9 @@ function moveToQuestion() {
   }, 1000)
 }
 function routenext() {
-  router.push({path: '/SoloQuiz'})
+  let quizId = route.query.quiz_id ? route.query.quiz_id : quiz_id.value
+  qnNumStore.quiz_id = quizId
+  router.push({path: `/SoloQuiz`})
 }
 </script>
 
@@ -58,7 +70,11 @@ function routenext() {
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
         <div class="text-5xl font-semibold col-span-2">GameVerse</div>
-        <div class="text-2xl col-span-2">Quiz Lobby</div>
+        <div class="text-2xl col-span-2">
+          Quiz Lobby ID: {{ route.params.lobby_id }}
+          <br />
+          Share Lobby Link: {{ url }}
+        </div>
         <div class="text-sm row-span-2 flow-root">
           <p class="float-right mt-10">Waiting for host to start the quiz</p>
         </div>
@@ -107,6 +123,7 @@ function routenext() {
       <footer class="fixed right-10 bottom-10 flex ml-6">
         <!-- button is just for host to use -->
         <button
+          v-if="client_id.toString().includes('Host')"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           @click="countdownstart()"
         >

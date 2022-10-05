@@ -89,19 +89,22 @@ const sortPlayers = (users) => {
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
         <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-5"
         >
           Exit Game
         </button>
         <button
-          v-if="qnNumStore.qnNum < quizStore.quiz.questions.length"
+          v-if="
+            qnNumStore.qnNum < quizStore.quiz.questions.length &&
+            qnNumStore.user_id.includes('Host')
+          "
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           @click="nextQuestion"
         >
           Next Question
         </button>
         <button
-          v-else
+          v-else-if="qnNumStore.user_id.includes('Host')"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           @click="moveToPodium"
         >

@@ -13,17 +13,20 @@ class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
         self.current_users: Dict[int, User] = {}
+        self.quiz_id: int = None
 
     async def connect(self, websocket: WebSocket, user_id: int, user: User):
         await websocket.accept()
         self.active_connections.append(websocket)
-        self.current_users[user_id] = user
+
+        if "Host" not in user_id:
+            self.current_users[user_id] = user
 
     def disconnect(self, websocket: WebSocket, user_id: str):
         self.active_connections.remove(websocket)
         del self.current_users[user_id]
 
-    async def send_personal_message(self, message: str, websocket: WebSocket):
+    async def send_personal_message(self, message: int, websocket: WebSocket):
         await websocket.send_text(message)
 
     async def broadcast(self, messageResponse: MessageResponse):
@@ -35,8 +38,8 @@ class ConnectionManager:
 currentConnections = {}
 
 
-@app.websocket("/ws/{room_id}/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
+@app.websocket("/ws/{room_id}/{user_id}/{quiz_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, quiz_id):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
@@ -47,6 +50,11 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
     user = User(name=user_id, score=0)
 
     await manager.connect(websocket, user_id, user)
+
+    if quiz_id != "undefined":
+        manager.quiz_id = quiz_id
+    else:
+        await manager.send_personal_message(manager.quiz_id, websocket)
 
     messageResponse = MessageResponse(
         command="Join",
@@ -60,7 +68,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: int, room_id: int):
 
             match data["command"]:
                 case "Done":
-                    manager.current_users[user_id].score += data["score"]
+                    if "Host" not in user_id:
+                        manager.current_users[user_id].score += data["score"]
 
                 case "Next Question":
                     messageResponse = MessageResponse(

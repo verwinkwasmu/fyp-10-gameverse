@@ -72,7 +72,9 @@
                 <p>{{ participantB.name }}</p>
               </div>
             </div>
+            
           </div>
+          
         </div>
         
           <!--Exit game button-->

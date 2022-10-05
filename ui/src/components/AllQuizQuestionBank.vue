@@ -67,9 +67,7 @@ const count = ref(0)
         </div>
       </div>
       <div class="flex justify-center pt-10">
-            <button class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded">
-            Back to Quiz Creation
-            </button>   
+            <router-link class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded hover:text-white" :to="{path: '/CreateQuiz'}">Back to Quiz Creation</router-link>
       </div>
     </div>
   </div>

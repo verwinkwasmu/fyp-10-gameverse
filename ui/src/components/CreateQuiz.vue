@@ -28,31 +28,15 @@ const joinRoomId = () => {
       </div>
 
       <div class="align-middle">
-        <div class="text-2xl text-center font-bold mt-8">How do you want to start your quiz?</div>
-        <div class="flex justify-center items-center mt-8 grid grid-flow-col auto-cols-max">
+        <div class="text-2xl text-center font-bold mt-8">How do you want to create your quiz?</div>
+        <div class="flex justify-center items-center mt-8 grid grid-flow-col auto-cols-max pt-20">
           <div>
-            <button
-              type="button"
-              class="bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white"
-              @click="createNewQuiz">
-              Choose A GameVerse Quiz
-            </button>
+            <router-link class="bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white" :to="{path: '/AllQuizzes'}">Choose From A Past Quiz</router-link>
           </div>
           <div>
-            <button
-              type="button"
-              class="bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white"
-              @click="createNewQuiz">
-              Customise Your Own Quiz
-            </button>
+            <router-link class="bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white" :to="{path: '/QuizCreation'}">Create Your Own Quiz</router-link>
           </div>
           <div>
-            <button
-              type="button"
-              class="bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white"
-              @click="createNewQuiz">
-              Quiz Bank
-            </button>
           </div>
         </div>
       </div>

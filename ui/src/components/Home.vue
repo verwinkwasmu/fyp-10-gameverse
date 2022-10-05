@@ -20,7 +20,7 @@
         </router-link>
         <router-link to="/CreateQuiz" tag="button">
           <button class="bg-fuchsia-400 hover:bg-fuchsia-600 text-black hover:text-white font-bold py-8 px-12 mx-2 rounded w-64 h-80">
-            Create Game
+            Create Quiz
           </button>
         </router-link>
       </div>

@@ -19,8 +19,6 @@ import QuizLobby from '../components/QuizLobby.vue'
 import NotScoreboard from '../components/NotScoreboard.vue'
 import AllQuizes from '../components/AllQuizzes.vue'
 
-
-
 import {QuizCreation, Chat, QuizCreationSummary} from '../components'
 
 const router = createRouter({

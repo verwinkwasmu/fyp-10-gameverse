@@ -53,7 +53,13 @@
                 <p>{{ participantR.name }}</p>
               </div>
             </div>
+            <button
+            class="text-indigo-100 transition-colors bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400 py-2 px-4"
+          >
+            Join Blue Team
+          </button>
           </div>
+         
           <div
             class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
           >
@@ -72,7 +78,11 @@
                 <p>{{ participantB.name }}</p>
               </div>
             </div>
-            
+            <button
+            class="text-indigo-100 transition-colors bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-400 py-2 px-4"
+          >
+            Join Red Team
+          </button>
           </div>
           
         </div>

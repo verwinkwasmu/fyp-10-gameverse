@@ -1,10 +1,11 @@
 <script setup>
-import { useQuizCreationStore } from "../stores/quizCreation";
-import Quiz from "../services/Quiz";
-import { useMutation } from "vue-query";
+import {useQuizCreationStore} from '../stores/quizCreation'
+import Quiz from '../services/Quiz'
+import {useMutation} from 'vue-query'
+import {useRouter} from 'vue-router'
 
-const store = useQuizCreationStore();
-
+const store = useQuizCreationStore()
+const router = useRouter()
 const {
   mutate: createQuiz,
   isLoading,
@@ -14,12 +15,12 @@ const {
   isSuccess,
 } = useMutation(() => Quiz.createQuiz(store.$state), {
   onSuccess: (data) => {
-    console.log(data);
+    router.push({path: `/MyQuizzes`})
   },
   onError: (error) => {
-    alert(error);
+    alert(error)
   },
-});
+})
 </script>
 
 <template>
@@ -55,6 +56,7 @@ const {
           <div
             class="grid grid-cols-1 gap-8 justify-items-center px-10 my-20"
             v-for="(question, index) in store.questions"
+            :key="index"
           >
             <span
               class="bg-blue-500 w-full text-white text-2xl font-medium mr-2 px-5 py-3 rounded"
@@ -63,7 +65,7 @@ const {
             <div
               class="grid grid-cols-4 gap-8 justify-items-center px-10 w-full"
             >
-              <div v-for="(value, key, index) in question.options">
+              <div v-for="(value, key, index) in question.options" :key="index">
                 <span
                   :class="
                     question.answer.includes(key)
@@ -79,28 +81,31 @@ const {
         </div>
       </div>
     </div>
-  </div>
-  <div className="">
-    <hr class="border-4 border-white w-full" />
-    <div class="grid grid-cols-1 gap-8 justify-items-center mt-10 w-11/12">
-      <div>
-        <button
-          type="button"
-          class="text-white bg-orange-400 hover:bg-orange-500 font-medium rounded-lg text-2xl px-5 py-2.5 mr-5"
-        >
-          Exit
-        </button>
-        <router-link to="/MyQuizzes" tag="button">
-        <button
-          class="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-2xl px-5 py-2.5"
-          @click="createQuiz"
-        >
-          Create Quiz
-        </button>
-      </router-link>
+    <div className="">
+      <hr class="border-4 border-white w-full" />
+      <div class="grid grid-cols-1 gap-8 justify-items-center mt-10 w-11/12">
+        <div>
+          <button
+            type="button"
+            class="text-white bg-orange-400 hover:bg-orange-500 font-medium rounded-lg text-2xl px-5 py-2.5 mr-5"
+          >
+            Exit
+          </button>
+          <button
+            class="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-2xl px-5 py-2.5"
+            @click="createQuiz"
+          >
+            Create Quiz
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+
+<style>
+  body {
+    background-image: url('../assets/bg.png');
+  }
+  </style>

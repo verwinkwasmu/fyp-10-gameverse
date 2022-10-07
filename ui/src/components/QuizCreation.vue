@@ -1,6 +1,6 @@
 <script setup>
-import { useQuizCreationStore } from "../stores/quizCreation";
-const store = useQuizCreationStore();
+import {useQuizCreationStore} from '../stores/quizCreation'
+const store = useQuizCreationStore()
 </script>
 
 <template>
@@ -40,7 +40,11 @@ const store = useQuizCreationStore();
             required
           />
         </div>
-        <div v-for="(question, index) in store.questions" class="w-full">
+        <div
+          v-for="(question, index) in store.questions"
+          class="w-full"
+          :key="index"
+        >
           <div class="w-full my-5">
             <label
               for="first_name"
@@ -130,15 +134,16 @@ const store = useQuizCreationStore();
           <div
             class="w-full my-5"
             v-for="(value, propertyName, index) in question.options"
+            :key="index"
           >
-          <div class="flex items-center">
-            <label class="block mb-2 text-sm font-medium text-white"
+            <div class="flex items-center">
+              <label class="block mb-2 text-sm font-medium text-white"
                 >Option {{ index + 1 }}</label
               >
-            <label class="block mb-2 text-sm font-medium pl-80 text-white"
-              >Answer</label
-            >
-          </div>
+              <label class="block mb-2 text-sm font-medium pl-80 text-white"
+                >Answer</label
+              >
+            </div>
             <input
               :id="'checkbox-' + index"
               type="checkbox"
@@ -238,13 +243,13 @@ const store = useQuizCreationStore();
             Add Question
           </button>
           <router-link to="/AllQuizQuestionBank" tag="button">
-          <button
-            type="button"
-            class="text-white bg-purple-800 hover:bg-purple-900 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-          >
-            Add from Question Bank
-          </button>
-        </router-link>
+            <button
+              type="button"
+              class="text-white bg-purple-800 hover:bg-purple-900 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            >
+              Add from Question Bank
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -273,4 +278,8 @@ const store = useQuizCreationStore();
   </div>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  background-image: url('../assets/bg.png');
+}
+</style>

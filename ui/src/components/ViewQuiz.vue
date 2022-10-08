@@ -105,7 +105,7 @@ const getData = async () => {
 
           <div class="flex justify-center pt-10">
             <div class="pr-4 pt-2">
-              <router-link class="bg-rose-600 hover:bg-rose-500 text-white hover:text-black font-bold py-2 px-4 rounded h-full" :to="{path: '/AllQuizzes'}">Back to Quizzes</router-link>
+              <router-link class="bg-purple-500 hover:bg-purple-700 text-white hover:text-black font-bold py-2 px-4 rounded" :to="{path: '/AllQuizzes'}">Back to Quizzes</router-link>
             </div> 
           </div>
 

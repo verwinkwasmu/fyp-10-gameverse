@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
 from unicodedata import category
+from xxlimited import new
 
 from sqlmodel import Session, select
 from entity.PlayerEntity import QuizResult
@@ -51,6 +52,7 @@ class PlayerRepository:
                 return None
 
             player_data = player.dict(exclude_unset=True)
+
             for key, value in player_data.items():
                 setattr(result, key, value)
 
@@ -80,32 +82,29 @@ class PlayerRepository:
                 return None
 
             player.total_points += quizResults.score
+            new_categories_played = player.categories_played.copy()
 
-            categories_played = player.categories_played
-
-            ## try the hero.dict(exclude_unset=True)
-            player_data = player.dict()
-            for key, value in player_data.items():
-                print(key)
             if quizResults.category not in player.categories_played:
-                categories_played[quizResults.category] = {
+                new_categories_played[quizResults.category] = {
                     "count": 1,
                     "points": quizResults.score,
                 }
-                # setattr(
-                #     player,
-                #     "categories_played",
-                #     categories_played,
-                # )
-                player.categories_played = categories_played
-            else:
-                categories_played[quizResults.category]["count"] += 1
-                categories_played[quizResults.category]["points"] += quizResults.score
-                setattr(player, "categories_played", categories_played)
+                player.categories_played = new_categories_played
 
-            print(player)
+            else:
+                currentCount = new_categories_played[quizResults.category]["count"] + 1
+                currentPoints = (
+                    new_categories_played[quizResults.category]["points"]
+                    + quizResults.score
+                )
+                new_categories_played[quizResults.category] = {
+                    "count": currentCount,
+                    "points": currentPoints,
+                }
+                player.categories_played = new_categories_played
+
             session.add(player)
             session.commit()
             session.refresh(player)
-            print("updated hero:", player)
+
             return player

@@ -3,8 +3,9 @@ import Room from '../pages/Room.vue'
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
 import PodiumLoading from '../components/PodiumLoading.vue'
-import TeamQuiz from '../components/TeamQuiz.vue'
+import TeamQuizLobby from '../components/TeamQuizLobby.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
+import TeamQuiz from '../components/TeamQuiz.vue'
 import Quizbank from '../components/AllQuizQuestionBank.vue'
 import QuizQuestionBank from '../components/AddQuestionFromBank.vue'
 import AddedQuizQuestionBank from '../components/AddedQuestionFromBank.vue'
@@ -17,6 +18,7 @@ import RoomLobby from '../components/RoomLobby.vue'
 import SoloQuiz from '../components/SoloQuiz.vue'
 import QuizLobby from '../components/QuizLobby.vue'
 import NotScoreboard from '../components/NotScoreboard.vue'
+import TeamNotScoreboard from '../components/TeamNotScoreboard.vue'
 import AllQuizes from '../components/AllQuizzes.vue'
 import ViewQuiz from '../components/ViewQuiz.vue'
 
@@ -50,12 +52,12 @@ const router = createRouter({
       component: NotScoreboard,
     },
     {
-      path: '/TeamQuiz',
-      component: TeamQuiz,
+      path: '/TeamQuizLobby/:lobby_id',
+      component: TeamQuizLobby,
     },
     {
       path: '/TeamQuizResults',
-      component: TeamQuiz,
+      component: TeamQuizResults,
     },
     {
       path: '/AllQuizQuestionBank',
@@ -105,6 +107,14 @@ const router = createRouter({
     {
       path: '/SoloQuiz',
       component: SoloQuiz,
+    },
+    {
+      path: '/TeamQuiz',
+      component: TeamQuiz,
+    },
+    {
+      path: '/TeamScoreboard',
+      component: TeamNotScoreboard,
     },
     {
       path: '/QuizLobby/:lobby_id',

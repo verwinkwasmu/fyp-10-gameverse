@@ -74,9 +74,15 @@ const getData = async () => {
           <div class="text-2xl font-bold">Questions</div>
 
           <div class="flex grid grid-flow-row auto-rows-max gap-4" v-for="(question,index) in quiz.questions" :key="index">
-
-            <div class="w-full justify-left bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white">
-              {{question.question}}</div>
+            
+            <div class="grid grid-flow-col auto-cols-max gap-4 w-full">
+              <div class="w-96 justify-items-stretch bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white">
+                {{question.question}}
+              </div>
+              <div class="grid justify-items-end bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white">
+                Time: {{question.timer}}
+              </div>
+            </div>
 
             <div v-for="(option,index) in question.options" :key="index">
 

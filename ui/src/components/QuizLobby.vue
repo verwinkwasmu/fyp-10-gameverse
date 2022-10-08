@@ -113,11 +113,14 @@ function routenext() {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Exit Game
-        </button>
+
+        <router-link to="/" tag="button">
+            <button
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Exit Game
+            </button>
+        </router-link>
       </footer>
 
       <footer class="fixed right-10 bottom-10 flex ml-6">

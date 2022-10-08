@@ -6,7 +6,10 @@ const router = useRouter()
 const text = ref('')
 
 const joinRoomId = () => {
-  router.push({path: `/QuizLobby/${text.value}`})
+  if (text.value != ''){
+    router.push({path: `/QuizLobby/${text.value}`})
+  }
+
 }
 </script>
 
@@ -44,6 +47,7 @@ const joinRoomId = () => {
             Join Game
           </button>
         </div>
+
       </div>
     </div>
   </div>

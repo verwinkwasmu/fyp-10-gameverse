@@ -25,7 +25,7 @@ const startGame = (quizId) => {
 </script>
 
 <template>
-  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
+  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
@@ -39,7 +39,7 @@ const startGame = (quizId) => {
         class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center"
       >
         <div
-          class="grid grid-flow-col auto-cols-max gap-4"
+          class="grid grid-flow-col auto-cols-max gap-2"
           v-for="(quiz, index) in quizzes"
           :key="index"
         >
@@ -49,33 +49,33 @@ const startGame = (quizId) => {
             {{ index + 1 }}
           </div>
           <div
-            class="w-80 p-4 items-center justify-center bg-indigo-700 rounded"
+            class="w-40 p-4 items-center justify-center bg-indigo-700 rounded"
           >
             {{ quiz.title }}
           </div>
           <div
-            class="w-80 p-4 items-center justify-center bg-indigo-700 rounded"
+            class="w-40 p-4 items-center justify-center bg-indigo-700 rounded"
           >
             {{ quiz.category }}
           </div>
           <div
-            class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
           >
             {{ quiz.questions.length }} Questions
           </div>
           <button
-            class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 mx-2 rounded font-bold"
+            class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold"
           >
             Edit Game
           </button>
           <button
-            class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 mx-2 rounded font-bold"
+            class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold"
             @click="startGame(quiz.id)"
           >
             Start Game
           </button>
           <button
-            class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 mx-2 rounded font-bold"
+            class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 rounded font-bold"
           >
             Delete
           </button>

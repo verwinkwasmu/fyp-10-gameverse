@@ -91,57 +91,63 @@ const joinBlueTeam = () => {
         </div>
       </div>
       <!--Scoreboard-->
-      <div class="flex justify-evenly" v-if="!clicker">
-        <div
-          class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
-        >
-          <div class="flex text-lg mb-2">
-            <div class="w-4/6 text-blue-600">Players in Quiz (Blue Team)</div>
-          </div>
-
+      <div
+        v-if="!clicker"
+        class="grid grid-cols-2 gap-4 justify-items-center mt-10"
+      >
+        <div class="w-9/12 text-center">
           <div
-            class="flex items-center py-4"
-            v-for="(value, key) in participantsBlue"
-            :key="key"
+            class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
           >
-            <div class="w-4/6 flex">
-              <img
-                class="w-6 sm:w-10 mr-2 self-center"
-                src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-              />
-              <p>{{ value.user.name }}</p>
+            <div class="flex text-lg mb-2">
+              <div class="w-4/6 text-blue-600">Players in Quiz (Blue Team)</div>
+            </div>
+
+            <div
+              class="flex items-center py-4"
+              v-for="(value, key) in participantsBlue"
+              :key="key"
+            >
+              <div class="w-4/6 flex">
+                <img
+                  class="w-6 sm:w-10 mr-2 self-center"
+                  src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+                />
+                <p>{{ value.user.name }}</p>
+              </div>
             </div>
           </div>
           <button
-            class="text-indigo-100 transition-colors bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400 py-2 px-4"
+            class="text-indigo-100 transition-colors bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400 py-2 px-4 mt-5"
             @click="joinBlueTeam"
           >
             Join Blue Team
           </button>
         </div>
-
-        <div
-          class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
-        >
-          <div class="flex text-lg mb-2">
-            <div class="w-4/6 text-red-600">Players in Quiz (Red Team)</div>
-          </div>
-
+        <div class="w-9/12 text-center">
           <div
-            class="flex items-center py-4"
-            v-for="(value, key) in participantsRed"
-            :key="key"
+            class="mx-auto p-4 mt-2 max-w-xl rounded overflow-hidden font-bold bg-purple-100 text-purple-800"
           >
-            <div class="w-4/6 flex">
-              <img
-                class="w-6 sm:w-10 mr-2 self-center"
-                src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
-              />
-              <p>{{ value.user.name }}</p>
+            <div class="flex text-lg mb-2">
+              <div class="w-4/6 text-red-600">Players in Quiz (Red Team)</div>
+            </div>
+
+            <div
+              class="flex items-center py-4"
+              v-for="(value, key) in participantsRed"
+              :key="key"
+            >
+              <div class="w-4/6 flex">
+                <img
+                  class="w-6 sm:w-10 mr-2 self-center"
+                  src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
+                />
+                <p>{{ value.user.name }}</p>
+              </div>
             </div>
           </div>
           <button
-            class="text-indigo-100 transition-colors bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-400 py-2 px-4"
+            class="text-indigo-100 transition-colors bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-400 py-2 px-4 mt-5"
             @click="joinRedTeam"
           >
             Join Red Team

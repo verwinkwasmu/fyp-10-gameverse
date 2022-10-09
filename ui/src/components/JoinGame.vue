@@ -27,14 +27,14 @@ const joinRoomId = () => {
       <div
         class="flex items-center mt-24 grid grid-flow-row auto-rows-max justify-items-center"
       >
-        <div class="text-2xl text-center">Enter Room ID:</div>
+        <div class="text-2xl text-center">Enter Lobby ID:</div>
         <div class="my-3">
           <input
             v-model="text"
             type="text"
             id="room_id"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-96"
-            placeholder="Room ID"
+            placeholder="Lobby ID"
             required
           />
         </div>

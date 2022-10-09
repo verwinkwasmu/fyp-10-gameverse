@@ -17,9 +17,11 @@ const answer_input = ref(null)
 const totalQn = ref()
 
 window.websocket.onmessage = (event) => {
-  if (event.data == 'Team has answered') {
+  if (JSON.parse(event.data).command == 'Team has answered') {
     console.log(event.data)
     qnAnswered.value = true
+    qnCorrect.value = JSON.parse(event.data).correct
+    console.log(JSON.parse(event.data).correct)
   } else if (JSON.parse(event.data).command == 'Show Team Scoreboard') {
     router.push({path: '/TeamScoreboard'})
   }
@@ -30,7 +32,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer / 2
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
 
   let timerCountdown = setInterval(() => {
     timer.value--
@@ -79,6 +81,7 @@ function checkAnswers() {
   const response = {
     command: 'Done',
     score: score,
+    correct: qnCorrect.value,
   }
   window.websocket.send(JSON.stringify(response))
 

@@ -17,7 +17,7 @@ window.websocket.onmessage = (event) => {
   if (JSON.parse(event.data).command == 'Next Question') {
     router.push({path: '/TeamQuiz'})
   } else if (JSON.parse(event.data).command == 'To Podium') {
-    router.push({path: '/Podium'})
+    router.push({path: '/TeamQuizResults'})
   } else {
     teamScores.value = JSON.parse(event.data).teamScores
     console.log(teamScores.value)

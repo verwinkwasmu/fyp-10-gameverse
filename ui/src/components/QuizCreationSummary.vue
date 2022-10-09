@@ -24,75 +24,100 @@ const {
 </script>
 
 <template>
-  <div class="mt-12">
-    <p class="flex justify-left text-5xl text-white pt-10 pl-20 font-light">
-      Gameverse Quiz Creation
-    </p>
-    <div className="flex flex-wrap lg:flex-nowrap justify-center m-8 p-8">
-      <div class="grid grid-cols-1 gap-8 justify-items-center w-8/12">
-        <div class="w-full">
-          <p class="text-5xl mb-5">Summary</p>
-          <br />
-          <p class="text-4xl mb-5">Quiz Category: {{ store.category }}</p>
-          <br />
-          <p class="text-4xl mb-5">Quiz Title: {{ store.title }}</p>
-          <br />
-          <p class="text-4xl mb-5">
-            <span
-              class="bg-blue-800 text-white text-3xl font-medium px-5 py-0.5 rounded mr-5"
-              >Questions: {{ store.questions.length }}</span
-            >
-            <router-link
-              :to="{
-                path: '/QuizCreation',
-              }"
-              class="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-3xl px-5 py-0.5 mr-2"
-            >
-              Edit
-            </router-link>
-          </p>
-        </div>
-        <div class="w-full mt-10">
-          <div
-            class="grid grid-cols-1 gap-8 justify-items-center px-10 my-20"
-            v-for="(question, index) in store.questions"
-            :key="index"
-          >
-            <span
-              class="bg-blue-500 w-full text-white text-2xl font-medium mr-2 px-5 py-3 rounded"
-              >Q{{ index + 1 }} {{ question.question }}</span
-            >
-            <div
-              class="grid grid-cols-4 gap-8 justify-items-center px-10 w-full"
-            >
-              <div v-for="(value, key, index) in question.options" :key="index">
-                <span
-                  :class="
-                    question.answer.includes(key)
-                      ? 'bg-green-400'
-                      : 'bg-blue-800'
-                  "
-                  class="text-xl w-full font-medium mr-2 px-5 py-2.5 rounded text-white"
-                  >{{ value }}</span
-                >
-              </div>
-            </div>
+  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
+    <!--Header-->
+    <div class="grid grid-rows-2 grid-flow-col gap-2 px-10 pt-10 ml-6 mr-6">
+      <router-link to="/">
+        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+      </router-link>
+      <div class="text-2xl col-span-2">Summary of Quiz</div>
+    </div>
+    
+
+    <div class="flex grid grid-flow-row auto-rows-max items-center mt-4 mx-4 gap-4 items-center justify-center">
+
+      <div class="grid grid-flow-row gap-4 mb-4">
+        <div class="grid grid-flow-col auto-cols-max gap-4">
+          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
+            Quiz Title 
+          </div>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
+            {{store.title}}
           </div>
         </div>
+
+        <div class="grid grid-flow-col auto-cols-max gap-4">
+          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
+            Number of Questions 
+          </div>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
+            {{store.questions.length}}
+          </div>
+        </div>
+
+        <div class="grid grid-flow-col auto-cols-max gap-4">
+          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
+            Category
+          </div>
+          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
+            {{store.category}}
+          </div>
+        </div>
+
+      </div>
+      <div class="text-2xl font-bold -mb-4">Questions</div>
+  
+      <div class="flex grid grid-flow-row auto-rows-max gap-4" v-for="(question,index) in store.questions" :key="index">
+        
+        <div class="grid grid-flow-col auto-cols-max gap-4 w-full">
+          <div class="w-96 justify-items-stretch bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white">
+            {{question.question}}
+          </div>
+          <div class="grid justify-items-end bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white">
+            Time: {{question.timer}}
+          </div>
+        </div>
+  
+        <div v-for="(option,index) in question.options" :key="index">
+  
+          <div v-if="index==question.answer" class="grid grid-flow-col auto-cols-max gap-4">
+            <div class="font-bold text-white rounded-full bg-green-500 flex items-center justify-center w-12 h-12 align-middle">
+              ✓ 
+            </div>
+            <div class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-green-500">
+              {{option}}</div>
+          </div>
+  
+          <div v-else class="grid grid-flow-col auto-cols-max gap-4">
+            <div class="font-bold text-white rounded-full bg-red-500 flex items-center justify-center w-12 h-12 align-middle">
+              ✖ 
+            </div>
+            <div class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-blue-900">
+              {{option}}</div>
+          </div>
+            
+  
+        </div>
+  
       </div>
     </div>
-    <div className="">
-      <hr class="border-4 border-white w-full" />
-      <div class="grid grid-cols-1 gap-8 justify-items-center mt-10 w-11/12">
+
+
+    <div className="" class="mt-14 mb-4">
+      <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
         <div>
+          <router-link to="/QuizCreation">
+            <button
+              type="button"
+              class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-5"
+            >
+              Back
+            </button>
+
+          </router-link>
+
           <button
-            type="button"
-            class="text-white bg-orange-400 hover:bg-orange-500 font-medium rounded-lg text-2xl px-5 py-2.5 mr-5"
-          >
-            Exit
-          </button>
-          <button
-            class="text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-2xl px-5 py-2.5"
+            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5"
             @click="createQuiz"
           >
             Create Quiz

@@ -44,9 +44,9 @@ class ConnectionManager:
         for connection in self.active_connections:
             await connection.send_json(asdict(messageResponse))
 
-    async def broadcastTeam(self, message: str, team: str):
+    async def broadcastTeam(self, message: object, team: str):
         for _, value in self.teamConnections[team].items():
-            await value["connection"].send_text(message)
+            await value["connection"].send_json(message)
 
 
 # need to create multiple connectionManager based on room_id currently using this way
@@ -72,8 +72,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
         await manager.send_personal_message(manager.quiz_id, websocket)
 
     messageResponse = MessageResponse(
-        command="Join",
-        current_users=manager.current_users,
+        command="Join", current_users=manager.current_users, teamScores=None, team=None
     )
     await manager.broadcast(messageResponse)
 
@@ -90,6 +89,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                     messageResponse = MessageResponse(
                         command="Next Question",
                         current_users=manager.current_users,
+                        teamScores=None,
+                        team=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -97,6 +98,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                     messageResponse = MessageResponse(
                         command="Show Scoreboard",
                         current_users=manager.current_users,
+                        teamScores=None,
+                        team=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -104,6 +107,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                     messageResponse = MessageResponse(
                         command="Start Game",
                         current_users=manager.current_users,
+                        teamScores=None,
+                        team=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -111,6 +116,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                     messageResponse = MessageResponse(
                         command="To Podium",
                         current_users=manager.current_users,
+                        teamScores=None,
+                        team=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -119,6 +126,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
         messageResponse = MessageResponse(
             command="Leave",
             current_users=manager.current_users,
+            teamScores=None,
+            team=None,
         )
         await manager.broadcast(messageResponse)
 
@@ -213,7 +222,11 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                         elif user_id in manager.teams["blue"]:
                             manager.teamScores["blue"] += data["score"]
                             team = "blue"
-                        await manager.broadcastTeam("Team has answered", team)
+                        message = {
+                            "command": "Team has answered",
+                            "correct": data["correct"],
+                        }
+                        await manager.broadcastTeam(message, team)
 
                 case "Scoreboard":
                     messageResponse = MessageResponse(
@@ -233,6 +246,14 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
                     )
                     await manager.broadcast(messageResponse)
 
+                case "To Podium":
+                    messageResponse = MessageResponse(
+                        command="To Podium",
+                        current_users=None,
+                        teamScores=manager.teamScores,
+                        team=None,
+                    )
+                    await manager.broadcast(messageResponse)
     except WebSocketDisconnect:
         manager.disconnect(websocket, user_id)
         messageResponse = MessageResponse(

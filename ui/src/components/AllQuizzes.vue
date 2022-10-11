@@ -81,7 +81,7 @@ const startTeamGame = (quizId) => {
               items-center
               justify-center
               bg-gray-700 
-              bg-opacity-10
+              bg-opacity-70
             "
           >
             <div class="max-w-2xl p-6 mx-4 bg-slate-200 rounded-md shadow-xl">

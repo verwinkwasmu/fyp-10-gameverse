@@ -81,7 +81,9 @@ const joinBlueTeam = () => {
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        <router-link to="/">
+          <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        </router-link>
         <div class="text-2xl col-span-2">
           Quiz Lobby ID: {{ route.params.lobby_id }} <br />
           Share Lobby Link: {{ url }}
@@ -164,17 +166,19 @@ const joinBlueTeam = () => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Exit Game
-        </button>
+        <router-link to="/">
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Exit Game
+          </button>
+        </router-link>
       </footer>
       <footer class="fixed right-10 bottom-10 flex ml-6">
         <!-- button is just for host to use -->
         <button
           v-if="client_id.toString().includes('Host')"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           @click="countdownstart()"
         >
           Start Game

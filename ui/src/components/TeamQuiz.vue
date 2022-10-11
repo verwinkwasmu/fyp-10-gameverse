@@ -21,8 +21,8 @@ window.websocket.onmessage = (event) => {
     console.log(event.data)
     qnAnswered.value = true
     qnCorrect.value = JSON.parse(event.data).correct
-    console.log(JSON.parse(event.data).correct)
   } else if (JSON.parse(event.data).command == 'Show Team Scoreboard') {
+    qnNumStore.qnNum += 1
     router.push({path: '/TeamScoreboard'})
   }
 }
@@ -84,8 +84,6 @@ function checkAnswers() {
     correct: qnCorrect.value,
   }
   window.websocket.send(JSON.stringify(response))
-
-  qnNumStore.qnNum += 1
 }
 
 const moveToScoreboard = () => {

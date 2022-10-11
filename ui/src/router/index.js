@@ -20,6 +20,7 @@ import QuizLobby from '../components/QuizLobby.vue'
 import NotScoreboard from '../components/NotScoreboard.vue'
 import TeamNotScoreboard from '../components/TeamNotScoreboard.vue'
 import AllQuizes from '../components/AllQuizzes.vue'
+import Leaderboard from '../components/Leaderboard.vue'
 import ViewQuiz from '../components/ViewQuiz.vue'
 import Login from '../components/Login.vue'
 
@@ -125,6 +126,10 @@ const router = createRouter({
     {
       path: '/AllQuizzes',
       component: AllQuizes,
+    },
+    {
+      path: '/Leaderboard',
+      component: Leaderboard,
     },
     {
       path: '/ViewQuiz/:quiz_id',

@@ -21,6 +21,7 @@ import NotScoreboard from '../components/NotScoreboard.vue'
 import TeamNotScoreboard from '../components/TeamNotScoreboard.vue'
 import AllQuizes from '../components/AllQuizzes.vue'
 import ViewQuiz from '../components/ViewQuiz.vue'
+import Login from '../components/Login.vue'
 
 import {QuizCreation, Chat, QuizCreationSummary} from '../components'
 
@@ -128,6 +129,10 @@ const router = createRouter({
     {
       path: '/ViewQuiz/:quiz_id',
       component: ViewQuiz,
+    },
+    {
+      path: '/Login',
+      component: Login,
     },
   ],
 })

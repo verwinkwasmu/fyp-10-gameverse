@@ -31,7 +31,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer / 2
+  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
 
   let timerCountdown = setInterval(() => {
     timer.value--

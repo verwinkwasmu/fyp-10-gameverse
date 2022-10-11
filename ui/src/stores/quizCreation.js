@@ -35,7 +35,7 @@ export const useQuizCreationStore = defineStore("quizCreation", {
         options: {
           option_1: "",
         },
-        answer: [],
+        answer: "",
         timer: "",
       };
       object.push(newQuestion);

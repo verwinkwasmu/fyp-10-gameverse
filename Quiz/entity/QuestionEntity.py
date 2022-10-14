@@ -10,7 +10,7 @@ class Question(SQLModel, table=True):
     option_2: str
     option_3: str
     option_4: str
-    answer: List = Field(default=[], sa_column=Column(ARRAY(String)))
+    answer: str
     timer: int
     category: str
 
@@ -25,7 +25,7 @@ class Question(SQLModel, table=True):
                 "option_2": "Yoda",
                 "option_3": "Han Solo",
                 "option_4": "Anakin Skywalker",
-                "answer": "Anakin Skywalker",
+                "answer": "option_4",
                 "timer": 20,
             }
         }

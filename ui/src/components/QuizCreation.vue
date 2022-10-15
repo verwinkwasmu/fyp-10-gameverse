@@ -1,6 +1,10 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
+function ErrorHandling(store.category, p2) {
+  return p1 * p2;
+}
+<div v-if='"question.question"===null'> Error </div>
 </script>
 
 <template>
@@ -61,7 +65,7 @@ const store = useQuizCreationStore()
         >
           <div class="w-full my-5">
             <label
-              for="first_name"
+              for="first_name" 
               class="block mb-2 text-sm font-medium text-white"
               >Quiz Question {{ index + 1 }}</label
             >

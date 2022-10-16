@@ -64,7 +64,7 @@ const router = createRouter({
       component: Quizbank,
     },
     {
-      path: '/AddQuestionFromBank',
+      path: '/AddQuestionFromBank/:category',
       component: QuizQuestionBank,
     },
     {

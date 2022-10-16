@@ -55,7 +55,7 @@ async def get_quizzes():
     quizzes = quizService.get_quizzes()
 
     if quizzes is None:
-        raise HTTPException(status_code=404, detail="No quizzes found")
+        raise HTTPException(status_code=500, detail="No quizzes found")
 
     return quizzes
 
@@ -66,7 +66,7 @@ async def get_quiz(quiz_id: int):
 
     if quiz is None:
         raise HTTPException(
-            status_code=404, detail=f"quiz with id: {quiz_id} not found"
+            status_code=500, detail=f"quiz with id: {quiz_id} not found"
         )
 
     return quiz
@@ -118,3 +118,13 @@ async def get_questions(category: str):
         )
 
     return result
+
+
+@app.get("/api/category/")
+async def get_category(category: str = ""):
+    results = quizService.get_category(category)
+
+    if results is None:
+        raise HTTPException(status_code=500, detail="No category found")
+
+    return results

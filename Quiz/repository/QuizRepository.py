@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import logging
 from typing import Any
+from unicodedata import category
 
 from sqlmodel import Session, select
 from entity.QuestionEntity import Question
@@ -105,5 +106,24 @@ class QuizRepository:
 
             if questions != []:
                 return questions
+
+            return None
+
+    def get_category(self, category: str):
+        with Session(self.database) as session:
+            print(category)
+            if category == "":
+                results = session.exec(select(Question.category).distinct()).all()
+            else:
+                results = [
+                    session.exec(
+                        select(Question.category).where(
+                            Question.category == category.capitalize()
+                        )
+                    ).first()
+                ]
+
+            if results != []:
+                return results
 
             return None

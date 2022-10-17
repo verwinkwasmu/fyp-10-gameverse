@@ -3,6 +3,7 @@ import axios from 'axios'
 const API = () => {
   return axios.create({
     baseURL: 'https://n08yph.deta.dev/api',
+    // baseURL: 'http://localhost:8080/api',
   })
 }
 
@@ -32,5 +33,21 @@ export default {
   },
   deleteQuiz(quiz_id) {
     return API().delete(`/quiz/${quiz_id}`)
+  },
+  async getCategories(category) {
+    try {
+      const response = await API().get(`/category/?category=${category}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
+  },
+  async getQuestionsByCategory(category) {
+    try {
+      const response = await API().get(`/questions/${category}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
 }

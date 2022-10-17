@@ -32,6 +32,17 @@ const startTeamGame = (quizId) => {
     query: {quiz_id: quizId, isHost: true},
   })
 }
+
+const deleteQuiz = async (quizId) => {
+  try {
+    const response = await Quiz.deleteQuiz(quizId)
+    //TODO will change this to use my vue query
+    location.reload()
+  } catch (err) {
+    //TODO add my error handling
+    alert(err)
+  }
+}
 </script>
 
 <template>
@@ -88,6 +99,7 @@ const startTeamGame = (quizId) => {
           </button>
           <button
             class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 rounded font-bold"
+            @click="deleteQuiz(quiz.id)"
           >
             Delete
           </button>

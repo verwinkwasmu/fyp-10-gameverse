@@ -7,7 +7,6 @@ const API = () => {
   })
 }
 
-// just a sample, not the actual one
 export default {
   async getQuizzes() {
     try {
@@ -31,8 +30,13 @@ export default {
   updateQuiz(payload) {
     return API().put('/update', payload)
   },
-  deleteQuiz(quiz_id) {
-    return API().delete(`/quiz/${quiz_id}`)
+  async deleteQuiz(quiz_id) {
+    try {
+      const response = await API().delete(`/delete/${quiz_id}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
   async getCategories(category) {
     try {

@@ -1,8 +1,10 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
-function ErrorHandling(store.category, p2) {
-  return p1 * p2;
+function ErrorHandling(question,timer,options) {
+  if(question == null){
+    alert('Question is null.');
+}
 }
 <div v-if='"question.question"===null'> Error </div>
 </script>
@@ -273,7 +275,7 @@ function ErrorHandling(store.category, p2) {
           </router-link>
 
           <router-link :to="{ path: '/QuizCreationSummary',}">
-            <button type="button" class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
+            <button onclick="ErrorHandling(question.question,question.timer,question.options)" type="button" class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
             Finish
             </button>
           </router-link>

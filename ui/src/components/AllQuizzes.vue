@@ -6,6 +6,7 @@ import Quiz from '../services/Quiz'
 const quizzes = ref([])
 const router = useRouter()
 let isOpen = ref(false);
+let modalQuizId = ref()
 
 onMounted(() => {
   getData()
@@ -33,6 +34,11 @@ const startTeamGame = (quizId) => {
   })
 }
 
+const modalOpen = (quizId) => {
+  modalQuizId.value = quizId
+  isOpen.value = true
+}
+
 </script>
 
 <template>
@@ -51,7 +57,7 @@ const startTeamGame = (quizId) => {
       <div class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-3 justify-center ">
 
         <div class="grid grid-flow-col auto-cols-max gap-4" v-for="(quiz,index) in quizzes" :key="index">
-
+          
           <div class="font-bold text-gray-700 rounded-full bg-white flex items-center justify-center w-12 h-12 align-middle	mt-1">
             {{index +1}}
           </div>
@@ -68,11 +74,14 @@ const startTeamGame = (quizId) => {
             <button class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold h-full">View Quiz</button>
           </router-link>
 
-          <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold" @click="isOpen = true">
+          <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold" @click="modalOpen(quiz.id)">
             Start Game
           </button>
 
-          <div
+        </div>
+
+
+        <div
             v-show="isOpen"
             class="
               absolute
@@ -104,18 +113,16 @@ const startTeamGame = (quizId) => {
                 </svg>
               </div>
               <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
-                <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="startSoloGame(quiz.id)">
+                <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="startSoloGame(modalQuizId)">
                   Solo
                 </button>
-                <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="startTeamGame(quiz.id)">
+                <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="startTeamGame(modalQuizId)">
                   Team
                 </button>
               </div>
             </div>
           </div>
 
-
-        </div>
       </div>
       
     </div>

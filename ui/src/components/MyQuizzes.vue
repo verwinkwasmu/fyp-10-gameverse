@@ -96,8 +96,8 @@ const startTeamGame = (quizId) => {
             flex
             items-center
             justify-center
-            bg-gray-700 
-            bg-opacity-70
+            bg-gray-600 
+            bg-opacity-20
           "
         >
           <div class="max-w-2xl p-6 mx-4 bg-slate-200 rounded-md shadow-xl">

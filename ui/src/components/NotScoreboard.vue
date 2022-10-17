@@ -2,12 +2,12 @@
 import {ref, onMounted} from 'vue'
 import {useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
-import {useQuizCreationStore} from '../stores/quizCreation'
+import {useQuizObjectStore} from '../stores/quizObject'
 
 const users = ref({})
 const router = useRouter()
 const qnNumStore = useQnNumberStore()
-const quizStore = useQuizCreationStore()
+const quizStore = useQuizObjectStore()
 
 onMounted(() => {
   window.websocket.send(JSON.stringify({command: 'Scoreboard'}))
@@ -20,7 +20,6 @@ window.websocket.onmessage = (event) => {
     router.push({path: '/Podium'})
   } else {
     users.value = JSON.parse(event.data).current_users
-    console.log(JSON.parse(event.data))
   }
 }
 

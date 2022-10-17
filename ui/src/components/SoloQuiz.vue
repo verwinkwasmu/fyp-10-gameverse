@@ -1,9 +1,9 @@
 <script setup>
 import Quiz from '../services/Quiz'
 import {ref, onMounted, onBeforeMount} from 'vue'
-import {useQuizCreationStore} from '../stores/quizCreation'
 import {useQnNumberStore} from '../stores/qnNumber'
 import {useRoute, useRouter} from 'vue-router'
+import {useQuizObjectStore} from '../stores/quizObject'
 
 const users = ref({})
 const router = useRouter()
@@ -14,11 +14,10 @@ window.websocket.onmessage = (event) => {
     router.push({path: '/Scoreboard'})
   } else {
     users.value = JSON.parse(event.data).current_users
-    console.log(JSON.parse(event.data))
   }
 }
 
-const store = useQuizCreationStore()
+const store = useQuizObjectStore()
 const qnNumStore = useQnNumberStore()
 const qnCorrect = ref(null)
 const qnAnswered = ref(false)
@@ -46,7 +45,6 @@ onMounted(() => {
 const getData = async () => {
   const response = await Quiz.getQuiz(qnNumStore.quiz_id)
   store.quiz = response.data
-  console.log(store.quiz.questions)
   totalQn.value = store.quiz.questions.length
 }
 

@@ -1,14 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import {ref, onMounted} from 'vue'
 import { useRouter, useRoute } from "vue-router";
+import {useUserIdStore} from '../stores/userId'
 
 // use with vue query
 
-const route = useRoute();
 const client_id = Date.now();
 const text = ref("");
 const messages = ref([]);
 
+const router = useRouter()
+const userStore = useUserIdStore()
+
+onMounted(()=>{
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
 
 const joinRoomId = () => {
   connection.send(text.value);

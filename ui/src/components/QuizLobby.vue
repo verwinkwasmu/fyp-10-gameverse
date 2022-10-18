@@ -1,19 +1,30 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onBeforeMount} from 'vue'
+import {useUserIdStore} from '../stores/userId'
 import {useRoute, useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
+
+const userStore = useUserIdStore()
+onBeforeMount(() => {
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
 
 const route = useRoute()
 const router = useRouter()
 const client_id = route.query.isHost
-  ? 'Host' + Date.now()
-  : Date.now().toString()
+  ? 'Host' + userStore.user.data.id
+  : userStore.user.data.id
 const quiz_id = ref()
 const users = ref({})
 const qnNumStore = useQnNumberStore()
 qnNumStore.user_id = client_id
 const url = `http://localhost:5173/QuizLobby/${route.params.lobby_id}`
 const countdowntimer = ref(3)
+
+
 
 window.websocket = new WebSocket(
   `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}/${route.query.quiz_id}`,

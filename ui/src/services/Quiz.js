@@ -1,36 +1,62 @@
-import axios from "axios";
+import axios from 'axios'
 
 const API = () => {
   return axios.create({
-    baseURL: "https://n08yph.deta.dev/api",
-  });
-};
+    baseURL: 'https://n08yph.deta.dev/api',
+    // baseURL: 'http://localhost:8080/api',
+  })
+}
 
-// just a sample, not the actual one
 export default {
   async getQuizzes() {
     try {
-      const response = await API().get("/quizzes");
-      return response.data;
+      const response = await API().get('/quizzes')
+      return response.data
     } catch (err) {
-      return err;
+      return err
     }
   },
   getQuiz(quiz_id) {
-    return API().get(`/quiz/${quiz_id}`);
+    return API().get(`/quiz/${quiz_id}`)
   },
   async createQuiz(payload) {
     try {
-      const response = await API().post("/create", payload);
-      return response.data;
+      const response = await API().post('/create', payload)
+      return response.data
     } catch (err) {
-      return err;
+      return err
     }
   },
-  updateQuiz(payload) {
-    return API().put("/update", payload);
+  async updateQuiz(payload) {
+    try {
+      const response = await API().post('/update', payload)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
-  deleteQuiz(quiz_id) {
-    return API().delete(`/quiz/${quiz_id}`);
+  async deleteQuiz(quiz_id) {
+    try {
+      const response = await API().delete(`/delete/${quiz_id}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
-};
+  async getCategories(category) {
+    try {
+      const response = await API().get(`/category/?category=${category}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
+  },
+  async getQuestionsByCategory(category) {
+    try {
+      const response = await API().get(`/questions/${category}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
+  },
+}

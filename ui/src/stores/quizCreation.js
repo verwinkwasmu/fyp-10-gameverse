@@ -1,47 +1,53 @@
-import { defineStore } from "pinia";
+import {defineStore} from 'pinia'
+import {useQuestionBankStore} from './questionBank'
 
-export const useQuizCreationStore = defineStore("quizCreation", {
+export const useQuizCreationStore = defineStore('quizCreation', {
   state: () => {
     return {
-      title: "",
-      category: "",
+      title: '',
+      category: '',
       questions: [
         {
-          question: "",
+          question: '',
           options: {
-            option_1: "",
-            option_2: "",
+            option_1: '',
+            option_2: '',
           },
           answer: [],
-          timer: "",
+          timer: '',
         },
       ],
-    };
+    }
   },
 
   actions: {
     addOption(object) {
-      let i = Object.keys(object).length;
-      object[`option_${i + 1}`] = "";
-      console.log(this.questions);
+      let i = Object.keys(object).length
+      object[`option_${i + 1}`] = ''
+      console.log(this.questions)
     },
     removeOption(object) {
-      let i = Object.keys(object).length;
-      delete object[`option_${i}`];
+      let i = Object.keys(object).length
+      delete object[`option_${i}`]
     },
     addQuestion(object) {
       let newQuestion = {
-        question: "",
+        question: '',
         options: {
-          option_1: "",
+          option_1: '',
         },
-        answer: "",
-        timer: "",
-      };
-      object.push(newQuestion);
+        answer: '',
+        timer: '',
+      }
+      object.push(newQuestion)
     },
-    removeQuestion(object) {
-      object.pop();
+    removeQuestion(object, index) {
+      const questionBankStore = useQuestionBankStore()
+
+      if (questionBankStore.addedQuestions.includes(object[index].question)) {
+        questionBankStore.removeQuestion(object[index].question)
+      }
+      object.splice(index, 1)
     },
   },
-});
+})

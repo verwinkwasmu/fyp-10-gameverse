@@ -1,10 +1,13 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 import Quiz from '../services/Quiz'
-import {useMutation} from 'vue-query'
+import {useMutation, useQueryClient} from 'vue-query'
 import {useRouter} from 'vue-router'
+import {useQuestionBankStore} from '../stores/questionBank'
 
+const queryClient = useQueryClient()
 const store = useQuizCreationStore()
+const questionBankStore = useQuestionBankStore()
 const router = useRouter()
 const {
   mutate: createQuiz,
@@ -15,6 +18,13 @@ const {
   isSuccess,
 } = useMutation(() => Quiz.createQuiz(store.$state), {
   onSuccess: (data) => {
+    // Reset stores
+    store.$reset()
+    questionBankStore.$reset()
+
+    // Refetch getQuizzes Query
+    queryClient.invalidateQueries('getQuizzes')
+    // Redirect to MyQuizzes page
     router.push({path: `/MyQuizzes`})
   },
   onError: (error) => {
@@ -24,7 +34,9 @@ const {
 </script>
 
 <template>
-  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
+  <div
+    class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
+  >
     <!--Header-->
     <div class="grid grid-rows-2 grid-flow-col gap-2 px-10 pt-10 ml-6 mr-6">
       <router-link to="/">
@@ -32,76 +44,102 @@ const {
       </router-link>
       <div class="text-2xl col-span-2">Summary of Quiz</div>
     </div>
-    
 
-    <div class="flex grid grid-flow-row auto-rows-max items-center mt-4 mx-4 gap-4 items-center justify-center">
-
+    <div
+      class="flex grid grid-flow-row auto-rows-max items-center mt-4 mx-4 gap-4 items-center justify-center"
+    >
       <div class="grid grid-flow-row gap-4 mb-4">
         <div class="grid grid-flow-col auto-cols-max gap-4">
-          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
-            Quiz Title 
+          <div
+            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+          >
+            Quiz Title
           </div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
-            {{store.title}}
-          </div>
-        </div>
-
-        <div class="grid grid-flow-col auto-cols-max gap-4">
-          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
-            Number of Questions 
-          </div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
-            {{store.questions.length}}
+          <div
+            class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
+          >
+            {{ store.title }}
           </div>
         </div>
 
         <div class="grid grid-flow-col auto-cols-max gap-4">
-          <div class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center">
+          <div
+            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+          >
+            Number of Questions
+          </div>
+          <div
+            class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
+          >
+            {{ store.questions.length }}
+          </div>
+        </div>
+
+        <div class="grid grid-flow-col auto-cols-max gap-4">
+          <div
+            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+          >
             Category
           </div>
-          <div class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center">
-            {{store.category}}
+          <div
+            class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
+          >
+            {{ store.category }}
           </div>
         </div>
-
       </div>
       <div class="text-2xl font-bold -mb-4">Questions</div>
-  
-      <div class="flex grid grid-flow-row auto-rows-max gap-4" v-for="(question,index) in store.questions" :key="index">
-        
+
+      <div
+        class="flex grid grid-flow-row auto-rows-max gap-4"
+        v-for="(question, index) in store.questions"
+        :key="index"
+      >
         <div class="grid grid-flow-col auto-cols-max gap-4 w-full">
-          <div class="w-96 justify-items-stretch bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white">
-            {{question.question}}
+          <div
+            class="w-96 justify-items-stretch bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white"
+          >
+            {{ question.question }}
           </div>
-          <div class="grid justify-items-end bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white">
-            Time: {{question.timer}}
+          <div
+            class="grid justify-items-end bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white"
+          >
+            Time: {{ question.timer }}
           </div>
         </div>
-  
-        <div v-for="(option,index) in question.options" :key="index">
-  
-          <div v-if="index==question.answer" class="grid grid-flow-col auto-cols-max gap-4">
-            <div class="font-bold text-white rounded-full bg-green-500 flex items-center justify-center w-12 h-12 align-middle">
-              ✓ 
+
+        <div v-for="(option, index) in question.options" :key="index">
+          <div
+            v-if="index == question.answer"
+            class="grid grid-flow-col auto-cols-max gap-4"
+          >
+            <div
+              class="font-bold text-white rounded-full bg-green-500 flex items-center justify-center w-12 h-12 align-middle"
+            >
+              ✓
             </div>
-            <div class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-green-500">
-              {{option}}</div>
+            <div
+              class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-green-500"
+            >
+              {{ option }}
+            </div>
           </div>
-  
+
           <div v-else class="grid grid-flow-col auto-cols-max gap-4">
-            <div class="font-bold text-white rounded-full bg-red-500 flex items-center justify-center w-12 h-12 align-middle">
-              ✖ 
+            <div
+              class="font-bold text-white rounded-full bg-red-500 flex items-center justify-center w-12 h-12 align-middle"
+            >
+              ✖
             </div>
-            <div class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-blue-900">
-              {{option}}</div>
+            <div
+              class="w-full justify-left px-8 py-3 text-base font-medium text-white bg-blue-900"
+            >
+              {{ option }}
+            </div>
           </div>
-            
-  
         </div>
-  
       </div>
     </div>
-
 
     <div className="" class="mt-14 mb-4">
       <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
@@ -113,7 +151,6 @@ const {
             >
               Back
             </button>
-
           </router-link>
 
           <button
@@ -128,9 +165,8 @@ const {
   </div>
 </template>
 
-
 <style>
-  body {
-    background-image: url('../assets/bg.png');
-  }
-  </style>
+body {
+  background-image: url('../assets/bg.png');
+}
+</style>

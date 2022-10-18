@@ -37,15 +37,12 @@ window.websocket.onopen = () => {
 window.websocket.onmessage = (event) => {
   if (!isNaN(event.data)) {
     quiz_id.value = event.data
-    console.log(quiz_id.value)
   }
 
   if (JSON.parse(event.data).command == 'Start Game') {
-    console.log('start game')
     moveToQuestion()
   } else {
     users.value = JSON.parse(event.data)
-    console.log(users.value.current_users)
   }
 }
 
@@ -124,13 +121,12 @@ function routenext() {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-
         <router-link to="/" tag="button">
-            <button
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Exit Game
-            </button>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Exit Game
+          </button>
         </router-link>
       </footer>
 

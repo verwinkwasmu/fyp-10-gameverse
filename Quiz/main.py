@@ -10,11 +10,13 @@ from service.QuizService import QuizService
 from entity.QuizEntity import Quiz
 
 engine = create_engine(
-    "postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway")
+    "postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway"
+)
 
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
 
 # can only be used in fastapi routes.. so not sure if its a wise design to pass through this every layer
 
@@ -29,7 +31,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -53,7 +55,7 @@ async def get_quizzes():
     quizzes = quizService.get_quizzes()
 
     if quizzes is None:
-        raise HTTPException(status_code=404, detail="No quizzes found")
+        raise HTTPException(status_code=500, detail="No quizzes found")
 
     return quizzes
 
@@ -64,7 +66,8 @@ async def get_quiz(quiz_id: int):
 
     if quiz is None:
         raise HTTPException(
-            status_code=404, detail=f"quiz with id: {quiz_id} not found")
+            status_code=500, detail=f"quiz with id: {quiz_id} not found"
+        )
 
     return quiz
 
@@ -75,7 +78,8 @@ async def create_quiz(quiz: Quiz):
 
     if result == None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to create quiz for id: {quiz.id}")
+            status_code=500, detail=f"Unable to create quiz for id: {quiz.id}"
+        )
 
     return result
 
@@ -86,7 +90,8 @@ async def update_quiz(quiz: Quiz):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to update quiz with id: {quiz.id}")
+            status_code=500, detail=f"Unable to update quiz with id: {quiz.id}"
+        )
 
     return result
 
@@ -97,7 +102,8 @@ async def delete_quiz(quiz_id: int):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to delete quiz for id: {quiz_id}")
+            status_code=500, detail=f"Unable to delete quiz for id: {quiz_id}"
+        )
 
     return result
 
@@ -108,6 +114,17 @@ async def get_questions(category: str):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"questions with category {category} not found")
+            status_code=500, detail=f"questions with category {category} not found"
+        )
 
     return result
+
+
+@app.get("/api/category/")
+async def get_category(category: str = ""):
+    results = quizService.get_category(category)
+
+    if results is None:
+        raise HTTPException(status_code=500, detail="No category found")
+
+    return results

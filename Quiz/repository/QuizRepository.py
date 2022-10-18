@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import logging
 from typing import Any
+from unicodedata import category
 
 from sqlmodel import Session, select
 from entity.QuestionEntity import Question
@@ -74,19 +75,55 @@ class QuizRepository:
             return quiz
 
     def save_questions(self, quiz: Quiz, session: Session):
+
         for question in quiz.questions:
-            option = question.get('options')
-            print(option)
-            data = Question(title=question.get('question'), option_1=option.get('option_1'), option_2=option.get('option_2'),
-                            option_3=option.get('option_3'), option_4=option.get('option_4'), answer=question.get('answer'), timer=question.get('timer'), category=quiz.category)
-            session.add(data)
+            """
+            Checking if question already exist in the question db
+            """
+            existing_question = session.exec(
+                select(Question).where(Question.title == question.get("question"))
+            ).first()
+
+            if not existing_question:
+                option = question.get("options")
+                data = Question(
+                    title=question.get("question"),
+                    option_1=option.get("option_1"),
+                    option_2=option.get("option_2"),
+                    option_3=option.get("option_3"),
+                    option_4=option.get("option_4"),
+                    answer=question.get("answer")[0],
+                    timer=question.get("timer"),
+                    category=quiz.category,
+                )
+                session.add(data)
 
     def get_questions(self, category: str):
         with Session(self.database) as session:
-            questions = session.exec(select(Question).where(
-                Question.category == category)).all()
+            questions = session.exec(
+                select(Question).where(Question.category == category)
+            ).all()
 
             if questions != []:
                 return questions
+
+            return None
+
+    def get_category(self, category: str):
+        with Session(self.database) as session:
+            print(category)
+            if category == "":
+                results = session.exec(select(Question.category).distinct()).all()
+            else:
+                results = [
+                    session.exec(
+                        select(Question.category).where(
+                            Question.category == category.capitalize()
+                        )
+                    ).first()
+                ]
+
+            if results != []:
+                return results
 
             return None

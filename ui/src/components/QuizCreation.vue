@@ -1,12 +1,12 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
-function ErrorHandling(question,timer,options) {
-  if(question == null){
-    alert('Question is null.');
+function ErrorHandling(question) {
+  if(question.filter(question => question.length < 7)){
+    alert('Please fill in all the fields.');
 }
 }
-<div v-if='"question.question"===null'> Error </div>
+//<div v-if='"question.question"===null'> Error </div>
 </script>
 
 <template>
@@ -275,7 +275,7 @@ function ErrorHandling(question,timer,options) {
           </router-link>
 
           <router-link :to="{ path: '/QuizCreationSummary',}">
-            <button onclick="ErrorHandling(question.question,question.timer,question.options)" type="button" class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
+            <button onclick="ErrorHandling(question)" type="button" class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
             Finish
             </button>
           </router-link>

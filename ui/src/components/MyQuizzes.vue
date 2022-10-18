@@ -7,16 +7,17 @@ import Quiz from '../services/Quiz'
 
 const queryClient = useQueryClient()
 const router = useRouter()
-let isOpen = ref(false);
+let isOpen = ref(false)
 const userStore = useUserIdStore()
 
 
 onMounted(() => {
-  getData()
 
   if (userStore.user == null){
     router.push({path: `/Login`})
   }
+})
+
 const deleteSuccess = ref(true)
 const showAlert = ref(false)
 

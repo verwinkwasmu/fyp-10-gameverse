@@ -1,9 +1,75 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
+
+// $(document).ready(function () {
+//     getInputs
+// });
+function checkRadio() {
+    // if ($('input[type=radio]:checked').size() = 0) {
+    //   alert("Please set a time");
+    // }
+    var checked_timer = document.querySelector('input[name = "default-radio"]:checked');
+
+    if(checked_timer != null){  //Test if something was checked
+      console.log(checked_timer.value); //Alert the value of the checked.
+    } 
+    else {
+    alert('Please select a time for the question'); //Alert, nothing was checked.
+    }
+}
+
+const  getInputs = () => {
+
+  var quizCategory = document.forms["quizCreate"]["quiz_category"].value;
+  if (quizCategory == "" || quizCategory == null) {
+    alert("Quiz Category must be filled up");
+    return false;
+  }
+
+  var quizTitle = document.forms["quizCreate"]["quiz_title"].value;
+  if (quizTitle == "" || quizTitle == null) {
+    alert("Quiz Title must be filled up");
+    return false;
+  }
+
+  var quizQuestion = document.forms["quizCreate"]["question"].value;
+  if (quizQuestion == "" || quizQuestion == null) {
+    alert("Question must be filled up");
+    return false;
+  }
+
+  // for (let i = 0; i < 4; i++)
+  // {
+  //   let optionId = "option" + [i]
+  //   console.log(optionId)
+  //   // var quizOption = document.forms["quizCreate"][optionId].value;
+  //   var quizOption = document.getElementById(optionId)
+  //   if (quizOption == "" || quizOption == null) {
+  //     alert("Option must be filled up");
+  //     return false;
+  //   }
+  // }
+
+  checkRadio();
+
+  // var quizAnswer = document.getElementById("quiz_answer");
+  // if (quizAnswer.value == "selectOption") {
+  //     alert("Please select a card type");
+  // }
+  //var quizAnswer = document.getElementById("quiz_answer");
+  if (document.quizCreate.quiz_answer.value == "") {
+      alert("Please select an answer type");
+      document.quizCreate.quiz_answer.focus();
+      return false;
+  }
+};
+
+
 </script>
 
 <template>
+  <form name="quizCreate" onsubmit="return getInputs()" method="post" required>
   <div
     class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
   >
@@ -29,7 +95,7 @@ const store = useQuizCreationStore()
           >
           <input
             type="text"
-            id="first_name"
+            id="quiz_category"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Category"
             v-model="store.category"
@@ -44,7 +110,7 @@ const store = useQuizCreationStore()
           >
           <input
             type="text"
-            id="first_name"
+            id="quiz_title"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Name"
             v-model="store.title"
@@ -71,7 +137,7 @@ const store = useQuizCreationStore()
             >
             <input
               type="text"
-              id="first_name"
+              id="question"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter the question name"
               v-model="question.question"
@@ -167,6 +233,7 @@ const store = useQuizCreationStore()
               v-model="question.answer"
             /> -->
             <input
+              :id="'option' + index"
               type="text"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter your option"
@@ -200,7 +267,7 @@ const store = useQuizCreationStore()
               </button>
               <button
                 type="button"
-                v-if="Object.keys(question.options).length > 1"
+                v-if="Object.keys(question.options).length > 2"
                 @click="store.removeOption(question.options)"
                 class="text-red-600 underline hover:font-bold font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
               >
@@ -230,6 +297,7 @@ const store = useQuizCreationStore()
               TODO gotta find a way to select the answer when it is added from the question bank
               -->
             <select
+              name="quiz_answer"
               v-model="question.answer"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             >
@@ -286,18 +354,21 @@ const store = useQuizCreationStore()
             </button>
           </router-link>
 
-          <router-link :to="{path: '/QuizCreationSummary'}">
+          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
+          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
             <button
+              @click="getInputs()"
               type="button"
               class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
             >
               Finish
             </button>
-          </router-link>
+          <!-- </router-link> -->
         </div>
       </div>
     </div>
   </div>
+  </form>
 </template>
 
 <style>

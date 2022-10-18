@@ -27,8 +27,13 @@ export default {
       return err
     }
   },
-  updateQuiz(payload) {
-    return API().put('/update', payload)
+  async updateQuiz(payload) {
+    try {
+      const response = await API().post('/update', payload)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
   async deleteQuiz(quiz_id) {
     try {

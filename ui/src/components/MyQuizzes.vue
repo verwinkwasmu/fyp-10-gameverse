@@ -1,9 +1,11 @@
 <script setup>
-import {ref} from 'vue'
+import {reactive, ref, shallowReactive, shallowRef} from 'vue'
 import {useQueryClient, useQuery, useMutation} from 'vue-query'
 import {useRouter} from 'vue-router'
 import Quiz from '../services/Quiz'
+import {useQuizUpdateStore} from '../stores/quizUpdate'
 
+const store = useQuizUpdateStore()
 const queryClient = useQueryClient()
 const router = useRouter()
 let isOpen = ref(false)
@@ -61,6 +63,18 @@ const startTeamGame = (quizId) => {
     query: {quiz_id: quizId, isHost: true},
   })
 }
+
+const moveToUpdateQuiz = (quiz) => {
+  store.$patch({
+    id: quiz.id,
+    title: quiz.title,
+    category: quiz.category,
+  })
+  store.addQuestions(quiz.questions)
+  router.push({
+    path: `/UpdateQuiz`,
+  })
+}
 </script>
 
 <template>
@@ -106,6 +120,7 @@ const startTeamGame = (quizId) => {
           </div>
           <button
             class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold"
+            @click="moveToUpdateQuiz(quiz)"
           >
             Edit Game
           </button>

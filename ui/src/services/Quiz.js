@@ -16,8 +16,13 @@ export default {
       return err
     }
   },
-  getQuiz(quiz_id) {
-    return API().get(`/quiz/${quiz_id}`)
+  async getQuiz(quiz_id) {
+    try {
+      const response = await API().get(`/quiz/${quiz_id}`)
+      return response.data
+    } catch (err) {
+      return err
+    }
   },
   async createQuiz(payload) {
     try {
@@ -29,7 +34,7 @@ export default {
   },
   async updateQuiz(payload) {
     try {
-      const response = await API().post('/update', payload)
+      const response = await API().put('/update', payload)
       return response.data
     } catch (err) {
       return err

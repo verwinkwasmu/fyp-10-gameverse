@@ -14,7 +14,7 @@ const store = useQuizUpdateStore()
       <router-link to="/">
         <div class="text-5xl font-semibold col-span-2">GameVerse</div>
       </router-link>
-      <div class="text-2xl col-span-2">Creating Quiz</div>
+      <div class="text-2xl col-span-2">Updating Quiz</div>
     </div>
 
     <div
@@ -60,7 +60,7 @@ const store = useQuizUpdateStore()
         </div>
         <div
           v-for="(question, index) in store.questions"
-          class="w-full p-6 w-full rounded-lg border"
+          class="w-full p-6 rounded-lg border"
           :key="index"
         >
           <div class="w-full my-5">
@@ -88,7 +88,7 @@ const store = useQuizUpdateStore()
                   :id="'timer-5s-' + index"
                   type="radio"
                   :value="5"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
@@ -104,7 +104,7 @@ const store = useQuizUpdateStore()
                   :id="'timer-10s' + index"
                   type="radio"
                   :value="10"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
@@ -120,7 +120,7 @@ const store = useQuizUpdateStore()
                   :id="'timer-15s' + index"
                   type="radio"
                   :value="15"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
@@ -136,7 +136,7 @@ const store = useQuizUpdateStore()
                   :id="'timer-20s' + index"
                   type="radio"
                   :value="20"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
@@ -233,7 +233,7 @@ const store = useQuizUpdateStore()
               v-model="question.answer"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             >
-              <option value="" disabled>Select your option</option>
+              <option disabled hidden value="">Select your option</option>
               <option
                 v-for="(value, propertyName, index) in question.options"
                 :key="index"

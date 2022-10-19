@@ -21,7 +21,7 @@ const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
 const addQuestion = (question) => {
   const input = {
     question: question.title,
-    answer: [question.answer],
+    answer: question.answer,
     timer: question.timer,
     options: {
       option_1: question.option_1,

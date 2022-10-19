@@ -44,7 +44,7 @@ onMounted(() => {
 })
 const getData = async () => {
   const response = await Quiz.getQuiz(qnNumStore.quiz_id)
-  store.quiz = response.data
+  store.quiz = response
   totalQn.value = store.quiz.questions.length
 }
 

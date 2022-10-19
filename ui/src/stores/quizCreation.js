@@ -13,7 +13,7 @@ export const useQuizCreationStore = defineStore('quizCreation', {
             option_1: '',
             option_2: '',
           },
-          answer: [],
+          answer: '',
           timer: '',
         },
       ],

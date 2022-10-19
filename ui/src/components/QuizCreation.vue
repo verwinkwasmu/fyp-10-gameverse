@@ -1,6 +1,7 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
+
 </script>
 
 <template>
@@ -88,61 +89,61 @@ const store = useQuizCreationStore()
                   :id="'timer-5s-' + index"
                   type="radio"
                   :value="5"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
 
                 <label
-                  for="default-checkbox"
+                  for="'timer-5s-' + index"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >5</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-10s' + index"
+                  :id="'timer-10s-' + index"
                   type="radio"
                   :value="10"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
 
                 <label
-                  for="default-checkbox"
+                  for="'timer-10s-' + index"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >10</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-15s' + index"
+                  :id="'timer-15s-' + index"
                   type="radio"
                   :value="15"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
 
                 <label
-                  for="default-checkbox"
+                  for="'timer-15s-' + index"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >15</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-20s' + index"
+                  :id="'timer-20s-' + index"
                   type="radio"
                   :value="20"
-                  name="default-radio"
+                  :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
                 />
 
                 <label
-                  for="default-checkbox"
+                  for="'timer-20s-' + index"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >20</label
                 >
@@ -233,10 +234,10 @@ const store = useQuizCreationStore()
               v-model="question.answer"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             >
-              <option value="" disabled>Select your option</option>
+              <option disabled hidden value="">Select your option</option>
               <option
                 v-for="(value, propertyName, index) in question.options"
-                :key="index"
+                :key="'propertyName-' + index"
                 :value="propertyName"
               >
                 {{ value }}

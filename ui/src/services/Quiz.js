@@ -13,7 +13,7 @@ export default {
       const response = await API().get('/quizzes')
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async getQuiz(quiz_id) {
@@ -21,7 +21,7 @@ export default {
       const response = await API().get(`/quiz/${quiz_id}`)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async createQuiz(payload) {
@@ -29,7 +29,7 @@ export default {
       const response = await API().post('/create', payload)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async updateQuiz(payload) {
@@ -37,7 +37,7 @@ export default {
       const response = await API().put('/update', payload)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async deleteQuiz(quiz_id) {
@@ -45,7 +45,7 @@ export default {
       const response = await API().delete(`/delete/${quiz_id}`)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async getCategories(category) {
@@ -53,7 +53,7 @@ export default {
       const response = await API().get(`/category/?category=${category}`)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
   async getQuestionsByCategory(category) {
@@ -61,7 +61,7 @@ export default {
       const response = await API().get(`/questions/${category}`)
       return response.data
     } catch (err) {
-      return err
+      throw new Error(err)
     }
   },
 }

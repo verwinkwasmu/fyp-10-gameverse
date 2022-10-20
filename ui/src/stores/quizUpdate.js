@@ -1,13 +1,15 @@
 import {defineStore} from 'pinia'
-import {toRef} from 'vue'
 import {useQuestionBankStore} from './questionBank'
+import {useStorage} from '@vueuse/core'
 
 export const useQuizUpdateStore = defineStore('quizUpdate', {
   state: () => ({
-    id: '',
-    title: '',
-    category: '',
-    questions: [],
+    quiz: useStorage('quiz', {
+      id: '',
+      title: '',
+      category: '',
+      questions: [],
+    }),
   }),
   actions: {
     addOption(object) {
@@ -27,7 +29,7 @@ export const useQuizUpdateStore = defineStore('quizUpdate', {
         answer: '',
         timer: '',
       }
-      this.questions.push(newQuestion)
+      this.quiz.questions.push(newQuestion)
     },
     removeQuestion(object, index) {
       const questionBankStore = useQuestionBankStore()
@@ -53,7 +55,7 @@ export const useQuizUpdateStore = defineStore('quizUpdate', {
           answer: question.answer,
           timer: question.timer,
         }
-        this.questions.push(newQuestion)
+        this.quiz.questions.push(newQuestion)
       }
     },
   },

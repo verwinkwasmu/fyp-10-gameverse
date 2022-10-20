@@ -14,6 +14,7 @@ const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
   () => Quiz.getQuestionsByCategory(route.params.category),
   {
     retry: 2,
+    staleTime: 50000,
     cacheTime: 50000,
   },
 )

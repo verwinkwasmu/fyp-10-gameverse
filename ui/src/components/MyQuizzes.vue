@@ -68,9 +68,12 @@ const startTeamGame = (quizId) => {
 
 const moveToUpdateQuiz = (quiz) => {
   store.$patch({
-    id: quiz.id,
-    title: quiz.title,
-    category: quiz.category,
+    quiz: {
+      id: quiz.id,
+      title: quiz.title,
+      category: quiz.category,
+      questions: [],
+    },
   })
   store.addQuestions(quiz.questions)
   router.push({

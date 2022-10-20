@@ -16,7 +16,7 @@ const {
   data,
   error,
   isSuccess,
-} = useMutation(() => Quiz.updateQuiz(store.$state), {
+} = useMutation(() => Quiz.updateQuiz(store.quiz), {
   onSuccess: (data) => {
     // Reset stores
     store.$reset()
@@ -59,7 +59,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.title }}
+            {{ store.quiz.title }}
           </div>
         </div>
 
@@ -72,7 +72,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.questions.length }}
+            {{ store.quiz.questions.length }}
           </div>
         </div>
 
@@ -85,7 +85,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.category }}
+            {{ store.quiz.category }}
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ const {
 
       <div
         class="flex grid grid-flow-row auto-rows-max gap-4"
-        v-for="(question, index) in store.questions"
+        v-for="(question, index) in store.quiz.questions"
         :key="index"
       >
         <div class="grid grid-flow-col auto-cols-max gap-4 w-full">

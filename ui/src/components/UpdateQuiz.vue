@@ -1,11 +1,13 @@
 <script setup>
+import {useRouter} from 'vue-router'
 import {useQuizUpdateStore} from '../stores/quizUpdate'
 const store = useQuizUpdateStore()
 </script>
 
 <template>
-  <div
+  <form
     class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
+    action="/UpdateQuizSummary"
   >
     <!--Header-->
     <div
@@ -32,7 +34,7 @@ const store = useQuizUpdateStore()
             id="first_name"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Category"
-            v-model="store.category"
+            v-model="store.quiz.category"
             required
           />
         </div>
@@ -47,7 +49,7 @@ const store = useQuizUpdateStore()
             id="first_name"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Name"
-            v-model="store.title"
+            v-model="store.quiz.title"
             required
           />
         </div>
@@ -59,7 +61,7 @@ const store = useQuizUpdateStore()
           >
         </div>
         <div
-          v-for="(question, index) in store.questions"
+          v-for="(question, index) in store.quiz.questions"
           class="w-full p-6 rounded-lg border"
           :key="index"
         >
@@ -91,6 +93,7 @@ const store = useQuizUpdateStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -107,6 +110,7 @@ const store = useQuizUpdateStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -123,6 +127,7 @@ const store = useQuizUpdateStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -139,6 +144,7 @@ const store = useQuizUpdateStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -159,13 +165,6 @@ const store = useQuizUpdateStore()
                 >Add answer {{ index + 1 }}</label
               >
             </div>
-            <!-- <input
-              :id="'checkbox-' + index"
-              type="checkbox"
-              :value="propertyName"
-              class="w-4 float-right text-indigo-600 bg-gray-100 rounded border-gray-300 mr-20"
-              v-model="question.answer"
-            /> -->
             <input
               type="text"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
@@ -232,6 +231,7 @@ const store = useQuizUpdateStore()
             <select
               v-model="question.answer"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
+              required
             >
               <option disabled hidden value="">Select your option</option>
               <option
@@ -246,7 +246,7 @@ const store = useQuizUpdateStore()
           <div class="justify-self-end">
             <button
               type="button"
-              @click="store.removeQuestion(store.questions, index)"
+              @click="store.removeQuestion(store.quiz.questions, index)"
               class="text-red-600 bg-slate-200 hover:bg-slate-400 text-sm rounded-lg px-5 py-2.5 text-center inline-flex items-center my-5 h-1/2"
             >
               <span class="text-2xl font-bold">🗑</span> &nbsp; Delete Question
@@ -255,7 +255,7 @@ const store = useQuizUpdateStore()
         </div>
         <div class="w-full">
           <button
-            v-if="store.questions.length < 15"
+            v-if="store.quiz.questions.length < 15"
             type="button"
             @click="store.addQuestion()"
             class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-5 mb-2"
@@ -285,19 +285,15 @@ const store = useQuizUpdateStore()
               Exit
             </button>
           </router-link>
-
-          <router-link to="/UpdateQuizSummary">
-            <button
-              type="button"
-              class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Finish
-            </button>
-          </router-link>
+          <input
+            type="submit"
+            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            value="Finish"
+          />
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <style>

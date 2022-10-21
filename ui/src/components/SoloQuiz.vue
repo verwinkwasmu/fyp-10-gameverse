@@ -71,7 +71,7 @@ function checkAnswers() {
   ) {
     qnCorrect.value = true
     qnAnswered.value = true
-    score += 10
+    score += (10 * timer.value)
     answer_input.value = null
   } else {
     qnCorrect.value = false

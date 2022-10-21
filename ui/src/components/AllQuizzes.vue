@@ -11,8 +11,6 @@ const userStore = useUserIdStore()
 let modalQuizId = ref()
 
 onMounted(() => {
-  getData()
-
   if (userStore.user == null){
     router.push({path: `/Login`})
   }

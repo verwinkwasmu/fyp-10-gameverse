@@ -132,7 +132,7 @@ const modalOpen = (quizId) => {
             {{ index + 1 }}
           </div>
           <div
-            class="w-40 p-4 items-center justify-center bg-indigo-700 rounded"
+            class="w-60 p-4 items-center justify-center bg-indigo-700 rounded"
           >
             {{ quiz.title }}
           </div>

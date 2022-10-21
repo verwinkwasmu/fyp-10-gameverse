@@ -17,6 +17,8 @@ onMounted(()=>{
   }
 })
 
+
+
 async function onSubmit() {
     loading.value = true
     isError.value = false
@@ -35,14 +37,16 @@ async function onSubmit() {
 </script>
 
 <template>
+  
   <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
     <!--Header-->
     <div class="px-10 pt-10 ml-6 mr-6 ">
       <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+      <div class="text-2xl col-span-2">Login</div>
     </div>
 
     
-    <div class="flex flex-col items-center justify-center px-6 mx-auto sm:py-28">
+    <div class="flex flex-col items-center justify-center px-6 mx-auto sm:py-20">
       
       <div class="w-full bg-slate-200 rounded-md shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
         <div class="px-6 space-y-4 md:space-y-6 sm:p-8">
@@ -71,11 +75,10 @@ async function onSubmit() {
               Loading ...
             </button>
 
-
           </div>
+        </div>
       </div>
-  </div>
-
-      
-  </div>
+      <router-view></router-view>
+    </div>
+ 
 </template>

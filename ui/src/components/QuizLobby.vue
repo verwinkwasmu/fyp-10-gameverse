@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onBeforeMount, onMounted} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useUserIdStore} from '../stores/userId'
 import {useRoute, useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
@@ -7,21 +7,16 @@ import {useQnNumberStore} from '../stores/qnNumber'
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserIdStore()
-const userId = userStore.user.data.id
-const userName = userStore.user.data.name
 
 if (userStore.user == null){
-    router.push({path: `/Login`})
+  router.push({path: `/Login`})
 }
 
-console.log(userName)
+const userId = userStore.user != null ? userStore.user.data.id  : null
+const userName = userStore.user != null ? userStore.user.data.name  : null
 
-
-// const client_id = route.query.isHost
-//   ? 'Host' + Date.now()
-//   : Date.now().toString()
 const client_id = route.query.isHost
-  ? 'Host' + userId.value
+  ? 'Host' + userId
   : userId.toString()
 const quiz_id = ref()
 const users = ref({})

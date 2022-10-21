@@ -2,9 +2,10 @@
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
 function ErrorHandling(question) {
-  if(question.filter(question => question.length < 7)){
-    alert('Please fill in all the fields.');
-}
+  alert(question)
+  // if(question.filter(question => question.length < 7)){
+  //   alert('Please fill in all the fields.');
+// }
 }
 //<div v-if='"question.question"===null'> Error </div>
 </script>
@@ -274,11 +275,11 @@ function ErrorHandling(question) {
             </button>
           </router-link>
 
-          <router-link :to="{ path: '/QuizCreationSummary',}">
+          <!-- <router-link :to="{ path: '/QuizCreationSummary',}"> -->
             <button onclick="ErrorHandling(question)" type="button" class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
             Finish
             </button>
-          </router-link>
+          <!-- </router-link> -->
         </div>
       </div>
     </div>

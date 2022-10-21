@@ -92,7 +92,7 @@ class QuizRepository:
                     option_2=option.get("option_2"),
                     option_3=option.get("option_3"),
                     option_4=option.get("option_4"),
-                    answer=question.get("answer")[0],
+                    answer=question.get("answer"),
                     timer=question.get("timer"),
                     category=quiz.category,
                 )

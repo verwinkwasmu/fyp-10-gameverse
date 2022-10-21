@@ -13,7 +13,7 @@ export const useQuizCreationStore = defineStore('quizCreation', {
             option_1: '',
             option_2: '',
           },
-          answer: [],
+          answer: '',
           timer: '',
         },
       ],
@@ -24,7 +24,6 @@ export const useQuizCreationStore = defineStore('quizCreation', {
     addOption(object) {
       let i = Object.keys(object).length
       object[`option_${i + 1}`] = ''
-      console.log(this.questions)
     },
     removeOption(object) {
       let i = Object.keys(object).length

@@ -30,6 +30,7 @@ class PlayerRepository:
             players = session.exec(select(Player)).all()
 
             if players != []:
+                players.sort(key=lambda x: x.total_points, reverse=True)
                 return players
 
             return None

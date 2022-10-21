@@ -26,7 +26,7 @@ class Quiz(SQLModel, table=True):
                             "option_3": "Han Solo",
                             "option_4": "Anakin Skywalker",
                         },
-                        "answer": ["option_4"],
+                        "answer": "option_4",
                         "timer": 20,
                     }
                 ],

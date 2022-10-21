@@ -22,8 +22,11 @@ import AllQuizes from '../components/AllQuizzes.vue'
 import Leaderboard from '../components/Leaderboard.vue'
 import ViewQuiz from '../components/ViewQuiz.vue'
 import Login from '../components/Login.vue'
-
+import UpdateQuiz from '../components/UpdateQuiz.vue'
+import UpdateQuizSummary from '../components/UpdateQuizSummary.vue'
 import {QuizCreation, Chat, QuizCreationSummary} from '../components'
+import AddQuestionFromBankForUpdate from '../components/AddQuestionFromBankForUpdate.vue'
+import AllQuizQuestionBankForUpdate from '../components/AllQuizQuestionBankForUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -133,6 +136,22 @@ const router = createRouter({
     {
       path: '/Login',
       component: Login,
+    },
+    {
+      path: '/UpdateQuiz',
+      component: UpdateQuiz,
+    },
+    {
+      path: '/UpdateQuizSummary',
+      component: UpdateQuizSummary,
+    },
+    {
+      path: '/AllQuizQuestionBankForUpdate',
+      component: AllQuizQuestionBankForUpdate,
+    },
+    {
+      path: '/AddQuestionFromBankForUpdate/:category',
+      component: AddQuestionFromBankForUpdate,
     },
   ],
 })

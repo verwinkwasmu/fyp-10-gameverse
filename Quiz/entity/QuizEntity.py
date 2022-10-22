@@ -9,12 +9,14 @@ class Quiz(SQLModel, table=True):
     category: str
     # questions: Dict = Field(default={}, sa_column=Column(JSON))
     questions: List = Field(default=[], sa_column=Column(ARRAY(JSON)))
+    user_id: int
 
     # Needed for Column(JSON)
     class Config:
         arbitrary_types_allowed = True
         schema_extra = {
             "example": {
+                "user_id": 1,
                 "title": "Star Wars Quiz",
                 "category": "Movies",
                 "questions": [

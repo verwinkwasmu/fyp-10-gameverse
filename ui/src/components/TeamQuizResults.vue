@@ -9,7 +9,6 @@ onMounted(() => {
 
 window.websocket.onmessage = (event) => {
   scores.value = JSON.parse(event.data).teamScores
-  console.log(scores.value)
 }
 </script>
 

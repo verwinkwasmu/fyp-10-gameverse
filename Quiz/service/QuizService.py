@@ -31,6 +31,14 @@ class QuizService:
 
         return None
 
+    def get_user_quizzes(self, user_id: int):
+        result = self.repository.get_user_quizzes(user_id)
+
+        if result != None:
+            return result
+
+        return None
+
     def update_quiz(self, quiz: Quiz):
         result = self.repository.update_quiz(quiz)
 

@@ -9,6 +9,7 @@ const queryClient = useQueryClient()
 const store = useQuizUpdateStore()
 const questionBankStore = useQuestionBankStore()
 const router = useRouter()
+
 const {
   mutate: updateQuiz,
   isLoading,
@@ -23,7 +24,7 @@ const {
     questionBankStore.$reset()
 
     // Refetch getQuizzes Query
-    queryClient.invalidateQueries('getQuizzes')
+    queryClient.invalidateQueries('getUserQuizzes')
 
     // Redirect to MyQuizzes page
     router.push({path: `/MyQuizzes`})

@@ -16,6 +16,14 @@ export default {
       throw new Error(err)
     }
   },
+  async getUserQuizzes(user_id) {
+    try {
+      const response = await API().get(`/quizzes/user/${user_id}`)
+      return response.data
+    } catch (err) {
+      throw new Error(err)
+    }
+  },
   async getQuiz(quiz_id) {
     try {
       const response = await API().get(`/quiz/${quiz_id}`)

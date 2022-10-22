@@ -12,10 +12,8 @@ const router = useRouter()
 let isOpen = ref(false)
 const userStore = useUserIdStore()
 
-
 onMounted(() => {
-
-  if (userStore.user == null){
+  if (userStore.user == null) {
     router.push({path: `/Login`})
   }
 })
@@ -32,11 +30,15 @@ const {
   isSuccess,
   data: quizzes,
   error: queryError,
-} = useQuery(['getQuizzes'], () => Quiz.getQuizzes(), {
-  retry: 2,
-  staleTime: 50000,
-  cacheTime: 50000,
-})
+} = useQuery(
+  ['getUserQuizzes'],
+  () => Quiz.getUserQuizzes(userStore.user.data.id),
+  {
+    retry: 2,
+    staleTime: 50000,
+    cacheTime: 50000,
+  },
+)
 
 // DELETE Quiz Function
 const {mutate: deleteQuiz, error: deleteError} = useMutation(
@@ -44,7 +46,7 @@ const {mutate: deleteQuiz, error: deleteError} = useMutation(
   {
     onSuccess: () => {
       // Refetch getQuizzes Query
-      queryClient.invalidateQueries('getQuizzes')
+      queryClient.invalidateQueries('getUserQuizzes')
       deleteSuccess.value = true
       showAlert.value = true
       setTimeout(() => {
@@ -81,6 +83,7 @@ const moveToUpdateQuiz = (quiz) => {
   store.$patch({
     quiz: {
       id: quiz.id,
+      user_id: quiz.user_id,
       title: quiz.title,
       category: quiz.category,
       questions: [],

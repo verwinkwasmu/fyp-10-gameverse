@@ -7,16 +7,14 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserIdStore()
 
-if (userStore.user == null){
-    router.push({path: `/Login`})
+if (userStore.user == null) {
+  router.push({path: `/Login`})
 }
 
-const userId = userStore.user != null ? userStore.user.data.id  : null
-const userName = userStore.user != null ? userStore.user.data.name  : null
+const userId = userStore.user != null ? userStore.user.data.id : null
+const userName = userStore.user != null ? userStore.user.data.name : null
 
-const client_id = route.query.isHost
-  ? 'Host' + userId
-  : userId.toString()
+const client_id = route.query.isHost ? 'Host' + userId : userId.toString()
 
 const quiz_id = ref()
 const qnNumStore = useQnNumberStore()
@@ -38,14 +36,12 @@ window.websocket.onopen = () => {
 window.websocket.onmessage = (event) => {
   if (!isNaN(event.data)) {
     quiz_id.value = event.data
-    console.log(quiz_id.value)
   }
 
   if (JSON.parse(event.data).command == 'Start Game') {
     console.log('start game')
     moveToQuestion()
   } else {
-    console.log(JSON.parse(event.data))
     participantsRed.value = JSON.parse(event.data).team.red
     participantsBlue.value = JSON.parse(event.data).team.blue
   }

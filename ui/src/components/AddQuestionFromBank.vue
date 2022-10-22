@@ -46,7 +46,7 @@ const removeQuestion = (questionTitle) => {
 </script>
 
 <template>
-  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
+  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">

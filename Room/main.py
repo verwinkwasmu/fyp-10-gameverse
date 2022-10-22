@@ -53,8 +53,8 @@ class ConnectionManager:
 currentConnections = {}
 
 
-@app.websocket("/ws/{room_id}/{user_id}/{quiz_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, quiz_id):
+@app.websocket("/ws/{room_id}/{user_id}/{user_name}/{quiz_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
@@ -62,7 +62,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
     manager = currentConnections.get(room_id)
 
     # create user entity
-    user = User(name=user_id, score=0)
+    user = User(name=user_name, score=0)
 
     await manager.connect(websocket, user_id, user)
 
@@ -136,8 +136,8 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
             del currentConnections[room_id]
 
 
-@app.websocket("/ws/teamQuiz/{room_id}/{user_id}/{quiz_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, quiz_id):
+@app.websocket("/ws/teamQuiz/{room_id}/{user_id}/{user_name}/{quiz_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
@@ -145,7 +145,7 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, room_id: int, q
     manager = currentConnections.get(room_id)
 
     # create user entity
-    user = User(name=user_id, score=0)
+    user = User(name=user_name, score=0)
 
     await manager.connect(websocket, user_id, user)
 

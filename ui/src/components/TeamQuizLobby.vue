@@ -1,13 +1,22 @@
 <script setup>
 import {ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
+import {useUserIdStore} from '../stores/userId'
 import {useQnNumberStore} from '../stores/qnNumber'
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserIdStore()
+
+if (userStore.user == null){
+    router.push({path: `/Login`})
+}
+
+const userId = userStore.user != null ? userStore.user.data.id  : null
+const userName = userStore.user != null ? userStore.user.data.name  : null
 
 const client_id = route.query.isHost
-  ? 'Host' + Date.now()
-  : Date.now().toString()
+  ? 'Host' + userId
+  : userId.toString()
 
 const quiz_id = ref()
 const qnNumStore = useQnNumberStore()
@@ -19,7 +28,7 @@ const participantsBlue = ref({})
 const participantsRed = ref({})
 
 window.websocket = new WebSocket(
-  `ws://localhost:8080/ws/teamQuiz/${route.params.lobby_id}/${client_id}/${route.query.quiz_id}`,
+  `ws://localhost:8080/ws/teamQuiz/${route.params.lobby_id}/${client_id}/${userName}/${route.query.quiz_id}`,
 )
 
 window.websocket.onopen = () => {

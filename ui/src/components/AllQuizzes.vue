@@ -1,12 +1,20 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import {useUserIdStore} from '../stores/userId'
 import {useQuery} from 'vue-query'
 import {useRouter} from 'vue-router'
 import Quiz from '../services/Quiz'
 
 const router = useRouter()
-let isOpen = ref(false)
+let isOpen = ref(false);
+const userStore = useUserIdStore()
 let modalQuizId = ref()
+
+onMounted(() => {
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
 
 // GET Quizzes Function
 const {
@@ -108,7 +116,7 @@ const modalOpen = (quizId) => {
 
         <div
           v-show="isOpen"
-          class="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-70"
+          class="absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-20"
         >
           <div class="max-w-2xl p-6 mx-4 bg-slate-200 rounded-md shadow-xl">
             <div class="flex items-center justify-between">

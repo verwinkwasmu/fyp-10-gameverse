@@ -1,10 +1,20 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
+import {useUserIdStore} from '../stores/userId'
 import {useRouter} from 'vue-router'
 
 const router = useRouter()
 const text = ref('')
 let isOpen = ref(false)
+
+const userStore = useUserIdStore()
+
+onMounted(() => {
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
 
 const joinSoloRoomId = () => {
   if (text.value != ''){

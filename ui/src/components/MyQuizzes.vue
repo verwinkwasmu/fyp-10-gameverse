@@ -1,7 +1,8 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
+import {useUserIdStore} from '../stores/userId'
+import {useRouter, useRoute} from 'vue-router'
 import {useQueryClient, useQuery, useMutation} from 'vue-query'
-import {useRouter} from 'vue-router'
 import Quiz from '../services/Quiz'
 import {useQuizUpdateStore} from '../stores/quizUpdate'
 
@@ -9,6 +10,16 @@ const store = useQuizUpdateStore()
 const queryClient = useQueryClient()
 const router = useRouter()
 let isOpen = ref(false)
+const userStore = useUserIdStore()
+
+
+onMounted(() => {
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
+
 const deleteSuccess = ref(true)
 const showAlert = ref(false)
 let modalQuizId = ref()
@@ -121,7 +132,7 @@ const modalOpen = (quizId) => {
             {{ index + 1 }}
           </div>
           <div
-            class="w-40 p-4 items-center justify-center bg-indigo-700 rounded"
+            class="w-60 p-4 items-center justify-center bg-indigo-700 rounded"
           >
             {{ quiz.title }}
           </div>

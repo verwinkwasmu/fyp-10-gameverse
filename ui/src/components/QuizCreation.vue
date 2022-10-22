@@ -39,17 +39,17 @@ const  getInputs = () => {
     return false;
   }
 
-  // for (let i = 0; i < 4; i++)
-  // {
-  //   let optionId = "option" + [i]
-  //   console.log(optionId)
-  //   // var quizOption = document.forms["quizCreate"][optionId].value;
-  //   var quizOption = document.getElementById(optionId)
-  //   if (quizOption == "" || quizOption == null) {
-  //     alert("Option must be filled up");
-  //     return false;
-  //   }
-  // }
+  for (let i = 0; i < 4; i++)
+  {
+    let optionId = "option" + [i]
+    console.log(optionId)
+    // var quizOption = document.forms["quizCreate"][optionId].value;
+    var quizOption = document.getElementById(optionId)
+    if (quizOption == "" || quizOption == null) {
+      alert("Option must be filled up");
+      return false;
+    }
+  }
 
   checkRadio();
 

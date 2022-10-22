@@ -87,11 +87,12 @@ const sortPlayers = (users) => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
+        <router-link
+          to="/"
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-5"
         >
           Exit Game
-        </button>
+        </router-link>
         <button
           v-if="
             qnNumStore.qnNum < quizStore.quiz.questions.length &&

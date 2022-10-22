@@ -45,7 +45,7 @@ onMounted(() => {
 })
 const getData = async () => {
   const response = await Quiz.getQuiz(qnNumStore.quiz_id)
-  store.quiz = response.data
+  store.quiz = response
   totalQn.value = store.quiz.questions.length
 }
 
@@ -68,7 +68,7 @@ function checkAnswers() {
   ) {
     qnCorrect.value = true
     qnAnswered.value = true
-    score += 10
+    score += (10 * timer.value)
     answer_input.value = null
   } else {
     qnCorrect.value = false

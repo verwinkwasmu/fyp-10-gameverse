@@ -17,7 +17,7 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
 </script>
 
 <template>
-  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
+  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
@@ -70,7 +70,7 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
             <div class="rounded-md shadow">
               <router-link
                 class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7"
-                :to="`/addquestionfrombank/${category}`"
+                :to="`/AddQuestionFromBankForUpdate/${category}`"
                 >Open</router-link
               >
             </div>
@@ -80,8 +80,8 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
       <div class="flex justify-center pt-10">
         <router-link
           class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded hover:text-white"
-          :to="{path: '/CreateQuiz'}"
-          >Back to Quiz Creation</router-link
+          :to="{path: '/UpdateQuiz'}"
+          >Back to Quiz Update</router-link
         >
       </div>
     </div>

@@ -1,13 +1,23 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
+import {useUserIdStore} from '../stores/userId'
 import {useRoute, useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
 
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserIdStore()
+
+if (userStore.user == null){
+  router.push({path: `/Login`})
+}
+
+const userId = userStore.user != null ? userStore.user.data.id  : null
+const userName = userStore.user != null ? userStore.user.data.name  : null
+
 const client_id = route.query.isHost
-  ? 'Host' + Date.now()
-  : Date.now().toString()
+  ? 'Host' + userId
+  : userId.toString()
 const quiz_id = ref()
 const users = ref({})
 const qnNumStore = useQnNumberStore()
@@ -15,8 +25,10 @@ qnNumStore.user_id = client_id
 const url = `http://localhost:5173/QuizLobby/${route.params.lobby_id}`
 const countdowntimer = ref(3)
 
+
+
 window.websocket = new WebSocket(
-  `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}/${route.query.quiz_id}`,
+  `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}/${userName}/${route.query.quiz_id}`,
 )
 
 window.websocket.onopen = () => {
@@ -95,7 +107,7 @@ function routenext() {
                 class="w-6 sm:w-10 mr-2 self-center"
                 src="https://cdn.shopify.com/s/files/1/1061/1924/products/Emoji_Icon_-_Cowboy_emoji_grande.png?v=1571606089"
               />
-              <p>{{ user_id }}</p>
+              <p>{{ value.name }}</p>
             </div>
           </div>
         </div>

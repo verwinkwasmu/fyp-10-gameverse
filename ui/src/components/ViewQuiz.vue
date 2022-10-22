@@ -1,15 +1,22 @@
 <script setup>
 import {ref, onMounted, onBeforeMount} from 'vue'
 import { useRouter, useRoute } from "vue-router";
+import {useUserIdStore} from '../stores/userId'
 import Quiz from '../services/Quiz'
 
 const quizzes = ref([])
 const router = useRouter()
 const route = useRoute()
 const quiz = ref()
+const userStore = useUserIdStore()
+
 
 onBeforeMount(() => {
   getData()
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
 })
 
 const getData = async () => {

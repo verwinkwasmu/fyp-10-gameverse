@@ -1,77 +1,13 @@
 <script setup>
-import {useQuizCreationStore} from '../stores/quizCreation'
-const store = useQuizCreationStore()
-
-// $(document).ready(function () {
-//     getInputs
-// });
-function checkRadio() {
-    // if ($('input[type=radio]:checked').size() = 0) {
-    //   alert("Please set a time");
-    // }
-    var checked_timer = document.querySelector('input[name = "default-radio"]:checked');
-
-    if(checked_timer != null){  //Test if something was checked
-      console.log(checked_timer.value); //Alert the value of the checked.
-    } 
-    else {
-    alert('Please select a time for the question'); //Alert, nothing was checked.
-    }
-}
-
-const  getInputs = () => {
-
-  var quizCategory = document.forms["quizCreate"]["quiz_category"].value;
-  if (quizCategory == "" || quizCategory == null) {
-    alert("Quiz Category must be filled up");
-    return false;
-  }
-
-  var quizTitle = document.forms["quizCreate"]["quiz_title"].value;
-  if (quizTitle == "" || quizTitle == null) {
-    alert("Quiz Title must be filled up");
-    return false;
-  }
-
-  var quizQuestion = document.forms["quizCreate"]["question"].value;
-  if (quizQuestion == "" || quizQuestion == null) {
-    alert("Question must be filled up");
-    return false;
-  }
-
-  for (let i = 0; i < 4; i++)
-  {
-    let optionId = "option" + [i]
-    console.log(optionId)
-    // var quizOption = document.forms["quizCreate"][optionId].value;
-    var quizOption = document.getElementById(optionId)
-    if (quizOption == "" || quizOption == null) {
-      alert("Option must be filled up");
-      return false;
-    }
-  }
-
-  checkRadio();
-
-  // var quizAnswer = document.getElementById("quiz_answer");
-  // if (quizAnswer.value == "selectOption") {
-  //     alert("Please select a card type");
-  // }
-  //var quizAnswer = document.getElementById("quiz_answer");
-  if (document.quizCreate.quiz_answer.value == "") {
-      alert("Please select an answer type");
-      document.quizCreate.quiz_answer.focus();
-      return false;
-  }
-};
-
-
+import {useRouter} from 'vue-router'
+import {useQuizUpdateStore} from '../stores/quizUpdate'
+const store = useQuizUpdateStore()
 </script>
 
 <template>
-  <form name="quizCreate" onsubmit="return getInputs()" method="post" required>
-  <div
+  <form
     class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
+    action="/UpdateQuizSummary"
   >
     <!--Header-->
     <div
@@ -80,7 +16,7 @@ const  getInputs = () => {
       <router-link to="/">
         <div class="text-5xl font-semibold col-span-2">GameVerse</div>
       </router-link>
-      <div class="text-2xl col-span-2">Creating Quiz</div>
+      <div class="text-2xl col-span-2">Updating Quiz</div>
     </div>
 
     <div
@@ -95,10 +31,10 @@ const  getInputs = () => {
           >
           <input
             type="text"
-            id="quiz_category"
+            id="first_name"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Category"
-            v-model="store.category"
+            v-model="store.quiz.category"
             required
           />
         </div>
@@ -110,10 +46,10 @@ const  getInputs = () => {
           >
           <input
             type="text"
-            id="quiz_title"
+            id="first_name"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Name"
-            v-model="store.title"
+            v-model="store.quiz.title"
             required
           />
         </div>
@@ -125,8 +61,8 @@ const  getInputs = () => {
           >
         </div>
         <div
-          v-for="(question, index) in store.questions"
-          class="w-full p-6 w-full rounded-lg border"
+          v-for="(question, index) in store.quiz.questions"
+          class="w-full p-6 rounded-lg border"
           :key="index"
         >
           <div class="w-full my-5">
@@ -137,7 +73,7 @@ const  getInputs = () => {
             >
             <input
               type="text"
-              id="question"
+              id="first_name"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter the question name"
               v-model="question.question"
@@ -157,58 +93,62 @@ const  getInputs = () => {
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
-                  for="'timer-5s-' + index"
+                  for="default-checkbox"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >5</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-10s-' + index"
+                  :id="'timer-10s' + index"
                   type="radio"
                   :value="10"
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
-                  for="'timer-10s-' + index"
+                  for="default-checkbox"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >10</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-15s-' + index"
+                  :id="'timer-15s' + index"
                   type="radio"
                   :value="15"
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
-                  for="'timer-15s-' + index"
+                  for="default-checkbox"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >15</label
                 >
               </div>
               <div class="flex items-center mb-4">
                 <input
-                  :id="'timer-20s-' + index"
+                  :id="'timer-20s' + index"
                   type="radio"
                   :value="20"
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
-                  for="'timer-20s-' + index"
+                  for="default-checkbox"
                   class="ml-2 text-sm font-medium text-white dark:text-gray-300"
                   >20</label
                 >
@@ -225,15 +165,7 @@ const  getInputs = () => {
                 >Add answer {{ index + 1 }}</label
               >
             </div>
-            <!-- <input
-              :id="'checkbox-' + index"
-              type="checkbox"
-              :value="propertyName"
-              class="w-4 float-right text-indigo-600 bg-gray-100 rounded border-gray-300 mr-20"
-              v-model="question.answer"
-            /> -->
             <input
-              :id="'option' + index"
               type="text"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter your option"
@@ -267,7 +199,7 @@ const  getInputs = () => {
               </button>
               <button
                 type="button"
-                v-if="Object.keys(question.options).length > 2"
+                v-if="Object.keys(question.options).length > 1"
                 @click="store.removeOption(question.options)"
                 class="text-red-600 underline hover:font-bold font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
               >
@@ -297,14 +229,14 @@ const  getInputs = () => {
               TODO gotta find a way to select the answer when it is added from the question bank
               -->
             <select
-              name="quiz_answer"
               v-model="question.answer"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
+              required
             >
               <option disabled hidden value="">Select your option</option>
               <option
                 v-for="(value, propertyName, index) in question.options"
-                :key="'propertyName-' + index"
+                :key="index"
                 :value="propertyName"
               >
                 {{ value }}
@@ -314,7 +246,7 @@ const  getInputs = () => {
           <div class="justify-self-end">
             <button
               type="button"
-              @click="store.removeQuestion(store.questions, index)"
+              @click="store.removeQuestion(store.quiz.questions, index)"
               class="text-red-600 bg-slate-200 hover:bg-slate-400 text-sm rounded-lg px-5 py-2.5 text-center inline-flex items-center my-5 h-1/2"
             >
               <span class="text-2xl font-bold">🗑</span> &nbsp; Delete Question
@@ -323,14 +255,14 @@ const  getInputs = () => {
         </div>
         <div class="w-full">
           <button
-            v-if="store.questions.length < 15"
+            v-if="store.quiz.questions.length < 15"
             type="button"
-            @click="store.addQuestion(store.questions)"
+            @click="store.addQuestion()"
             class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-5 mb-2"
           >
             Add Question
           </button>
-          <router-link to="/AllQuizQuestionBank" tag="button">
+          <router-link to="/AllQuizQuestionBankForUpdate" tag="button">
             <button
               type="button"
               class="text-white bg-purple-800 hover:bg-purple-900 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
@@ -345,7 +277,7 @@ const  getInputs = () => {
       <hr class="border-1 border-slate-300" />
       <div class="flex grid grid-cols-1 gap-8 justify-items-center m-5 w-11/12">
         <div>
-          <router-link to="/CreateQuiz">
+          <router-link to="/MyQuizzes">
             <button
               type="button"
               class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
@@ -353,21 +285,14 @@ const  getInputs = () => {
               Exit
             </button>
           </router-link>
-
-          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
-          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
-            <button
-              @click="getInputs()"
-              type="button"
-              class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Finish
-            </button>
-          <!-- </router-link> -->
+          <input
+            type="submit"
+            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            value="Finish"
+          />
         </div>
       </div>
     </div>
-  </div>
   </form>
 </template>
 

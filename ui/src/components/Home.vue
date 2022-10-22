@@ -1,3 +1,28 @@
+<script setup>
+import { ref, onBeforeMount, onMounted} from "vue";
+import { useRouter, useRoute } from "vue-router";
+import {useUserIdStore} from '../stores/userId'
+
+const router = useRouter()
+const userStore = useUserIdStore()
+
+onMounted(()=>{
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
+
+const signOut = () => {
+  let logout = userStore.logout()
+  if (logout){
+    router.push('/Login')
+  }
+}
+
+
+</script>
+
 <template>
   <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
     <div class="p-10 ml-6 mr-6">
@@ -24,6 +49,16 @@
           </button>
         </router-link>
       </div>
+
+      <footer class="fixed left-10 bottom-5 flex ml-6">
+        <router-link to="/">
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="signOut"
+          >
+            Sign Out
+          </button>
+        </router-link>
+      </footer>
     </div>
   </div>
 </template>

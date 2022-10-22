@@ -4,10 +4,29 @@ import {ref, onMounted, onBeforeMount} from 'vue'
 import {useQnNumberStore} from '../stores/qnNumber'
 import {useRoute, useRouter} from 'vue-router'
 import {useQuizObjectStore} from '../stores/quizObject'
+import {useQuery} from 'vue-query'
 
 const users = ref({})
 const router = useRouter()
 const route = useRoute()
+const store = useQuizObjectStore()
+const qnNumStore = useQnNumberStore()
+const qnCorrect = ref(null)
+const qnAnswered = ref(false)
+const timer = ref()
+const answer_input = ref(null)
+const totalQn = ref()
+
+// GET Single Quiz by quiz_id
+const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
+  ['quizById'],
+  () => Quiz.getQuiz(qnNumStore.quiz_id),
+  {
+    retry: 2,
+    staleTime: 50000,
+    cacheTime: 50000,
+  },
+)
 
 window.websocket.onmessage = (event) => {
   if (JSON.parse(event.data).command == 'Show Scoreboard') {
@@ -17,20 +36,10 @@ window.websocket.onmessage = (event) => {
   }
 }
 
-const store = useQuizObjectStore()
-const qnNumStore = useQnNumberStore()
-const qnCorrect = ref(null)
-const qnAnswered = ref(false)
-const timer = ref()
-const answer_input = ref(null)
-const totalQn = ref()
-
-onBeforeMount(() => {
-  getData()
-})
-
 onMounted(() => {
-  timer.value = store.quiz.questions[qnNumStore.qnNum].timer
+  store.quiz = data.value
+  totalQn.value = data.value.questions.length
+  timer.value = data.value.questions[qnNumStore.qnNum].timer
 
   let timerCountdown = setInterval(() => {
     timer.value--
@@ -42,11 +51,6 @@ onMounted(() => {
     }
   }, 1000)
 })
-const getData = async () => {
-  const response = await Quiz.getQuiz(qnNumStore.quiz_id)
-  store.quiz = response.data
-  totalQn.value = store.quiz.questions.length
-}
 
 function showAnswer(event) {
   qnAnswered.value = true
@@ -59,15 +63,15 @@ function checkAnswers() {
     answer_input.value = ''
   }
 
-  let answer_key = store.quiz.questions[qnNumStore.qnNum].answer
+  let answer_key = data.value.questions[qnNumStore.qnNum].answer
   let score = 0
   if (
-    store.quiz.questions[qnNumStore.qnNum].options[answer_key] ==
+    data.value.questions[qnNumStore.qnNum].options[answer_key] ==
     answer_input.value
   ) {
     qnCorrect.value = true
     qnAnswered.value = true
-    score += 10
+    score += (10 * timer.value)
     answer_input.value = null
   } else {
     qnCorrect.value = false
@@ -91,12 +95,22 @@ const moveToScoreboard = () => {
 
 <template>
   <div id="Quiz">
-    <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white">
+    <div
+      v-if="isError"
+      class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+      role="alert"
+    >
+      <span class="font-medium">Error Occurred:</span> {{ queryError }}
+    </div>
+    <div
+      v-else
+      class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white"
+    >
       <div class="p-10 ml-6 mr-6">
         <!--Header-->
         <div class="grid grid-rows-2 grid-flow-col gap-2">
           <div class="text-4xl font-semibold col-span-2">GameVerse</div>
-          <div class="text-2xl col-span-2">{{ store.quiz.category }}</div>
+          <div class="text-2xl col-span-2">{{ data.category }}</div>
           <div v-if="!qnAnswered" class="text-sm row-span-2 flow-root">
             <p class="float-right mt-10">
               Question {{ qnNumStore.qnNum + 1 }} of {{ totalQn }}
@@ -109,7 +123,7 @@ const moveToScoreboard = () => {
             class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center"
           >
             <div class="text-4xl">
-              <div>{{ store.quiz.questions[qnNumStore.qnNum].question }}</div>
+              <div>{{ data.questions[qnNumStore.qnNum].question }}</div>
             </div>
           </div>
 
@@ -124,9 +138,8 @@ const moveToScoreboard = () => {
               >
                 <button
                   class="button h-24 m-2 box-border rounded-lg hover:bg-blue-900"
-                  v-for="(option, index) in store.quiz.questions[
-                    qnNumStore.qnNum
-                  ].options"
+                  v-for="(option, index) in data.questions[qnNumStore.qnNum]
+                    .options"
                   :key="index"
                   :value="option"
                   v-html="option"

@@ -1,22 +1,37 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
+import {useUserIdStore} from '../stores/userId'
+import {useRouter, useRoute} from 'vue-router'
 import {useQueryClient, useQuery, useMutation} from 'vue-query'
-import {useRouter} from 'vue-router'
 import Quiz from '../services/Quiz'
+import {useQuizUpdateStore} from '../stores/quizUpdate'
 
+const store = useQuizUpdateStore()
 const queryClient = useQueryClient()
 const router = useRouter()
 let isOpen = ref(false)
+const userStore = useUserIdStore()
+
+
+onMounted(() => {
+
+  if (userStore.user == null){
+    router.push({path: `/Login`})
+  }
+})
+
 const deleteSuccess = ref(true)
 const showAlert = ref(false)
+let modalQuizId = ref()
 
 // GET Quizzes Function
 const {
   isLoading,
   isError,
   isFetching,
+  isSuccess,
   data: quizzes,
-  error,
+  error: queryError,
 } = useQuery(['getQuizzes'], () => Quiz.getQuizzes(), {
   retry: 2,
   staleTime: 50000,
@@ -61,6 +76,26 @@ const startTeamGame = (quizId) => {
     query: {quiz_id: quizId, isHost: true},
   })
 }
+
+const moveToUpdateQuiz = (quiz) => {
+  store.$patch({
+    quiz: {
+      id: quiz.id,
+      title: quiz.title,
+      category: quiz.category,
+      questions: [],
+    },
+  })
+  store.addQuestions(quiz.questions)
+  router.push({
+    path: `/UpdateQuiz`,
+  })
+}
+
+const modalOpen = (quizId) => {
+  modalQuizId.value = quizId
+  isOpen.value = true
+}
 </script>
 
 <template>
@@ -75,8 +110,15 @@ const startTeamGame = (quizId) => {
         </router-link>
         <div class="text-2xl col-span-2">My Quizzes</div>
       </div>
-
       <div
+        v-if="isError"
+        class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+        role="alert"
+      >
+        <span class="font-medium">Error Occurred:</span> {{ queryError }}
+      </div>
+      <div
+        v-else-if="isSuccess"
         class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center"
       >
         <div
@@ -90,7 +132,7 @@ const startTeamGame = (quizId) => {
             {{ index + 1 }}
           </div>
           <div
-            class="w-40 p-4 items-center justify-center bg-indigo-700 rounded"
+            class="w-60 p-4 items-center justify-center bg-indigo-700 rounded"
           >
             {{ quiz.title }}
           </div>
@@ -106,12 +148,13 @@ const startTeamGame = (quizId) => {
           </div>
           <button
             class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold"
+            @click="moveToUpdateQuiz(quiz)"
           >
             Edit Game
           </button>
           <button
             class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold"
-            @click="isOpen = true"
+            @click="modalOpen(quiz.id)"
           >
             Start Game
           </button>
@@ -148,13 +191,13 @@ const startTeamGame = (quizId) => {
               <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
                 <button
                   class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
-                  @click="startSoloGame(quiz.id)"
+                  @click="startSoloGame(modalQuizId)"
                 >
                   Solo
                 </button>
                 <button
                   class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
-                  @click="startTeamGame(quiz.id)"
+                  @click="startTeamGame(modalQuizId)"
                 >
                   Team
                 </button>

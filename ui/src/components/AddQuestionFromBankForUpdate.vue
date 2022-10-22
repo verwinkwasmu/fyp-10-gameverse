@@ -1,11 +1,11 @@
 <script setup>
 import Quiz from '../services/Quiz'
 import {useRoute, useRouter} from 'vue-router'
-import {useQuizCreationStore} from '../stores/quizCreation'
+import {useQuizUpdateStore} from '../stores/quizUpdate'
 import {useQuestionBankStore} from '../stores/questionBank'
 import {useQuery} from 'vue-query'
 
-const store = useQuizCreationStore()
+const store = useQuizUpdateStore()
 const questionBankStore = useQuestionBankStore()
 const route = useRoute()
 
@@ -14,6 +14,7 @@ const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
   () => Quiz.getQuestionsByCategory(route.params.category),
   {
     retry: 2,
+    staleTime: 50000,
     cacheTime: 50000,
   },
 )
@@ -187,15 +188,15 @@ const removeQuestion = (questionTitle) => {
           <div class="pr-4 pt-2">
             <router-link
               class="bg-fuchsia-400 hover:bg-fuchsia-300 text-white font-bold py-2 px-4 rounded"
-              :to="{path: '/AllQuizQuestionBank'}"
+              :to="{path: '/AllQuizQuestionBankForUpdate'}"
               >Back to Question Bank</router-link
             >
           </div>
           <router-link
             class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded"
-            to="/QuizCreation"
+            to="/UpdateQuiz"
           >
-            Back to Quiz Creation
+            Back to Quiz Update
           </router-link>
         </div>
       </div>

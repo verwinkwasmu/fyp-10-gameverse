@@ -1,10 +1,11 @@
 <script setup>
 import {useQuizCreationStore} from '../stores/quizCreation'
 import Quiz from '../services/Quiz'
-import {useMutation} from 'vue-query'
+import {useMutation, useQueryClient} from 'vue-query'
 import {useRouter} from 'vue-router'
 import {useQuestionBankStore} from '../stores/questionBank'
 
+const queryClient = useQueryClient()
 const store = useQuizCreationStore()
 const questionBankStore = useQuestionBankStore()
 const router = useRouter()
@@ -21,6 +22,8 @@ const {
     store.$reset()
     questionBankStore.$reset()
 
+    // Refetch getQuizzes Query
+    queryClient.invalidateQueries('getQuizzes')
     // Redirect to MyQuizzes page
     router.push({path: `/MyQuizzes`})
   },

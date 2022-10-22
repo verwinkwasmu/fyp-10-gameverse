@@ -1,18 +1,19 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import Quiz from '../services/Quiz'
+import {useQuery} from 'vue-query'
 
 const category = ref('')
-const output = ref([])
 
-onMounted(() => {
-  searchCategory()
-})
-
-const searchCategory = async () => {
-  const response = await Quiz.getCategories(category.value)
-  output.value = response
-}
+const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
+  ['questionsByCategory', category],
+  () => Quiz.getCategories(category.value),
+  {
+    retry: 2,
+    staleTime: 50000,
+    cacheTime: 50000,
+  },
+)
 </script>
 
 <template>
@@ -52,7 +53,7 @@ const searchCategory = async () => {
         </div>
         <div
           class="flex flex-row pt-5"
-          v-for="(category, index) in output"
+          v-for="(category, index) in data"
           :key="index"
         >
           <div class="basis-1/2 pr-4">

@@ -1,23 +1,22 @@
 <script setup>
-import {onMounted, ref} from 'vue'
 import Quiz from '../services/Quiz'
 import {useRoute, useRouter} from 'vue-router'
 import {useQuizCreationStore} from '../stores/quizCreation'
 import {useQuestionBankStore} from '../stores/questionBank'
+import {useQuery} from 'vue-query'
 
 const store = useQuizCreationStore()
 const questionBankStore = useQuestionBankStore()
 const route = useRoute()
-const output = ref([])
 
-onMounted(() => {
-  getQuestionsByCategory()
-})
-
-const getQuestionsByCategory = async () => {
-  const response = await Quiz.getQuestionsByCategory(route.params.category)
-  output.value = response
-}
+const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
+  ['questionsByCategory'],
+  () => Quiz.getQuestionsByCategory(route.params.category),
+  {
+    retry: 2,
+    cacheTime: 50000,
+  },
+)
 
 const addQuestion = (question) => {
   const input = {
@@ -75,108 +74,110 @@ const removeQuestion = (questionTitle) => {
             <a
               href="#"
               class="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-800 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-3"
-              >Questions: {{ output.length }}</a
+              >Questions: {{ data.length }}</a
             >
           </div>
         </div>
         <div class="text-m row-span-2 flow-root">
           <p class="float-left mt-10">Questions:</p>
         </div>
-        <div v-for="(question, index) in output" :key="index">
-          <div class="text-sm">
-            <p>Q{{ index + 1 }}.</p>
-          </div>
-          <div class="flex flex-row">
-            <div class="basis-2/3 pr-3">
-              <div class="rounded-md shadow">
-                <a
-                  href="#"
-                  class="flex w-full items-center justify-left rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-10"
-                >
-                  {{ question.title }}</a
-                >
+        <div v-if="isSuccess">
+          <div v-for="(question, index) in data" :key="index">
+            <div class="text-sm">
+              <p>Q{{ index + 1 }}.</p>
+            </div>
+            <div class="flex flex-row">
+              <div class="basis-2/3 pr-3">
+                <div class="rounded-md shadow">
+                  <a
+                    href="#"
+                    class="flex w-full items-center justify-left rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-10"
+                  >
+                    {{ question.title }}</a
+                  >
+                </div>
+              </div>
+              <div class="basis-1/3">
+                <div class="rounded-md shadow">
+                  <button
+                    v-if="
+                      !questionBankStore.addedQuestions.includes(question.title)
+                    "
+                    class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7"
+                    @click="addQuestion(question)"
+                  >
+                    Add Question
+                  </button>
+                  <button
+                    v-else
+                    class="flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 md:py-1 md:px-7"
+                    @click="removeQuestion(question.title)"
+                  >
+                    Remove Question
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="basis-1/3">
-              <div class="rounded-md shadow">
-                <button
-                  v-if="
-                    !questionBankStore.addedQuestions.includes(question.title)
-                  "
-                  class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7"
-                  @click="addQuestion(question)"
-                >
-                  Add Question
-                </button>
-                <button
-                  v-else
-                  class="flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-700 md:py-1 md:px-7"
-                  @click="removeQuestion(question.title)"
-                >
-                  Remove Question
-                </button>
+            <div class="flex flex-row pt-3">
+              <div class="basis-1/4 pr-3">
+                <div class="rounded-md shadow">
+                  <a
+                    href="#"
+                    class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
+                    :class="
+                      question.answer == 'option_1'
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-blue-900 hover:bg-blue-800'
+                    "
+                  >
+                    {{ question.option_1 }}</a
+                  >
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="flex flex-row pt-3">
-            <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a
-                  href="#"
-                  class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
-                  :class="
-                    question.answer == 'option_1'
-                      ? 'bg-green-500 hover:bg-green-600'
-                      : 'bg-blue-900 hover:bg-blue-800'
-                  "
-                >
-                  {{ question.option_1 }}</a
-                >
+              <div class="basis-1/4 pr-3">
+                <div class="rounded-md shadow">
+                  <a
+                    href="#"
+                    class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
+                    :class="
+                      question.answer == 'option_2'
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-blue-900 hover:bg-blue-800'
+                    "
+                  >
+                    {{ question.option_2 }}</a
+                  >
+                </div>
               </div>
-            </div>
-            <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a
-                  href="#"
-                  class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
-                  :class="
-                    question.answer == 'option_2'
-                      ? 'bg-green-500 hover:bg-green-600'
-                      : 'bg-blue-900 hover:bg-blue-800'
-                  "
-                >
-                  {{ question.option_2 }}</a
-                >
+              <div class="basis-1/4 pr-3">
+                <div class="rounded-md shadow">
+                  <a
+                    href="#"
+                    class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
+                    :class="
+                      question.answer == 'option_3'
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-blue-900 hover:bg-blue-800'
+                    "
+                  >
+                    {{ question.option_3 }}</a
+                  >
+                </div>
               </div>
-            </div>
-            <div class="basis-1/4 pr-3">
-              <div class="rounded-md shadow">
-                <a
-                  href="#"
-                  class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
-                  :class="
-                    question.answer == 'option_3'
-                      ? 'bg-green-500 hover:bg-green-600'
-                      : 'bg-blue-900 hover:bg-blue-800'
-                  "
-                >
-                  {{ question.option_3 }}</a
-                >
-              </div>
-            </div>
-            <div class="basis-1/4">
-              <div class="rounded-md shadow">
-                <a
-                  href="#"
-                  class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
-                  :class="
-                    question.answer == 'option_4'
-                      ? 'bg-green-500 hover:bg-green-600'
-                      : 'bg-blue-900 hover:bg-blue-800'
-                  "
-                >
-                  {{ question.option_4 }}</a
-                >
+              <div class="basis-1/4">
+                <div class="rounded-md shadow">
+                  <a
+                    href="#"
+                    class="flex w-full items-center justify-left rounded-md border border-transparent px-8 py-3 text-base font-medium text-white md:py-1 md:px-10"
+                    :class="
+                      question.answer == 'option_4'
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-blue-900 hover:bg-blue-800'
+                    "
+                  >
+                    {{ question.option_4 }}</a
+                  >
+                </div>
               </div>
             </div>
           </div>

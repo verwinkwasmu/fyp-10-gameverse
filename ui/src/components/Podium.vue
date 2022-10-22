@@ -1,7 +1,29 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import {useMutation} from 'vue-query'
+import {useRouter} from 'vue-router'
+import Player from '../services/Player'
+import {useQnNumberStore} from '../stores/qnNumber'
+import {useQuizObjectStore} from '../stores/quizObject'
 
+const router = useRouter()
 const users = ref({})
+const qnNumStore = useQnNumberStore()
+const quizObjectStore = useQuizObjectStore()
+
+const {
+  mutate: addQuizResults,
+  isLoading,
+  isError,
+  data,
+  error,
+  isSuccess,
+} = useMutation((payload) => Player.addQuizResults(payload), {
+  onSuccess: (data) => {},
+  onError: (error) => {
+    alert(error)
+  },
+})
 
 onMounted(() => {
   window.websocket.send(JSON.stringify({command: 'To Podium'}))
@@ -9,6 +31,16 @@ onMounted(() => {
 
 window.websocket.onmessage = (event) => {
   users.value = JSON.parse(event.data).current_users
+
+  // to make sure that only users (not host) gets to have their scores recorded
+  if (qnNumStore.user_id.toString() in users.value) {
+    const payload = {
+      id: parseInt(qnNumStore.user_id),
+      score: users.value[qnNumStore.user_id].score,
+      category: quizObjectStore.quiz.category,
+    }
+    addQuizResults(payload)
+  }
 }
 
 const sortPlayers = (users) => {
@@ -22,6 +54,11 @@ const sortPlayers = (users) => {
     return b[1] - a[1]
   })
   return sortUsers.slice(0, 3)
+}
+
+const backToHome = () => {
+  window.websocket.close()
+  router.push({path: '/'})
 }
 </script>
 
@@ -50,12 +87,12 @@ const sortPlayers = (users) => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <router-link
-          to="/"
+        <button
           class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          @click="backToHome"
         >
           Exit Game
-        </router-link>
+        </button>
       </footer>
     </div>
   </div>

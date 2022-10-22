@@ -39,7 +39,7 @@ window.websocket.onmessage = (event) => {
 onMounted(() => {
   store.quiz = data.value
   totalQn.value = data.value.questions.length
-  timer.value = data.value.questions[qnNumStore.qnNum].timer / 4
+  timer.value = data.value.questions[qnNumStore.qnNum].timer
 
   let timerCountdown = setInterval(() => {
     timer.value--

@@ -27,7 +27,9 @@ class ConnectionManager:
 
     def disconnect(self, websocket: WebSocket, user_id: str):
         self.active_connections.remove(websocket)
-        del self.current_users[user_id]
+
+        if "Host" not in user_id:
+            del self.current_users[user_id]
 
         if user_id in self.teams["red"]:
             del self.teams["red"][user_id]
@@ -54,7 +56,9 @@ currentConnections = {}
 
 
 @app.websocket("/ws/{room_id}/{user_id}/{user_name}/{quiz_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id):
+async def websocket_endpoint(
+    websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id
+):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()
@@ -137,7 +141,9 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str, user_name: str,
 
 
 @app.websocket("/ws/teamQuiz/{room_id}/{user_id}/{user_name}/{quiz_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id):
+async def websocket_endpoint(
+    websocket: WebSocket, user_id: str, user_name: str, room_id: int, quiz_id
+):
 
     if room_id not in currentConnections:
         currentConnections[room_id] = ConnectionManager()

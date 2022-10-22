@@ -14,7 +14,6 @@ const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
   () => Quiz.getQuestionsByCategory(route.params.category),
   {
     retry: 2,
-    staleTime: 50000,
     cacheTime: 50000,
   },
 )
@@ -32,14 +31,14 @@ const addQuestion = (question) => {
     },
   }
 
-  store.questions.push(input)
+  store.quiz.questions.push(input)
   questionBankStore.addQuestion(question.title)
 }
 
 const removeQuestion = (questionTitle) => {
-  for (let i = 0; i < store.questions.length; i++) {
-    if (store.questions[i].question == questionTitle) {
-      store.questions.splice(i, 1)
+  for (let i = 0; i < store.quiz.questions.length; i++) {
+    if (store.quiz.questions[i].question == questionTitle) {
+      store.quiz.questions.splice(i, 1)
     }
   }
   questionBankStore.removeQuestion(questionTitle)
@@ -47,7 +46,9 @@ const removeQuestion = (questionTitle) => {
 </script>
 
 <template>
-  <div class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto">
+  <div
+    class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
+  >
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">

@@ -30,7 +30,7 @@ class QuizRepository:
         with Session(self.database) as session:
             quizzes = session.exec(select(Quiz)).all()
 
-            if quizzes != []:
+            if quizzes or quizzes == []:
                 return quizzes
 
             return None
@@ -44,6 +44,16 @@ class QuizRepository:
                 return None
 
             return quiz
+
+    def get_user_quizzes(self, user_id: int):
+        with Session(self.database) as session:
+            statement = select(Quiz).where(Quiz.user_id == user_id)
+            quizzes = session.exec(statement).all()
+
+            if quizzes or quizzes == []:
+                return quizzes
+
+            return None
 
     def update_quiz(self, quiz: Quiz):
         with Session(self.database) as session:

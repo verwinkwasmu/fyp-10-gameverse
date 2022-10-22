@@ -6,6 +6,7 @@ export const useQuizUpdateStore = defineStore('quizUpdate', {
   state: () => ({
     quiz: useStorage('quiz', {
       id: '',
+      user_id: '',
       title: '',
       category: '',
       questions: [],

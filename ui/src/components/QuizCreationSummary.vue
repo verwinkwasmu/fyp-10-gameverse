@@ -23,7 +23,7 @@ const {
     questionBankStore.$reset()
 
     // Refetch getQuizzes Query
-    queryClient.invalidateQueries('getQuizzes')
+    queryClient.invalidateQueries('getUserQuizzes')
     // Redirect to MyQuizzes page
     router.push({path: `/MyQuizzes`})
   },

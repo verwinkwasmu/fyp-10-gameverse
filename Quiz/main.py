@@ -60,6 +60,18 @@ async def get_quizzes():
     return quizzes
 
 
+@app.get("/api/quizzes/user/{user_id}", response_model=List[Quiz])
+async def get_user_quizzes(user_id: int):
+    quizzes = quizService.get_user_quizzes(user_id)
+
+    if quizzes is None:
+        raise HTTPException(
+            status_code=500, detail=f"No quizzes found for user with id: {user_id}"
+        )
+
+    return quizzes
+
+
 @app.get("/api/quiz/{quiz_id}", response_model=Quiz)
 async def get_quiz(quiz_id: int):
     quiz = quizService.get_quiz(quiz_id)

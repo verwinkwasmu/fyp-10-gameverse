@@ -3,15 +3,12 @@ import {ref, onMounted} from 'vue'
 
 const users = ref({})
 
-
 onMounted(() => {
   window.websocket.send(JSON.stringify({command: 'To Podium'}))
 })
 
 window.websocket.onmessage = (event) => {
   users.value = JSON.parse(event.data).current_users
-  // console.log(JSON.parse(event.data))
-  console.log(users.value)
 }
 
 const sortPlayers = (users) => {
@@ -25,9 +22,7 @@ const sortPlayers = (users) => {
     return b[1] - a[1]
   })
   return sortUsers.slice(0, 3)
-
 }
-
 </script>
 
 <template>
@@ -39,10 +34,14 @@ const sortPlayers = (users) => {
         <div class="text-2xl col-span-2">Quiz Category</div>
       </div>
 
-      <div class="grid grid-flow-row flex justify-center items-center mt-20 gap-2">
+      <div
+        class="grid grid-flow-row flex justify-center items-center mt-20 gap-2"
+      >
         <div v-for="user in sortPlayers(users)" :key="user">
-            <p class="flex justify-center items-center font-semibold text-2xl">{{ user[0] }}</p>
-            <p class="flex justify-center items-center">{{ user[1] }} Points</p>
+          <p class="flex justify-center items-center font-semibold text-2xl">
+            {{ user[0] }}
+          </p>
+          <p class="flex justify-center items-center">{{ user[1] }} Points</p>
         </div>
         <div class="col-span-3">
           <img src="../assets/podium_new.png" style="width: 500px" />

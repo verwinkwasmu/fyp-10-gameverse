@@ -2,74 +2,10 @@
 import {useQuizCreationStore} from '../stores/quizCreation'
 const store = useQuizCreationStore()
 
-// $(document).ready(function () {
-//     getInputs
-// });
-function checkRadio() {
-    // if ($('input[type=radio]:checked').size() = 0) {
-    //   alert("Please set a time");
-    // }
-    var checked_timer = document.querySelector('input[name = "default-radio"]:checked');
-
-    if(checked_timer != null){  //Test if something was checked
-      console.log(checked_timer.value); //Alert the value of the checked.
-    } 
-    else {
-    alert('Please select a time for the question'); //Alert, nothing was checked.
-    }
-}
-
-const  getInputs = () => {
-
-  var quizCategory = document.forms["quizCreate"]["quiz_category"].value;
-  if (quizCategory == "" || quizCategory == null) {
-    alert("Quiz Category must be filled up");
-    return false;
-  }
-
-  var quizTitle = document.forms["quizCreate"]["quiz_title"].value;
-  if (quizTitle == "" || quizTitle == null) {
-    alert("Quiz Title must be filled up");
-    return false;
-  }
-
-  var quizQuestion = document.forms["quizCreate"]["question"].value;
-  if (quizQuestion == "" || quizQuestion == null) {
-    alert("Question must be filled up");
-    return false;
-  }
-
-  for (let i = 0; i < 4; i++)
-  {
-    let optionId = "option" + [i]
-    console.log(optionId)
-    // var quizOption = document.forms["quizCreate"][optionId].value;
-    var quizOption = document.getElementById(optionId)
-    if (quizOption == "" || quizOption == null) {
-      alert("Option must be filled up");
-      return false;
-    }
-  }
-
-  checkRadio();
-
-  // var quizAnswer = document.getElementById("quiz_answer");
-  // if (quizAnswer.value == "selectOption") {
-  //     alert("Please select a card type");
-  // }
-  //var quizAnswer = document.getElementById("quiz_answer");
-  if (document.quizCreate.quiz_answer.value == "") {
-      alert("Please select an answer type");
-      document.quizCreate.quiz_answer.focus();
-      return false;
-  }
-};
-
-
 </script>
 
 <template>
-  <form name="quizCreate" onsubmit="return getInputs()" method="post" required>
+  <form action="/QuizCreationSummary">
   <div
     class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
   >
@@ -157,6 +93,7 @@ const  getInputs = () => {
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -173,6 +110,7 @@ const  getInputs = () => {
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -189,6 +127,7 @@ const  getInputs = () => {
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -205,6 +144,7 @@ const  getInputs = () => {
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -299,7 +239,8 @@ const  getInputs = () => {
             <select
               name="quiz_answer"
               v-model="question.answer"
-              class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
+              class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5" 
+              required
             >
               <option disabled hidden value="">Select your option</option>
               <option
@@ -345,7 +286,7 @@ const  getInputs = () => {
       <hr class="border-1 border-slate-300" />
       <div class="flex grid grid-cols-1 gap-8 justify-items-center m-5 w-11/12">
         <div>
-          <router-link to="/CreateQuiz">
+          <router-link to="/MyQuizzes">
             <button
               type="button"
               class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
@@ -353,17 +294,11 @@ const  getInputs = () => {
               Exit
             </button>
           </router-link>
-
-          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
-          <!-- <router-link :to="{path: '/QuizCreationSummary'}"> -->
-            <button
-              @click="getInputs()"
-              type="button"
-              class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Finish
-            </button>
-          <!-- </router-link> -->
+          <input
+            type="submit"
+            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            value="Finish"
+          />
         </div>
       </div>
     </div>

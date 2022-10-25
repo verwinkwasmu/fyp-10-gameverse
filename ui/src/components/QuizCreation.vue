@@ -5,6 +5,7 @@ const store = useQuizCreationStore()
 </script>
 
 <template>
+  <form action="/QuizCreationSummary">
   <div
     class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
   >
@@ -30,7 +31,7 @@ const store = useQuizCreationStore()
           >
           <input
             type="text"
-            id="first_name"
+            id="quiz_category"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Category"
             v-model="store.category"
@@ -45,7 +46,7 @@ const store = useQuizCreationStore()
           >
           <input
             type="text"
-            id="first_name"
+            id="quiz_title"
             class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
             placeholder="Enter the Quiz Name"
             v-model="store.title"
@@ -72,7 +73,7 @@ const store = useQuizCreationStore()
             >
             <input
               type="text"
-              id="first_name"
+              id="question"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter the question name"
               v-model="question.question"
@@ -92,6 +93,7 @@ const store = useQuizCreationStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -108,6 +110,7 @@ const store = useQuizCreationStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -124,6 +127,7 @@ const store = useQuizCreationStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -140,6 +144,7 @@ const store = useQuizCreationStore()
                   :name="'radio-group-' + index"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
                   v-model="question.timer"
+                  required
                 />
 
                 <label
@@ -168,6 +173,7 @@ const store = useQuizCreationStore()
               v-model="question.answer"
             /> -->
             <input
+              :id="'option' + index"
               type="text"
               class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Enter your option"
@@ -201,7 +207,7 @@ const store = useQuizCreationStore()
               </button>
               <button
                 type="button"
-                v-if="Object.keys(question.options).length > 1"
+                v-if="Object.keys(question.options).length > 2"
                 @click="store.removeOption(question.options)"
                 class="text-red-600 underline hover:font-bold font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
               >
@@ -231,8 +237,10 @@ const store = useQuizCreationStore()
               TODO gotta find a way to select the answer when it is added from the question bank
               -->
             <select
+              name="quiz_answer"
               v-model="question.answer"
-              class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5"
+              class="bg-indigo-700 border border-indigo-600 text-white text-sm rounded-lg block w-full p-2.5" 
+              required
             >
               <option disabled hidden value="">Select your option</option>
               <option
@@ -278,7 +286,7 @@ const store = useQuizCreationStore()
       <hr class="border-1 border-slate-300" />
       <div class="flex grid grid-cols-1 gap-8 justify-items-center m-5 w-11/12">
         <div>
-          <router-link to="/CreateQuiz">
+          <router-link to="/MyQuizzes">
             <button
               type="button"
               class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
@@ -286,19 +294,16 @@ const store = useQuizCreationStore()
               Exit
             </button>
           </router-link>
-
-          <router-link :to="{path: '/QuizCreationSummary'}">
-            <button
-              type="button"
-              class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-            >
-              Finish
-            </button>
-          </router-link>
+          <input
+            type="submit"
+            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            value="Finish"
+          />
         </div>
       </div>
     </div>
   </div>
+  </form>
 </template>
 
 <style>

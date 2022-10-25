@@ -29,7 +29,6 @@ class QuizRepository:
     def get_quizzes(self):
         with Session(self.database) as session:
             quizzes = session.exec(select(Quiz)).all()
-            print(quizzes)
             if quizzes or quizzes == []:
                 return quizzes
 

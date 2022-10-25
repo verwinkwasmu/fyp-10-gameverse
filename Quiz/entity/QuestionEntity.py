@@ -1,6 +1,7 @@
 from sqlalchemy import Column
 from sqlmodel import ARRAY, Field, SQLModel, String
 from typing import List, Optional
+from datetime import datetime
 
 
 class Question(SQLModel, table=True):
@@ -13,6 +14,7 @@ class Question(SQLModel, table=True):
     answer: str
     timer: int
     category: str
+    created_at: Optional[datetime] = Field(default=datetime.utcnow(), nullable=False)
 
     # Needed for Column(JSON)
     class Config:

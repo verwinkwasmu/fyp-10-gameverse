@@ -31,14 +31,14 @@ const addQuestion = (question) => {
     },
   }
 
-  store.questions.push(input)
+  store.createdQuiz.questions.push(input)
   questionBankStore.addQuestion(question.title)
 }
 
 const removeQuestion = (questionTitle) => {
-  for (let i = 0; i < store.questions.length; i++) {
-    if (store.questions[i].question == questionTitle) {
-      store.questions.splice(i, 1)
+  for (let i = 0; i < store.createdQuiz.questions.length; i++) {
+    if (store.createdQuiz.questions[i].question == questionTitle) {
+      store.createdQuiz.questions.splice(i, 1)
     }
   }
   questionBankStore.removeQuestion(questionTitle)

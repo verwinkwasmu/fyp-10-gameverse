@@ -14,15 +14,11 @@ engine = create_engine(
 )
 
 
-
-
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 
 # can only be used in fastapi routes.. so not sure if its a wise design to pass through this every layer
-
-
 def get_session():
     with Session(engine) as session:
         yield session

@@ -74,7 +74,7 @@ const backToHome = () => {
       <div
         class="grid grid-flow-row flex justify-center items-center mt-20 gap-2"
       >
-        <div v-for="user in sortPlayers(users)" :key="user">
+        <div v-for="user in sortPlayers(users)" :key="user" class="columns-[10rem]">
           <p class="flex justify-center items-center font-semibold text-2xl">
             {{ user[0] }}
           </p>

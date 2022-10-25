@@ -9,6 +9,7 @@ const queryClient = useQueryClient()
 const store = useQuizCreationStore()
 const questionBankStore = useQuestionBankStore()
 const router = useRouter()
+
 const {
   mutate: createQuiz,
   isLoading,
@@ -16,10 +17,16 @@ const {
   data,
   error,
   isSuccess,
-} = useMutation(() => Quiz.createQuiz(store.$state), {
+} = useMutation(() => Quiz.createQuiz(store.createdQuiz), {
   onSuccess: (data) => {
     // Reset stores
+    const user_id = store.createdQuiz.user_id
+    localStorage.removeItem('createdQuiz')
+
+    // reset store with current user_id
     store.$reset()
+    store.createdQuiz.user_id = user_id
+
     questionBankStore.$reset()
 
     // Refetch getQuizzes Query
@@ -58,7 +65,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.title }}
+            {{ store.createdQuiz.title }}
           </div>
         </div>
 
@@ -71,7 +78,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.questions.length }}
+            {{ store.createdQuiz.questions.length }}
           </div>
         </div>
 
@@ -84,7 +91,7 @@ const {
           <div
             class="w-80 p-4 items-center justify-center bg-indigo-700 rounded text-center"
           >
-            {{ store.category }}
+            {{ store.createdQuiz.category }}
           </div>
         </div>
       </div>
@@ -92,7 +99,7 @@ const {
 
       <div
         class="flex grid grid-flow-row auto-rows-max gap-4"
-        v-for="(question, index) in store.questions"
+        v-for="(question, index) in store.createdQuiz.questions"
         :key="index"
       >
         <div class="grid grid-flow-col auto-cols-max gap-4 w-full">

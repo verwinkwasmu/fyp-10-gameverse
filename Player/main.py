@@ -13,8 +13,11 @@ from entity.PlayerEntity import Player
 # test db as of now, there are present issues connecting to db from docker container
 # engine = create_engine("postgresql://postgres@localhost:5432/testDB")
 engine = create_engine(
-    "postgresql://postgres:yt5Jdi4Q8IbDwRBQOh4h@containers-us-west-60.railway.app:5748/railway"
+    "postgresql://postgres:TysBv8mr0Am4FN6D7cyj@containers-us-west-60.railway.app:5748/railway"
 )
+
+
+
 
 
 def create_db_and_tables():

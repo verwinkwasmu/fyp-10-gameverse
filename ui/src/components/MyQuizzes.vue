@@ -150,7 +150,7 @@ const modalOpen = (quizId) => {
             {{ quiz.questions.length }} Questions
           </div>
           <button
-            class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold"
+            class="bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold"
             @click="moveToUpdateQuiz(quiz)"
           >
             Edit Game
@@ -263,6 +263,16 @@ const modalOpen = (quizId) => {
       <div class="ml-3 text-sm font-normal">
         Error Occurred: {{ deleteError }}
       </div>
+      
     </div>
+    <footer class="fixed left-10 bottom-5 flex ml-6">
+        <router-link to="/">
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Return
+          </button>
+        </router-link>
+      </footer>
   </div>
 </template>

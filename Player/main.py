@@ -1,5 +1,6 @@
 from distutils.command.install_egg_info import safe_name
 import logging
+import os
 from typing import List
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Field, Session, SQLModel, create_engine, select
@@ -12,13 +13,12 @@ from entity.PlayerEntity import Player
 
 # test db as of now, there are present issues connecting to db from docker container
 # engine = create_engine("postgresql://postgres@localhost:5432/testDB")
+
+pg_password = os.getenv('PG_PASSWORD')
 engine = create_engine(
     "postgresql://postgres:TysBv8mr0Am4FN6D7cyj@containers-us-west-60.railway.app:5748/railway"
+    # f"postgresql://postgres:{pg_password}@containers-us-west-60.railway.app:5748/railway"
 )
-
-
-
-
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)

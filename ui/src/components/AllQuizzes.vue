@@ -100,7 +100,7 @@ const modalOpen = (quizId) => {
 
           <router-link :to="`/ViewQuiz/${quiz.id}`" tag="button">
             <button
-              class="bg-purple-500 hover:bg-purple-700 text-white py-2 px-8 rounded font-bold h-full"
+              class="bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold h-full"
             >
               View Quiz
             </button>
@@ -155,5 +155,14 @@ const modalOpen = (quizId) => {
         </div>
       </div>
     </div>
+    <footer class="fixed left-10 bottom-5 flex ml-6">
+        <router-link to="/createQuiz">
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Return
+          </button>
+        </router-link>
+      </footer>
   </div>
 </template>

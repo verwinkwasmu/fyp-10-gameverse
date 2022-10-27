@@ -13,9 +13,19 @@ window.websocket.onmessage = (event) => {
 </script>
 
 <template lang="">
-  <p class="text-5xl text-white pt-10 pl-20 font-light">Gameverse Quiz</p>
-  <div class="flex items-center justify-center pt-40 mb-0"></div>
-  <div class="flex items-center justify-center space-x-20 m-0 pb-0 pr-30 pl-30">
+  <div
+    class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white overflow-auto"
+  >
+    <div class="p-10 ml-6 mr-6">
+      <!--Header-->
+      <div class="grid grid-rows-2 grid-flow-col gap-2">
+        <router-link to="/">
+          <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        </router-link>
+        <div class="text-2xl col-span-2">Team Quiz Results</div>
+      </div>
+    </div>
+  <div class="flex items-center justify-center space-x-20 m-0 pb-0 pr-30 pl-30 pt-20">
     <!-- <img src="../assets/winner.png" class="w-24" /> -->
   </div>
   <div class="flex items-center justify-center">
@@ -58,5 +68,6 @@ window.websocket.onmessage = (event) => {
         Exit Game
       </router-link>
     </footer>
+  </div>
   </div>
 </template>

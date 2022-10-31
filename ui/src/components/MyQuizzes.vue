@@ -124,6 +124,7 @@ const modalOpen = (quizId) => {
         v-else-if="isSuccess"
         class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center"
       >
+
         <div
           class="grid grid-flow-col auto-cols-max gap-2"
           v-for="(quiz, index) in quizzes"
@@ -167,6 +168,7 @@ const modalOpen = (quizId) => {
           >
             Delete
           </button>
+          
 
           <div
             v-show="isOpen"
@@ -205,11 +207,29 @@ const modalOpen = (quizId) => {
                   Team
                 </button>
               </div>
+              
             </div>
           </div>
         </div>
       </div>
+      <div v-else-if="!isSuccess" class="align-middle">
+        <div class="text-2xl text-center font-bold mt-8">
+          No Quizzes
+        </div>
+        <div
+          class="flex justify-center items-center mt-8 grid grid-flow-col auto-cols-max"
+        >
+        <router-link to="/createquiz">
+          <button
+            class="bg-lime-400 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded"
+          >
+            Proceed to create a quiz
+          </button>
+        </router-link>
+        </div>
+      </div>
     </div>
+    
     <div
       v-if="deleteSuccess && showAlert"
       id="toast-success"

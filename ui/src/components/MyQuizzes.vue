@@ -40,6 +40,7 @@ const {
   },
 )
 
+
 // DELETE Quiz Function
 const {mutate: deleteQuiz, error: deleteError} = useMutation(
   (quizId) => Quiz.deleteQuiz(quizId),
@@ -121,7 +122,7 @@ const modalOpen = (quizId) => {
         <span class="font-medium">Error Occurred:</span> {{ queryError }}
       </div>
       <div
-        v-else-if="isSuccess"
+        v-else-if="quizzes.length > 0"
         class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center"
       >
 
@@ -212,7 +213,7 @@ const modalOpen = (quizId) => {
           </div>
         </div>
       </div>
-      <div v-else-if="!isSuccess" class="align-middle">
+      <div v-else-if="quizzes.length == 0" class="align-middle">
         <div class="text-2xl text-center font-bold mt-8">
           No Quizzes
         </div>

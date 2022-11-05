@@ -25,6 +25,8 @@ def run_query(query):
 
 player_df = run_query("SELECT * from player;")
 
+# Header
+st.markdown("<h1 style='text-align: center;'>Quiz Game Usage Analytics</h1>", unsafe_allow_html=True)
 
 col1, col2 = st.columns((1, 1))
 

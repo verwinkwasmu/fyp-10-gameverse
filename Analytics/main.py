@@ -22,23 +22,27 @@ conn = init_connection()
 def run_query(query):
     return pd.read_sql_query(query, conn)
 
-col1, col2 = st.columns((1,1))
+
+player_df = run_query("SELECT * from player;")
+
+
+col1, col2 = st.columns((1, 1))
 
 # First Column
 with col1:
-    df = run_query("SELECT * from player;")
-
     # Top 5 players based on total points
     st.write("Top 5 players based on total points:")
     st.bar_chart(
-        df.sort_values(by="total_points", ascending=False).head(5),
+        player_df.sort_values(by="total_points", ascending=False).head(5),
         x="name",
         y="total_points",
     )
 
 # Second Column
 with col2:
-    df_1 = run_query("SELECT t.category, t.item ->> 'count' AS count, t.item ->> 'points' AS points FROM player, json_each(categories_played) AS t(category, item);")
+    df_1 = run_query(
+        "SELECT t.category, t.item ->> 'count' AS count, t.item ->> 'points' AS points FROM player, json_each(categories_played) AS t(category, item);"
+    )
 
     # convert column datatype to int datatype
     df_1 = df_1.astype({"count": int, "points": int})

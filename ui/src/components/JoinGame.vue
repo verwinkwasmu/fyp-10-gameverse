@@ -58,7 +58,7 @@ const joinTeamRoomId = () => {
         <div class="my-3">
           <button
             type="button"
-            class="bg-lime-400 hover:bg-lime-600 text-black hover:text-white font-bold py-4 px-8 mx-2 rounded"
+            class="btn-proceed"
             @click="isOpen = true"
             
           >
@@ -99,10 +99,10 @@ const joinTeamRoomId = () => {
               </svg>
             </div>
             <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
-              <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="joinSoloRoomId">
+              <button class="btn-proceed"  @click="joinSoloRoomId">
                 Solo
               </button>
-              <button class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"  @click="joinTeamRoomId">
+              <button class="btn-proceed"  @click="joinTeamRoomId">
                 Team
               </button>
             </div>
@@ -114,7 +114,7 @@ const joinTeamRoomId = () => {
     <footer class="fixed left-10 bottom-5 flex ml-6">
         <router-link to="/">
           <button
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            class="btn-return"
           >
             Return
           </button>

@@ -89,7 +89,7 @@ const sortPlayers = (users) => {
       <footer class="fixed left-10 bottom-10 flex ml-6">
         <router-link
           to="/"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-5"
+          class="btn-exitQuiz"
         >
           Exit Game
         </router-link>
@@ -98,14 +98,14 @@ const sortPlayers = (users) => {
             qnNumStore.qnNum < quizStore.quiz.questions.length &&
             qnNumStore.user_id.includes('Host')
           "
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-nextQues"
           @click="nextQuestion"
         >
           Next Question
         </button>
         <button
           v-else-if="qnNumStore.user_id.includes('Host')"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-nextQues"
           @click="moveToPodium"
         >
           To Podium

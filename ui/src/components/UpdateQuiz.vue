@@ -258,14 +258,14 @@ const store = useQuizUpdateStore()
             v-if="store.quiz.questions.length < 15"
             type="button"
             @click="store.addQuestion()"
-            class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-5 mb-2"
+            class="btn-add rounded-lg text-sm px-5 py-2.5 mr-5 mb-2"
           >
             Add Question
           </button>
           <router-link to="/AllQuizQuestionBankForUpdate" tag="button">
             <button
               type="button"
-              class="text-white bg-purple-800 hover:bg-purple-900 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+              class="btn-add rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
             >
               Add from Question Bank
             </button>
@@ -280,14 +280,14 @@ const store = useQuizUpdateStore()
           <router-link to="/MyQuizzes">
             <button
               type="button"
-              class="text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+              class="btn-return"
             >
               Return
             </button>
           </router-link>
           <input
             type="submit"
-            class="text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            class="btn-complete"
             value="Complete Quiz Update"
           />
         </div>

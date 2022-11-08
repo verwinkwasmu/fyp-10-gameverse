@@ -59,7 +59,7 @@ const signOut = () => {
       <footer class="fixed left-10 bottom-5 flex ml-6">
         <router-link to="/">
           <button
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            class="btn-return"
             @click="signOut"
           >
             Sign Out

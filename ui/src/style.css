@@ -76,3 +76,36 @@ button.showRightAnswer {
     background-color: #f9f9f9;
   }
 }
+
+@layer components {
+  .btn-proceed {
+    @apply bg-lime-400 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded;
+  }
+  .btn-add {
+    @apply text-white bg-blue-700 hover:bg-blue-600 font-medium;
+  }
+  .btn-complete {
+    @apply text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2
+  }
+  .btn-return {
+    @apply text-white bg-red-500 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 font-bold
+  }
+  .btn-createQuizPage {
+    @apply bg-lime-400 hover:bg-lime-600 text-black py-24 px-8 mx-2 rounded w-64 h-80 font-bold hover:text-white
+  }
+  .btn-delete {
+    @apply bg-red-700 hover:bg-red-900 text-black py-2 px-8 rounded font-bold
+  }
+  .btn-edit {
+    @apply bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold
+  }
+  .btn-soloQuiz {
+    @apply bg-lime-400 hover:bg-lime-600 text-black font-bold py-2 rounded mt-20
+  }
+  .btn-nextQues {
+    @apply bg-lime-500 hover:bg-lime-700 text-black font-bold py-2 px-4 rounded
+  }
+  .btn-exitQuiz {
+    @apply bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded mr-5
+  }
+}

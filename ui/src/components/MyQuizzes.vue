@@ -5,6 +5,7 @@ import {useRouter, useRoute} from 'vue-router'
 import {useQueryClient, useQuery, useMutation} from 'vue-query'
 import Quiz from '../services/Quiz'
 import {useQuizUpdateStore} from '../stores/quizUpdate'
+import colors from 'tailwindcss/colors'
 
 const store = useQuizUpdateStore()
 const queryClient = useQueryClient()
@@ -152,19 +153,19 @@ const modalOpen = (quizId) => {
             {{ quiz.questions.length }} Questions
           </div>
           <button
-            class="bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold"
+            class="btn-edit"
             @click="moveToUpdateQuiz(quiz)"
           >
             Edit Game
           </button>
           <button
-            class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold"
+            class="btn-proceed"
             @click="modalOpen(quiz.id)"
           >
             Start Game
           </button>
           <button
-            class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 rounded font-bold"
+            class="btn-delete"
             @click="deleteQuiz(quiz.id)"
           >
             Delete
@@ -196,13 +197,13 @@ const modalOpen = (quizId) => {
               </div>
               <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
                 <button
-                  class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                  class="btn-proceed"
                   @click="startSoloGame(modalQuizId)"
                 >
                   Solo
                 </button>
                 <button
-                  class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                  class="btn-proceed"
                   @click="startTeamGame(modalQuizId)"
                 >
                   Team
@@ -222,7 +223,7 @@ const modalOpen = (quizId) => {
         >
         <router-link to="/createquiz">
           <button
-            class="bg-lime-400 hover:bg-lime-600 text-black font-bold py-2 px-4 rounded"
+            class="btn-proceed"
           >
             Proceed to create a quiz
           </button>
@@ -289,7 +290,7 @@ const modalOpen = (quizId) => {
     <footer class="fixed left-10 bottom-5 flex ml-6">
         <router-link to="/">
           <button
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            class="btn-return"
           >
             Return
           </button>

@@ -100,14 +100,14 @@ const modalOpen = (quizId) => {
 
           <router-link :to="`/ViewQuiz/${quiz.id}`" tag="button">
             <button
-              class="bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold h-full"
+              class="btn-edit h-full"
             >
               View Quiz
             </button>
           </router-link>
 
           <button
-            class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold"
+            class="btn-proceed"
             @click="modalOpen(quiz.id)"
           >
             Start Game
@@ -139,13 +139,13 @@ const modalOpen = (quizId) => {
             </div>
             <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
               <button
-                class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                class="btn-proceed text-xl"
                 @click="startSoloGame(modalQuizId)"
               >
                 Solo
               </button>
               <button
-                class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                class="btn-proceed text-xl"
                 @click="startTeamGame(modalQuizId)"
               >
                 Team
@@ -154,11 +154,27 @@ const modalOpen = (quizId) => {
           </div>
         </div>
       </div>
+      <div v-else-if="quizzes.length == 0" class="align-middle">
+        <div class="text-2xl text-center font-bold mt-8">
+          No Quizzes
+        </div>
+        <div
+          class="flex justify-center items-center mt-8 grid grid-flow-col auto-cols-max"
+        >
+        <!-- <router-link to="/createquiz">
+          <button
+            class="btn-proceed"
+          >
+            Proceed to create a quiz
+          </button>
+        </router-link> -->
+        </div>
+      </div>
     </div>
     <footer class="fixed left-10 bottom-5 flex ml-6">
         <router-link to="/createQuiz">
           <button
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            class="btn-return"
           >
             Return
           </button>

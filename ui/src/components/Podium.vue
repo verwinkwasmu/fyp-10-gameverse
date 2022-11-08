@@ -88,7 +88,7 @@ const backToHome = () => {
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
         <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-exitQuiz"
           @click="backToHome"
         >
           Exit Game

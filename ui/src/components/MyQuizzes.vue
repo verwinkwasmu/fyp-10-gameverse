@@ -5,6 +5,7 @@ import {useRouter, useRoute} from 'vue-router'
 import {useQueryClient, useQuery, useMutation} from 'vue-query'
 import Quiz from '../services/Quiz'
 import {useQuizUpdateStore} from '../stores/quizUpdate'
+import colors from 'tailwindcss/colors'
 
 const store = useQuizUpdateStore()
 const queryClient = useQueryClient()
@@ -39,6 +40,7 @@ const {
     cacheTime: 50000,
   },
 )
+
 
 // DELETE Quiz Function
 const {mutate: deleteQuiz, error: deleteError} = useMutation(
@@ -121,9 +123,10 @@ const modalOpen = (quizId) => {
         <span class="font-medium">Error Occurred:</span> {{ queryError }}
       </div>
       <div
-        v-else-if="isSuccess"
+        v-else-if="quizzes.length > 0"
         class="flex grid grid-flow-row auto-rows-max items-center mt-7 mx-7 gap-4 justify-center"
       >
+
         <div
           class="grid grid-flow-col auto-cols-max gap-2"
           v-for="(quiz, index) in quizzes"
@@ -150,23 +153,24 @@ const modalOpen = (quizId) => {
             {{ quiz.questions.length }} Questions
           </div>
           <button
-            class="bg-amber-200 hover:bg-amber-100 text-black py-2 px-8 rounded font-bold"
+            class="btn-edit"
             @click="moveToUpdateQuiz(quiz)"
           >
             Edit Game
           </button>
           <button
-            class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold"
+            class="btn-proceed"
             @click="modalOpen(quiz.id)"
           >
             Start Game
           </button>
           <button
-            class="bg-red-700 hover:bg-red-900 text-white py-2 px-8 rounded font-bold"
+            class="btn-delete"
             @click="deleteQuiz(quiz.id)"
           >
             Delete
           </button>
+          
 
           <div
             v-show="isOpen"
@@ -193,23 +197,41 @@ const modalOpen = (quizId) => {
               </div>
               <div class="flex grid grid-flow-col mt-4 gap-4 h-16">
                 <button
-                  class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                  class="btn-proceed"
                   @click="startSoloGame(modalQuizId)"
                 >
                   Solo
                 </button>
                 <button
-                  class="bg-lime-500 hover:bg-lime-700 text-black hover:text-white py-2 px-8 rounded font-bold text-xl"
+                  class="btn-proceed"
                   @click="startTeamGame(modalQuizId)"
                 >
                   Team
                 </button>
               </div>
+              
             </div>
           </div>
         </div>
       </div>
+      <div v-else-if="quizzes.length == 0" class="align-middle">
+        <div class="text-2xl text-center font-bold mt-8">
+          No Quizzes
+        </div>
+        <div
+          class="flex justify-center items-center mt-8 grid grid-flow-col auto-cols-max"
+        >
+        <router-link to="/createquiz">
+          <button
+            class="btn-proceed"
+          >
+            Proceed to create a quiz
+          </button>
+        </router-link>
+        </div>
+      </div>
     </div>
+    
     <div
       v-if="deleteSuccess && showAlert"
       id="toast-success"
@@ -268,7 +290,8 @@ const modalOpen = (quizId) => {
     <footer class="fixed left-10 bottom-5 flex ml-6">
         <router-link to="/">
           <button
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            class="btn-return"
+
           >
             Return
           </button>

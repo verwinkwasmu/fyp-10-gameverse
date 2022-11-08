@@ -208,13 +208,16 @@ const moveToScoreboard = () => {
           </div>
         </div>
         <div v-else>
-          <div class="grid grid-flow-row grid-col-1 gap-1">
+          <div class="grid grid-flow-row grid-col-1 gap-1 justify-center">
+            <div class="text-2xl text-center font-bold mt-8">
+              Yay! So who are the leaders?
+            </div>
             <!-- just for the host to use -->
             <button
-              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-52"
+              class="btn-soloQuiz"
               @click="moveToScoreboard()"
             >
-              move to scoreboard
+              Let's go!
             </button>
           </div>
         </div>

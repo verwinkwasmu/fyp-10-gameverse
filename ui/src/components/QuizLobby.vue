@@ -42,6 +42,9 @@ window.websocket.onmessage = (event) => {
 
   if (JSON.parse(event.data).command == 'Start Game') {
     moveToQuestion()
+
+    //TODO: add counts to quiz
+    
   } else {
     users.value = JSON.parse(event.data)
   }

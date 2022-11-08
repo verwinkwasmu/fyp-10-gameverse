@@ -291,6 +291,7 @@ const modalOpen = (quizId) => {
         <router-link to="/">
           <button
             class="btn-return"
+
           >
             Return
           </button>

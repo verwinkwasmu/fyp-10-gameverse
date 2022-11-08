@@ -82,7 +82,21 @@ class PlayerRepository:
             if not player:
                 return None
 
+            # add start end times
+            if player.start_times == None:
+                player.start_times = []
+            if player.end_times == None:
+                player.end_times = []
+
+            new_start_times = player.start_times + [quizResults.start_time]
+            end_start_times = player.end_times + [quizResults.end_time]
+            
+            player.start_times = new_start_times
+            player.end_times = end_start_times
+
             player.total_points += quizResults.score
+
+            # this requires a copy to work
             new_categories_played = player.categories_played.copy()
 
             if quizResults.category not in player.categories_played:

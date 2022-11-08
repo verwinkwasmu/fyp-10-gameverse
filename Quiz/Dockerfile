@@ -1,14 +1,14 @@
 FROM python:latest
 
 # set the working directory
-WORKDIR /app
+WORKDIR /code
 
 # install dependencies
-COPY ./requirements.txt /app
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+COPY ./requirements.txt /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 # copy the scripts to the folder
-COPY . /app
+COPY . /code/
 
 # start the server
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "82"]

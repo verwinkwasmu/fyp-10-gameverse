@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from unicodedata import category
 from sqlmodel import Column, Field, SQLModel, JSON
-from typing import Dict, Optional
+from typing import Dict, Optional, List
+from datetime import datetime
+from sqlalchemy import ARRAY, String
 
 
 @dataclass
@@ -9,14 +11,18 @@ class QuizResult:
     id: int
     score: int
     category: str
+    start_time: str
+    end_time: str
 
 
 class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    email: str
+    email: str = Field(sa_column=Column("email", String, unique=True))
     total_points: int
     categories_played: Dict = Field(default={}, sa_column=Column(JSON))
+    start_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
+    end_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
 
     # Needed for Column(JSON)
     class Config:

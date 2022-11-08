@@ -156,7 +156,7 @@ const {
               type="button"
               class="btn-return"
             >
-              Back
+              Return
             </button>
           </router-link>
 

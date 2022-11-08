@@ -17,6 +17,7 @@ const timer = ref()
 const answer_input = ref(null)
 const totalQn = ref()
 const score = ref(0)
+
 // GET Single Quiz by quiz_id
 const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
   ['quizById'],
@@ -36,20 +37,38 @@ window.websocket.onmessage = (event) => {
   }
 }
 
-onMounted(() => {
-  store.quiz = data.value
-  totalQn.value = data.value.questions.length
-  timer.value = data.value.questions[qnNumStore.qnNum].timer
+onMounted(async () => {
+  //TODO: still dk if this solves the bug need to keep testing, (error: question is not defined)
+  if (!data.value) {
+    data.value = await Quiz.getQuiz(qnNumStore.quiz_id)
+    store.quiz = data.value
+    totalQn.value = data.value.questions.length
+    timer.value = data.value.questions[qnNumStore.qnNum].timer / 2
 
-  let timerCountdown = setInterval(() => {
-    timer.value--
-    if (timer.value == 0) {
-      clearInterval(timerCountdown)
-      if (!qnAnswered.value) {
-        checkAnswers()
+    let timerCountdown = setInterval(() => {
+      timer.value--
+      if (timer.value == 0) {
+        clearInterval(timerCountdown)
+        if (!qnAnswered.value) {
+          checkAnswers()
+        }
       }
-    }
-  }, 1000)
+    }, 1000)
+  } else {
+    store.quiz = data.value
+    totalQn.value = data.value.questions.length
+    timer.value = data.value.questions[qnNumStore.qnNum].timer / 2
+
+    let timerCountdown = setInterval(() => {
+      timer.value--
+      if (timer.value == 0) {
+        clearInterval(timerCountdown)
+        if (!qnAnswered.value) {
+          checkAnswers()
+        }
+      }
+    }, 1000)
+  }
 })
 
 function showAnswer(event) {
@@ -103,7 +122,7 @@ const moveToScoreboard = () => {
       <span class="font-medium">Error Occurred:</span> {{ queryError }}
     </div>
     <div
-      v-else
+      v-else-if="isSuccess"
       class="bg-quiz w-screen h-screen bg-no-repeat bg-cover text-white"
     >
       <div class="p-10 ml-6 mr-6">

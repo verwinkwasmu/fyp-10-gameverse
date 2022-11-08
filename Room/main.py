@@ -1,10 +1,8 @@
 from dataclasses import asdict
-
 from typing import Any, Dict, List
-
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-
 from entities import MessageResponse, User
+from datetime import datetime
 
 app = FastAPI()
 
@@ -76,9 +74,16 @@ async def websocket_endpoint(
         await manager.send_personal_message(manager.quiz_id, websocket)
 
     messageResponse = MessageResponse(
-        command="Join", current_users=manager.current_users, teamScores=None, team=None
+        command="Join",
+        current_users=manager.current_users,
+        teamScores=None,
+        team=None,
+        start_time=None,
+        end_time=None,
     )
     await manager.broadcast(messageResponse)
+
+    start_time = None
 
     try:
         while True:
@@ -95,6 +100,8 @@ async def websocket_endpoint(
                         current_users=manager.current_users,
                         teamScores=None,
                         team=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -104,15 +111,22 @@ async def websocket_endpoint(
                         current_users=manager.current_users,
                         teamScores=None,
                         team=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
                 case "Start":
+                    # set quiz start time
+                    start_time = datetime.utcnow().isoformat(timespec="seconds")
+
                     messageResponse = MessageResponse(
                         command="Start Game",
                         current_users=manager.current_users,
                         teamScores=None,
                         team=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -122,6 +136,8 @@ async def websocket_endpoint(
                         current_users=manager.current_users,
                         teamScores=None,
                         team=None,
+                        start_time=start_time,
+                        end_time=datetime.utcnow().isoformat(timespec="seconds"),
                     )
                     await manager.broadcast(messageResponse)
 
@@ -132,6 +148,8 @@ async def websocket_endpoint(
             current_users=manager.current_users,
             teamScores=None,
             team=None,
+            start_time=None,
+            end_time=None,
         )
         await manager.broadcast(messageResponse)
 

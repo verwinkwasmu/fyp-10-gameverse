@@ -16,7 +16,7 @@ from entity.PlayerEntity import Player
 
 pg_password = os.getenv('PG_PASSWORD')
 engine = create_engine(
-    "postgresql://postgres:TysBv8mr0Am4FN6D7cyj@containers-us-west-60.railway.app:5748/railway"
+    "postgresql://postgres:8KLmNgNs502aodohKANd@containers-us-west-93.railway.app:6583/railway"
     # f"postgresql://postgres:{pg_password}@containers-us-west-60.railway.app:5748/railway"
 )
 

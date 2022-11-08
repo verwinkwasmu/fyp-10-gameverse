@@ -21,8 +21,8 @@ class Player(SQLModel, table=True):
     email: str = Field(sa_column=Column("email", String, unique=True))
     total_points: int
     categories_played: Dict = Field(default={}, sa_column=Column(JSON))
-    start_times: List[datetime] = Field(default=[], sa_column=Column(ARRAY(String)))
-    end_times: List[datetime] = Field(default=[], sa_column=Column(ARRAY(String)))
+    start_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
+    end_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
 
     # Needed for Column(JSON)
     class Config:

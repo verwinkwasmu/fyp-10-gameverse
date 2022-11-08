@@ -130,7 +130,7 @@ const backToHome = () => {
 
       <footer class="fixed left-10 bottom-10 flex ml-6">
         <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-exitQuiz"
           @click="backToHome"
         >
           Exit Game
@@ -141,7 +141,7 @@ const backToHome = () => {
         <!-- button is just for host to use -->
         <button
           v-if="client_id.toString().includes('Host')"
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-nextQues"
           @click="countdownstart()"
         >
           Start Game

@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Room from '../pages/Room.vue'
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
 import PodiumLoading from '../components/PodiumLoading.vue'
@@ -34,10 +33,6 @@ const router = createRouter({
     {
       path: '/room/:room_id',
       component: Chat,
-    },
-    {
-      path: '/testRoom',
-      component: Room,
     },
     {
       path: '/QuizResult',

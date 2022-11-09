@@ -43,7 +43,7 @@ onMounted(async () => {
     data.value = await Quiz.getQuiz(qnNumStore.quiz_id)
     store.quiz = data.value
     totalQn.value = data.value.questions.length
-    timer.value = data.value.questions[qnNumStore.qnNum].timer / 2
+    timer.value = data.value.questions[qnNumStore.qnNum].timer
 
     let timerCountdown = setInterval(() => {
       timer.value--
@@ -57,7 +57,7 @@ onMounted(async () => {
   } else {
     store.quiz = data.value
     totalQn.value = data.value.questions.length
-    timer.value = data.value.questions[qnNumStore.qnNum].timer / 2
+    timer.value = data.value.questions[qnNumStore.qnNum].timer
 
     let timerCountdown = setInterval(() => {
       timer.value--

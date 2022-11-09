@@ -142,7 +142,7 @@ const getData = async () => {
         <div class="flex justify-center pt-10">
           <div class="pr-4 pt-2">
             <router-link
-              class="bg-red-500 hover:bg-red-700 text-white hover:text-white font-bold py-2 px-4 rounded"
+              class="btn-return"
               :to="{path: '/AllQuizzes'}"
               >Back to Quizzes</router-link
             >

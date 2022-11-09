@@ -74,6 +74,11 @@ function routenext() {
   qnNumStore.quiz_id = quizId
   router.push({path: `/SoloQuiz`})
 }
+
+const backToHome = () => {
+  window.websocket.close()
+  router.push({path: '/'})
+}
 </script>
 
 <template>
@@ -123,15 +128,13 @@ function routenext() {
         </div>
       </div>
 
-      <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <router-link to="/" tag="button">
-          <button
-            class="btn-exitQuiz"
-          >
-            Exit Game
-          </button>
-        </router-link>
+        <button
+          class="btn-exitQuiz"
+          @click="backToHome"
+        >
+          Exit Game
+        </button>
       </footer>
 
       <footer class="fixed right-10 bottom-10 flex ml-6">

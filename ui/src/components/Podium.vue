@@ -26,20 +26,25 @@ const {
 })
 
 onMounted(() => {
-  window.websocket.send(JSON.stringify({command: 'To Podium'}))
+  if (qnNumStore.user_id.includes('Host')) {
+    window.websocket.send(JSON.stringify({command: 'To Podium'}))
+  }
 })
 
 window.websocket.onmessage = (event) => {
-  users.value = JSON.parse(event.data).current_users
-
-  // to make sure that only users (not host) gets to have their scores recorded
-  if (qnNumStore.user_id.toString() in users.value) {
-    const payload = {
-      id: parseInt(qnNumStore.user_id),
-      score: users.value[qnNumStore.user_id].score,
-      category: quizObjectStore.quiz.category,
+  if (JSON.parse(event.data).command == 'To Podium') {
+    users.value = JSON.parse(event.data).current_users
+    // to make sure that only users (not host) gets to have their scores recorded
+    if (qnNumStore.user_id.toString() in users.value) {
+      const payload = {
+        id: parseInt(qnNumStore.user_id),
+        score: users.value[qnNumStore.user_id].score,
+        category: quizObjectStore.quiz.category,
+        start_time: JSON.parse(event.data).start_time,
+        end_time: JSON.parse(event.data).end_time,
+      }
+      addQuizResults(payload)
     }
-    addQuizResults(payload)
   }
 }
 
@@ -74,7 +79,11 @@ const backToHome = () => {
       <div
         class="grid grid-flow-row flex justify-center items-center mt-20 gap-2"
       >
-        <div v-for="user in sortPlayers(users)" :key="user" class="columns-[10rem]">
+        <div
+          v-for="user in sortPlayers(users)"
+          :key="user"
+          class="columns-[10rem]"
+        >
           <p class="flex justify-center items-center font-semibold text-2xl">
             {{ user[0] }}
           </p>

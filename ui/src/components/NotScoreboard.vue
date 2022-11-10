@@ -43,6 +43,12 @@ const sortPlayers = (users) => {
   })
   return sortUsers
 }
+
+const backToHome = () => {
+  window.websocket.close()
+  router.push({path: '/'})
+}
+
 </script>
 
 <template>
@@ -87,12 +93,12 @@ const sortPlayers = (users) => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <router-link
-          to="/"
+        <button
           class="btn-exitQuiz"
+          @click="backToHome"
         >
           Exit Game
-        </router-link>
+        </button>
         <button
           v-if="
             qnNumStore.qnNum < quizStore.quiz.questions.length &&

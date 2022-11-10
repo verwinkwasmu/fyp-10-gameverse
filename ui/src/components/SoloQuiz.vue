@@ -245,10 +245,7 @@ const moveToScoreboard = () => {
               Yay! So who are the leaders?
             </div>
             <!-- just for the host to use -->
-            <button
-              class="btn-soloQuiz"
-              @click="moveToScoreboard()"
-            >
+            <button class="btn-soloQuiz" @click="moveToScoreboard()">
               Let's go!
             </button>
           </div>

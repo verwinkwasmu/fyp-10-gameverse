@@ -8,7 +8,7 @@ pip install -r requirements.txt
 ```
 This is how you run the code locally (without Docker):
 ```
-uvicorn main:app --host 0.0.0.0 --port 80 --reload
+uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 ```
 Build and run the Docker image locally, as follows:
 ```

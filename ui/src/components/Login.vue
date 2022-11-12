@@ -58,14 +58,14 @@ async function onSubmit() {
       >
         <div class="px-6 space-y-4 md:space-y-6 sm:p-8">
           <h1
-            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+            class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white"
           >
             Log in to your account
           </h1>
           <div>
             <label
               for="email"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              class="block mb-2 text-sm font-medium text-white"
               >User ID</label
             >
             <input

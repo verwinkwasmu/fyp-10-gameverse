@@ -72,6 +72,7 @@ function moveToQuestion() {
 function routenext() {
   let quizId = route.query.quiz_id ? route.query.quiz_id : quiz_id.value
   qnNumStore.quiz_id = quizId
+  qnNumStore.qnNum = 0
   router.push({path: `/SoloQuiz`})
 }
 

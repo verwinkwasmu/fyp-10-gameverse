@@ -30,6 +30,12 @@ const nextQuestion = () => {
 const moveToPodium = () => {
   window.websocket.send(JSON.stringify({command: 'To Podium'}))
 }
+
+const backToHome = () => {
+  window.websocket.close()
+  router.push({path: '/'})
+}
+
 </script>
 
 <template>
@@ -105,6 +111,7 @@ const moveToPodium = () => {
       <footer class="fixed left-10 bottom-10 flex ml-6">
         <button
           class="btn-exitQuiz"
+          @click="backToHome"
         >
           Exit Game
         </button>

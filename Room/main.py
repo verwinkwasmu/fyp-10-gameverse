@@ -176,13 +176,20 @@ async def websocket_endpoint(
     if quiz_id != "undefined":
         manager.quiz_id = quiz_id
     else:
-        print(manager.quiz_id)
         await manager.send_personal_message(manager.quiz_id, websocket)
 
     messageResponse = MessageResponse(
-        command="Join", current_users=None, team=manager.teams, teamScores=None
+        command="Join",
+        current_users=None,
+        team=manager.teams,
+        teamScores=None,
+        start_time=None,
+        end_time=None,
     )
     await manager.broadcast(messageResponse)
+
+    start_time = None
+
     try:
         while True:
             data = await websocket.receive_json()
@@ -205,6 +212,8 @@ async def websocket_endpoint(
                         team=manager.teams,
                         current_users=None,
                         teamScores=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -225,15 +234,22 @@ async def websocket_endpoint(
                         team=manager.teams,
                         current_users=None,
                         teamScores=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
                 case "Start":
+                    # set quiz start time
+                    start_time = datetime.utcnow().isoformat(timespec="seconds")
+
                     messageResponse = MessageResponse(
                         command="Start Game",
                         team=manager.teams,
                         current_users=None,
                         teamScores=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -242,9 +258,11 @@ async def websocket_endpoint(
                         team = ""
                         if user_id in manager.teams["red"]:
                             manager.teamScores["red"] += data["score"]
+                            manager.current_users[user_id].score += data["score"]
                             team = "red"
                         elif user_id in manager.teams["blue"]:
                             manager.teamScores["blue"] += data["score"]
+                            manager.current_users[user_id].score += data["score"]
                             team = "blue"
                         message = {
                             "command": "Team has answered",
@@ -258,6 +276,8 @@ async def websocket_endpoint(
                         teamScores=manager.teamScores,
                         current_users=None,
                         team=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
@@ -267,15 +287,19 @@ async def websocket_endpoint(
                         team=manager.teams,
                         current_users=None,
                         teamScores=None,
+                        start_time=None,
+                        end_time=None,
                     )
                     await manager.broadcast(messageResponse)
 
                 case "To Podium":
                     messageResponse = MessageResponse(
                         command="To Podium",
-                        current_users=None,
+                        current_users=manager.current_users,
                         teamScores=manager.teamScores,
-                        team=None,
+                        team=manager.teams,
+                        start_time=start_time,
+                        end_time=datetime.utcnow().isoformat(timespec="seconds"),
                     )
                     await manager.broadcast(messageResponse)
     except WebSocketDisconnect:
@@ -285,6 +309,8 @@ async def websocket_endpoint(
             current_users=None,
             teamScores=None,
             team=None,
+            start_time=None,
+            end_time=None,
         )
         await manager.broadcast(messageResponse)
 

@@ -79,6 +79,11 @@ const joinRedTeam = () => {
 const joinBlueTeam = () => {
   window.websocket.send(JSON.stringify({command: 'Join Blue'}))
 }
+
+const backToHome = () => {
+  window.websocket.close()
+  router.push({path: '/'})
+}
 </script>
 
 <template>
@@ -86,9 +91,7 @@ const joinBlueTeam = () => {
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <router-link to="/">
-          <div class="text-5xl font-semibold col-span-2">GameVerse</div>
-        </router-link>
+        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
         <div class="text-2xl col-span-2">
           Quiz Lobby ID: {{ route.params.lobby_id }} <br />
           Share Lobby Link: {{ url }}
@@ -171,13 +174,7 @@ const joinBlueTeam = () => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <router-link to="/">
-          <button
-            class="btn-exitQuiz"
-          >
-            Exit Game
-          </button>
-        </router-link>
+        <button class="btn-exitQuiz" @click="backToHome">Exit Game</button>
       </footer>
       <footer class="fixed right-10 bottom-10 flex ml-6">
         <!-- button is just for host to use -->

@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import QuizResult from '../components/QuizResult.vue'
 import Podium from '../components/Podium.vue'
-import PodiumLoading from '../components/PodiumLoading.vue'
+import Analytics from '../components/Analytics.vue'
 import TeamQuizLobby from '../components/TeamQuizLobby.vue'
 import TeamQuizResults from '../components/TeamQuizResults.vue'
 import TeamQuiz from '../components/TeamQuiz.vue'
@@ -43,8 +43,8 @@ const router = createRouter({
       component: Podium,
     },
     {
-      path: '/PodiumLoading',
-      component: PodiumLoading,
+      path: '/Analytics',
+      component: Analytics,
     },
     {
       path: '/Scoreboard',

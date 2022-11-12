@@ -6,15 +6,13 @@ const toggleDark = useToggle(isDark)
 </script>
 
 <template>
-  <div>
+  <div style="height: 100%;">
     <router-view />
   </div>
 </template>
 
 <style scoped>
-html.dark {
-  color-scheme: dark;
-}
+
 .logo {
   height: 6em;
   padding: 1.5em;

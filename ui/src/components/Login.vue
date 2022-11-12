@@ -54,7 +54,7 @@ async function onSubmit() {
       class="flex flex-col items-center justify-center px-6 mx-auto sm:py-20"
     >
       <div
-        class="w-full bg-slate-200 rounded-md shadow dark:border md:mt-0 sm:max-w-md xl:p-0"
+        class="w-full bg-slate-900 rounded-md shadow dark:border md:mt-0 sm:max-w-md xl:p-0 border-gray-800"
       >
         <div class="px-6 space-y-4 md:space-y-6 sm:p-8">
           <h1
@@ -70,7 +70,7 @@ async function onSubmit() {
             >
             <input
               v-model="userId"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-96"
+              class="bg-gray-700 border border-gray-600  placeholder-gray-400 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-96"
               placeholder="Please enter your User ID"
               required=""
               @keyup.enter="onSubmit"
@@ -106,18 +106,18 @@ async function onSubmit() {
           <button
             v-if="loading == false"
             @click="onSubmit"
-            class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            class="w-full text-white bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             Sign in
           </button>
           <button
             v-else
-            class="w-full text-white bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            class="w-full text-white bg-purple-600 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             disabled
           >
             <svg
               aria-hidden="true"
-              class="inline mr-1 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              class="inline mr-1 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-purple-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

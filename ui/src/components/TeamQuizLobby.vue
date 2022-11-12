@@ -126,7 +126,7 @@ const joinBlueTeam = () => {
           </div>
           <button
             class="text-indigo-100 transition-colors bg-blue-700 rounded-lg focus:shadow-outline hover:bg-blue-400 py-2 px-4 mt-5"
-            @click="joinBlueTeam"
+            @click="joinBlueTeam" :disabled = "route.query.isHost"
           >
             Join Blue Team
           </button>
@@ -155,7 +155,7 @@ const joinBlueTeam = () => {
           </div>
           <button
             class="text-indigo-100 transition-colors bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-400 py-2 px-4 mt-5"
-            @click="joinRedTeam"
+            @click="joinRedTeam" :disabled = "route.query.isHost"
           >
             Join Red Team
           </button>

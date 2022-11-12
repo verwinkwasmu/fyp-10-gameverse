@@ -148,7 +148,7 @@ const modalOpen = (quizId) => {
             {{ quiz.category }}
           </div>
           <div
-            class="p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="p-4 bg-blue-900 text-white items-center w-40 rounded justify-center text-center"
           >
             {{ quiz.questions.length }} Questions
           </div>

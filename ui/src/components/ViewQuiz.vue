@@ -101,7 +101,7 @@ const getData = async () => {
               {{ question.question }}
             </div>
             <div
-              class="grid justify-items-end bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white"
+              class="flex bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white justify-center items-center"
             >
               Time: {{ question.timer }}
             </div>

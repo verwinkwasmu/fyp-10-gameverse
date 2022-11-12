@@ -29,7 +29,7 @@ const signOut = () => {
     <iframe
       src="https://verwinkwasmu-fyp-10-gameverse-analyticsmain-8vol3m.streamlit.app/?embedded=true"
     ></iframe>
-    <footer class="fixed right-0 bottom-12 flex ml-6">
+    <footer class="fixed left-0 bottom-6 flex ml-6">
       <router-link to="/">
         <button class="btn-return" @click="signOut">Sign Out</button>
       </router-link>

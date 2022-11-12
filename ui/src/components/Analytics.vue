@@ -12,6 +12,11 @@ onMounted(() => {
   if (userStore.user == null) {
     router.push({path: `/Login`})
   }
+
+  if (userStore.user.data.id > 0) {
+    console.log(userStore.user.id)
+    router.push({path: `/`})
+  }
 })
 
 const signOut = () => {

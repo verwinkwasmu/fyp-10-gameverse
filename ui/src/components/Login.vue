@@ -25,7 +25,7 @@ async function onSubmit() {
   if (login == 200) {
     // if user id is admin (first digit is a 0), redirect to admin page
     switch (String(userId.value)[0]) {
-      case '0':
+      case '-':
         router.push({path: `/Analytics`})
         break
 
@@ -63,14 +63,12 @@ async function onSubmit() {
             Log in to your account
           </h1>
           <div>
-            <label
-              for="email"
-              class="block mb-2 text-sm font-medium text-white"
+            <label for="email" class="block mb-2 text-sm font-medium text-white"
               >User ID</label
             >
             <input
               v-model="userId"
-              class="bg-gray-700 border border-gray-600  placeholder-gray-400 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-96"
+              class="bg-gray-700 border border-gray-600 placeholder-gray-400 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-96"
               placeholder="Please enter your User ID"
               required=""
               @keyup.enter="onSubmit"

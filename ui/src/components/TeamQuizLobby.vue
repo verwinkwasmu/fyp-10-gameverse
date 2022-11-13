@@ -1,8 +1,10 @@
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {useUserIdStore} from '../stores/userId'
 import {useQnNumberStore} from '../stores/qnNumber'
+import {useQueryClient} from 'vue-query'
+
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserIdStore()
@@ -10,6 +12,10 @@ const userStore = useUserIdStore()
 if (userStore.user == null) {
   router.push({path: `/Login`})
 }
+
+onMounted(() => {
+  useQueryClient().invalidateQueries('quizById')
+})
 
 const userId = userStore.user != null ? userStore.user.data.id : null
 const userName = userStore.user != null ? userStore.user.data.name : null
@@ -70,6 +76,8 @@ const moveToQuestion = () => {
 const routenext = () => {
   let quizId = route.query.quiz_id ? route.query.quiz_id : quiz_id.value
   qnNumStore.quiz_id = quizId
+  qnNumStore.qnNum = 0
+
   router.push({path: `/TeamQuiz`})
 }
 

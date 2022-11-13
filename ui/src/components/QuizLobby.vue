@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {onMounted, ref} from 'vue'
 import {useUserIdStore} from '../stores/userId'
 import {useRoute, useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
@@ -12,6 +12,10 @@ const userStore = useUserIdStore()
 if (userStore.user == null) {
   router.push({path: `/Login`})
 }
+
+onMounted(() => {
+  useQueryClient().invalidateQueries('quizById')
+})
 
 const userId = userStore.user != null ? userStore.user.data.id : null
 const userName = userStore.user != null ? userStore.user.data.name : null
@@ -67,8 +71,6 @@ function routenext() {
   let quizId = route.query.quiz_id ? route.query.quiz_id : quiz_id.value
   qnNumStore.quiz_id = quizId
   qnNumStore.qnNum = 0
-
-  useQueryClient().invalidateQueries('quizById')
 
   router.push({path: `/SoloQuiz`})
 }

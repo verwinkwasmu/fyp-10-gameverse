@@ -23,7 +23,7 @@ async function onSubmit() {
   let login = await userStore.login(userId.value)
 
   if (login == 200) {
-    // if user id is admin (first digit is a 0), redirect to admin page
+    // if user id is admin (first digit is a '-'), redirect to admin page
     switch (String(userId.value)[0]) {
       case '-':
         router.push({path: `/Analytics`})

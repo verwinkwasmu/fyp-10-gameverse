@@ -3,7 +3,6 @@ import axios from 'axios'
 const API = () => {
   return axios.create({
     baseURL: 'https://yhb9zv.deta.dev/api',
-    // baseURL: 'http://localhost:8080/api',
   })
 }
 

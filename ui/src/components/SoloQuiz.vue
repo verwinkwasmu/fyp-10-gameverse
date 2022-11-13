@@ -1,6 +1,6 @@
 <script setup>
 import Quiz from '../services/Quiz'
-import {ref, onMounted, onBeforeMount} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useQnNumberStore} from '../stores/qnNumber'
 import {useRoute, useRouter} from 'vue-router'
 import {useQuizObjectStore} from '../stores/quizObject'
@@ -19,9 +19,24 @@ const totalQn = ref()
 const score = ref(0)
 
 // GET Single Quiz by quiz_id
-const {isLoading, isError, isFetching, data, error, isSuccess} = useQuery(
+const {
+  isLoading,
+  isError,
+  isFetching,
+  data,
+  error: queryError,
+  isSuccess,
+} = useQuery(
   ['quizById'],
-  () => Quiz.getQuiz(qnNumStore.quiz_id),
+  async () => {
+    const quizData = await Quiz.getQuiz(qnNumStore.quiz_id)
+    console.log('ran in useQuery')
+    setTimer(
+      quizData.questions.length,
+      quizData.questions[qnNumStore.qnNum].timer,
+    )
+    return quizData
+  },
   {
     retry: 2,
     staleTime: 50000,
@@ -37,40 +52,30 @@ window.websocket.onmessage = (event) => {
   }
 }
 
-onMounted(async () => {
-  //TODO: still dk if this solves the bug need to keep testing, (error: question is not defined)
-  if (!data.value) {
-    data.value = await Quiz.getQuiz(qnNumStore.quiz_id)
-    store.quiz = data.value
-    totalQn.value = data.value.questions.length
-    timer.value = data.value.questions[qnNumStore.qnNum].timer
-
-    let timerCountdown = setInterval(() => {
-      timer.value--
-      if (timer.value == 0) {
-        clearInterval(timerCountdown)
-        if (!qnAnswered.value) {
-          checkAnswers()
-        }
-      }
-    }, 1000)
-  } else {
-    store.quiz = data.value
-    totalQn.value = data.value.questions.length
-    timer.value = data.value.questions[qnNumStore.qnNum].timer
-
-    let timerCountdown = setInterval(() => {
-      timer.value--
-      if (timer.value == 0) {
-        clearInterval(timerCountdown)
-        if (!qnAnswered.value) {
-          checkAnswers()
-        }
-      }
-    }, 1000)
+onMounted(() => {
+  if (qnNumStore.qnNum > 0) {
+    setTimer(
+      data.value.questions.length,
+      data.value.questions[qnNumStore.qnNum].timer,
+    )
   }
 })
 
+function setTimer(questionsLength, questionTimer) {
+  console.log('ran x1')
+  totalQn.value = questionsLength
+  timer.value = questionTimer
+
+  let timerCountdown = setInterval(() => {
+    timer.value--
+    if (timer.value == 0) {
+      clearInterval(timerCountdown)
+      if (!qnAnswered.value) {
+        checkAnswers()
+      }
+    }
+  }, 1000)
+}
 function showAnswer(event) {
   qnAnswered.value = true
   answer_input.value = event

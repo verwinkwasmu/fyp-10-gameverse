@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {useQuizObjectStore} from '../stores/quizObject'
-import {useQueryClient} from 'vue-query'
 
 const API = () => {
   return axios.create({

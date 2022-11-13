@@ -1,9 +1,9 @@
 import axios from 'axios'
+import {useQuizObjectStore} from '../stores/quizObject'
 
 const API = () => {
   return axios.create({
     baseURL: 'https://n08yph.deta.dev/api',
-    // baseURL: 'http://localhost:8080/api',
   })
 }
 
@@ -27,6 +27,11 @@ export default {
   async getQuiz(quiz_id) {
     try {
       const response = await API().get(`/quiz/${quiz_id}`)
+
+      // Store the quiz object in the store to prevent render error in soloQuiz and teamQuiz
+      const store = useQuizObjectStore()
+      store.quiz = response.data
+
       return response.data
     } catch (err) {
       throw new Error(err)

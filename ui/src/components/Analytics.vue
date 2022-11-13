@@ -14,7 +14,6 @@ onMounted(() => {
   }
 
   if (userStore.user.data.id > 0) {
-    console.log(userStore.user.id)
     router.push({path: `/`})
   }
 })

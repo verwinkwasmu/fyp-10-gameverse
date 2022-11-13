@@ -3,29 +3,26 @@ import {ref, onMounted} from 'vue'
 import {useUserIdStore} from '../stores/userId'
 import {useRoute, useRouter} from 'vue-router'
 import {useQnNumberStore} from '../stores/qnNumber'
+import {useQueryClient} from 'vue-query'
 
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserIdStore()
 
-if (userStore.user == null){
+if (userStore.user == null) {
   router.push({path: `/Login`})
 }
 
-const userId = userStore.user != null ? userStore.user.data.id  : null
-const userName = userStore.user != null ? userStore.user.data.name  : null
+const userId = userStore.user != null ? userStore.user.data.id : null
+const userName = userStore.user != null ? userStore.user.data.name : null
 
-const client_id = route.query.isHost
-  ? 'Host' + userId
-  : userId.toString()
+const client_id = route.query.isHost ? 'Host' + userId : userId.toString()
 const quiz_id = ref()
 const users = ref({})
 const qnNumStore = useQnNumberStore()
 qnNumStore.user_id = client_id
 const url = `http://localhost:5173/QuizLobby/${route.params.lobby_id}`
 const countdowntimer = ref(3)
-
-
 
 window.websocket = new WebSocket(
   `ws://localhost:8080/ws/${route.params.lobby_id}/${client_id}/${userName}/${route.query.quiz_id}`,
@@ -42,9 +39,6 @@ window.websocket.onmessage = (event) => {
 
   if (JSON.parse(event.data).command == 'Start Game') {
     moveToQuestion()
-
-    //TODO: add counts to quiz
-    
   } else {
     users.value = JSON.parse(event.data)
   }
@@ -73,6 +67,9 @@ function routenext() {
   let quizId = route.query.quiz_id ? route.query.quiz_id : quiz_id.value
   qnNumStore.quiz_id = quizId
   qnNumStore.qnNum = 0
+
+  useQueryClient().invalidateQueries('quizById')
+
   router.push({path: `/SoloQuiz`})
 }
 
@@ -130,12 +127,7 @@ const backToHome = () => {
       </div>
 
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
-          class="btn-exitQuiz"
-          @click="backToHome"
-        >
-          Exit Game
-        </button>
+        <button class="btn-exitQuiz" @click="backToHome">Exit Game</button>
       </footer>
 
       <footer class="fixed right-10 bottom-10 flex ml-6">

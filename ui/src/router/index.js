@@ -23,17 +23,14 @@ import ViewQuiz from '../components/ViewQuiz.vue'
 import Login from '../components/Login.vue'
 import UpdateQuiz from '../components/UpdateQuiz.vue'
 import UpdateQuizSummary from '../components/UpdateQuizSummary.vue'
-import {QuizCreation, Chat, QuizCreationSummary} from '../components'
+import QuizCreation from '../components/QuizCreation.vue'
+import QuizCreationSummary from '../components/QuizCreationSummary.vue'
 import AddQuestionFromBankForUpdate from '../components/AddQuestionFromBankForUpdate.vue'
 import AllQuizQuestionBankForUpdate from '../components/AllQuizQuestionBankForUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/room/:room_id',
-      component: Chat,
-    },
     {
       path: '/QuizResult',
       component: QuizResult,

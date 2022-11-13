@@ -17,7 +17,6 @@ export const useUserIdStore = defineStore('userId', {
       try {
         const response = await Player.getPlayer(userId)
         this.user = response
-        console.log(response)
         localStorage.setItem('user', JSON.stringify(response))
         quizCreationStore.createdQuiz.user_id = userId
         quizUpdateStore.quiz.user_id = userId

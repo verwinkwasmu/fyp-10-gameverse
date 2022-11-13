@@ -1,7 +1,7 @@
-fastapi
-uvicorn
-sqlmodel
-psycopg2-binary
-requests
-pytest
-pytest-cov
+fastapi==0.79.0
+uvicorn==0.18.2
+sqlmodel==0.0.6
+psycopg2-binary==2.9.3
+requests==2.28.1
+pytest==7.1.2
+pytest-cov==3.0.0

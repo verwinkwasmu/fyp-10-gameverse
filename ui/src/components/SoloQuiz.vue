@@ -30,11 +30,12 @@ const {
   ['quizById'],
   async () => {
     const quizData = await Quiz.getQuiz(qnNumStore.quiz_id)
-    console.log('ran in useQuery')
-    setTimer(
-      quizData.questions.length,
-      quizData.questions[qnNumStore.qnNum].timer,
-    )
+    if (qnNumStore.qnNum < quizData.questions.length) {
+      setTimer(
+        quizData.questions.length,
+        quizData.questions[qnNumStore.qnNum].timer,
+      )
+    }
     return quizData
   },
   {
@@ -62,7 +63,6 @@ onMounted(() => {
 })
 
 function setTimer(questionsLength, questionTimer) {
-  console.log('ran x1')
   totalQn.value = questionsLength
   timer.value = questionTimer
 

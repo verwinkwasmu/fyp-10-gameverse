@@ -21,14 +21,13 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font col-span-2">GameVerse Quiz Creation</div>
+        <router-link to="/">
+          <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+        </router-link>
+        <div class="text-2xl col-span-2">Question Bank</div>
       </div>
       <div class="mx-auto mt-16 max-w-xl rounded overflow-hidden">
-        <div class="flex items-center py-4">
-          <div class="w-4/6 flex">
-            <p class="text-3xl font col-span-2">Question Bank</p>
-          </div>
-        </div>
+
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="quizname"
@@ -37,7 +36,7 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
           v-model="category"
         />
         <div class="basis-1/4">
-          <div class="rounded-md shadow">
+          <div class="rounded-md shadow pt-3">
             <button
               class="flex w-full items-center justify-center rounded-md border border-transparent bg-cyan-600 px-8 py-3 text-base font-medium text-white hover:bg-cyan-700 md:py-1 md:px-7"
               @click="searchCategory"
@@ -79,7 +78,7 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
       </div>
       <div class="flex justify-center pt-10">
         <router-link
-          class="bg-red-400 hover:bg-red-300 text-black font-bold py-2 px-4 rounded hover:text-white"
+          class="btn-return hover:text-white"
           :to="{path: '/UpdateQuiz'}"
           >Back to Quiz Update</router-link
         >

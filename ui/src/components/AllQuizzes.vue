@@ -15,7 +15,7 @@ onMounted(() => {
     router.push({path: `/Login`})
   }
 })
-
+  
 // GET Quizzes Function
 const {
   isLoading,
@@ -93,7 +93,7 @@ const modalOpen = (quizId) => {
           </div>
 
           <div
-            class="w-30 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="w-30 p-4 w-40 bg-blue-900 text-white items-center rounded justify-center text-center"
           >
             Questions: {{ quiz.questions.length }}
           </div>

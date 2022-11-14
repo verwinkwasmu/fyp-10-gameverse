@@ -13,6 +13,7 @@ class QuizResult:
     category: str
     start_time: str
     end_time: str
+    quizTitle: str
 
 
 class Player(SQLModel, table=True):
@@ -21,8 +22,12 @@ class Player(SQLModel, table=True):
     email: str = Field(sa_column=Column("email", String, unique=True))
     total_points: int
     categories_played: Dict = Field(default={}, sa_column=Column(JSON))
-    start_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
-    end_times: Optional[List[datetime]] = Field(default=[], sa_column=Column(ARRAY(String)))
+    start_times: Optional[List[str]] = Field(
+        default=[], sa_column=Column(ARRAY(String))
+    )
+    end_times: Optional[List[str]] = Field(
+        default=[], sa_column=Column(ARRAY(String))
+    )
 
     # Needed for Column(JSON)
     class Config:
@@ -36,8 +41,8 @@ class Player(SQLModel, table=True):
                 "email": "tohwei@xiang.com",
                 "total_points": 70,
                 "categories_played": {
-                    "Movies": {"count": 5, "points": 50},
-                    "Kdrama": {"count": 2, "points": 20},
+                    "Movies": {"Star Wars Quiz": {"count": 5, "points": 50}},
+                    "Kdrama": {"Yumi Cells Quiz": {"count": 2, "points": 20}},
                 },
             }
         }

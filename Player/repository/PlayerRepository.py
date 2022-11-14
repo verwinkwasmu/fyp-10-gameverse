@@ -7,6 +7,7 @@ from sqlmodel import Session, select
 from entity.PlayerEntity import QuizResult
 from entity.PlayerEntity import Player
 
+from copy import deepcopy
 
 @dataclass
 class PlayerRepository:
@@ -77,49 +78,50 @@ class PlayerRepository:
 
     def input_quiz_results(self, quizResults: QuizResult):
         with Session(self.database) as session:
-            player = session.get(Player, quizResults.id)
+            oldPlayer = session.get(Player, quizResults.id)
 
-            if not player:
+            if not oldPlayer:
                 return None
 
             # add start end times
-            if player.start_times == None:
-                player.start_times = []
-            if player.end_times == None:
-                player.end_times = []
+            if oldPlayer.start_times == None:
+                oldPlayer.start_times = []
+            if oldPlayer.end_times == None:
+                oldPlayer.end_times = []
 
-            new_start_times = player.start_times + [quizResults.start_time]
-            end_start_times = player.end_times + [quizResults.end_time]
-            
-            player.start_times = new_start_times
-            player.end_times = end_start_times
+            new_start_times = oldPlayer.start_times + [quizResults.start_time]
+            end_start_times = oldPlayer.end_times + [quizResults.end_time]
 
-            player.total_points += quizResults.score
+            oldPlayer.start_times = new_start_times
+            oldPlayer.end_times = end_start_times
+
+            oldPlayer.total_points += quizResults.score
+
+            player = deepcopy(oldPlayer)
 
             # this requires a copy to work
-            new_categories_played = player.categories_played.copy()
+            new_categories_played = player.categories_played
 
-            if quizResults.category not in player.categories_played:
-                new_categories_played[quizResults.category] = {
+            if quizResults.category not in new_categories_played:
+                new_categories_played[quizResults.category] = {}
+
+            if quizResults.quizTitle not in new_categories_played[quizResults.category]:
+                new_categories_played[quizResults.category][quizResults.quizTitle] = {
                     "count": 1,
                     "points": quizResults.score,
                 }
-                player.categories_played = new_categories_played
-
             else:
-                currentCount = new_categories_played[quizResults.category]["count"] + 1
-                currentPoints = (
-                    new_categories_played[quizResults.category]["points"]
-                    + quizResults.score
-                )
-                new_categories_played[quizResults.category] = {
-                    "count": currentCount,
-                    "points": currentPoints,
-                }
-                player.categories_played = new_categories_played
+                new_categories_played[quizResults.category][quizResults.quizTitle][
+                    "count"
+                ] += 1
+                new_categories_played[quizResults.category][quizResults.quizTitle][
+                    "points"
+                ] += quizResults.score
 
-            session.add(player)
+            setattr(oldPlayer, "categories_played", new_categories_played)
+            
+            session.add(oldPlayer)
             session.commit()
-            session.refresh(player)
+            session.refresh(oldPlayer)
 
-            return player
+            return oldPlayer

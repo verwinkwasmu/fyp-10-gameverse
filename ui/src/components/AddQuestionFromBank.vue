@@ -108,12 +108,13 @@ const removeQuestion = (questionTitle) => {
                 <div class=" shadow w-96 justify-items-stretch bg-indigo-700 px-8 py-3 mt-6 text-base font-medium text-white">
                     {{ question.title }}
                 </div>
+                <div
+                    class="flex bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white justify-center items-center"
+                  >
+                    Time: {{ question.timer }}
+                  </div>
               </div>
-              <div
-              class="flex bg-blue-900 px-8 py-3 mt-6 text-base font-medium text-white justify-center items-center"
-            >
-              Time: {{ question.timer }}
-            </div>
+             
             </div>
 
             <div class="flex grid grid-flow-row auto-rows-max gap-4">

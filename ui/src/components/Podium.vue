@@ -42,6 +42,7 @@ window.websocket.onmessage = (event) => {
         category: quizObjectStore.quiz.category,
         start_time: JSON.parse(event.data).start_time,
         end_time: JSON.parse(event.data).end_time,
+        quizTitle: quizObjectStore.quiz.title,
       }
       addQuizResults(payload)
     }
@@ -96,12 +97,7 @@ const backToHome = () => {
 
       <!--Exit game button-->
       <footer class="fixed left-10 bottom-10 flex ml-6">
-        <button
-          class="btn-exitQuiz"
-          @click="backToHome"
-        >
-          Exit Game
-        </button>
+        <button class="btn-exitQuiz" @click="backToHome">Exit Game</button>
       </footer>
     </div>
   </div>

@@ -16,6 +16,7 @@ const qnAnswered = ref(false)
 const timer = ref()
 const answer_input = ref(null)
 const totalQn = ref()
+const score = ref(0)
 
 // GET Single Quiz by quiz_id
 const {
@@ -89,14 +90,14 @@ function checkAnswers() {
   }
 
   let answer_key = data.value.questions[qnNumStore.qnNum].answer
-  let score = 0
+  score.value = 0
   if (
     data.value.questions[qnNumStore.qnNum].options[answer_key] ==
     answer_input.value
   ) {
     qnCorrect.value = true
     qnAnswered.value = true
-    score += 10 * timer.value
+    score.value += 10 * timer.value
     answer_input.value = null
   } else {
     qnCorrect.value = false
@@ -106,7 +107,7 @@ function checkAnswers() {
 
   const response = {
     command: 'Done',
-    score: score,
+    score: score.value,
     correct: qnCorrect.value,
   }
   window.websocket.send(JSON.stringify(response))
@@ -191,7 +192,7 @@ const moveToScoreboard = () => {
               />
             </div>
             <div class="text-lg font-bold text-center">That's correct!</div>
-            <div class="text-center">+10 points</div>
+            <div class="text-center">+{{ score }}points</div>
           </div>
         </div>
 

@@ -44,6 +44,7 @@ window.websocket.onmessage = (event) => {
         category: quizObjectStore.quiz.category,
         start_time: JSON.parse(event.data).start_time,
         end_time: JSON.parse(event.data).end_time,
+        quizTitle: quizObjectStore.quiz.title,
       }
       addQuizResults(payload)
     }

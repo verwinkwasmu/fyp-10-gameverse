@@ -14,7 +14,8 @@ class QuizRepository:
 
     def create_quiz(self, quiz: Quiz):
         with Session(self.database) as session:
-            statement = select(Quiz).where(Quiz.id == quiz.id)
+            # check if new quizTitle doesnt exist in db
+            statement = select(Quiz).where(Quiz.title == quiz.title)
             result = session.exec(statement).first()
 
             if result == None:

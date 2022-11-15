@@ -35,7 +35,7 @@ const {
     router.push({path: `/MyQuizzes`})
   },
   onError: (error) => {
-    alert(error)
+    console.log(error)
   },
 })
 </script>
@@ -152,20 +152,21 @@ const {
       <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
         <div>
           <router-link to="/QuizCreation">
-            <button
-              type="button"
-              class="btn-return"
-            >
-              Return
-            </button>
+            <button type="button" class="btn-return">Return</button>
           </router-link>
 
-          <button
-            class="btn-complete"
-            @click="createQuiz"
-          >
-            Create Quiz
-          </button>
+          <button class="btn-complete" @click="createQuiz">Create Quiz</button>
+        </div>
+      </div>
+    </div>
+    <div className="" class="mt-5 mb-4">
+      <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
+        <div
+          v-if="isError"
+          class="grid grid-cols-1 justify-items-center p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 w-7/12"
+          role="alert"
+        >
+          <span class="font-medium">Error Occurred</span> {{ error.detail }}
         </div>
       </div>
     </div>

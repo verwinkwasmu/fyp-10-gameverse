@@ -1,4 +1,4 @@
-from sqlalchemy import ARRAY
+from sqlalchemy import ARRAY, String
 from sqlmodel import Column, Field, SQLModel, JSON
 from typing import Dict, List, Optional
 from datetime import datetime
@@ -7,7 +7,7 @@ from datetime import datetime
 class Quiz(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     created_at: Optional[datetime] = Field(default=datetime.utcnow(), nullable=False)
-    title: str
+    title: str = Field(sa_column=Column("title", String, unique=True))
     category: str
     questions: List = Field(default=[], sa_column=Column(ARRAY(JSON)))
     user_id: Optional[int] = Field(default=None)

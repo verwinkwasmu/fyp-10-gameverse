@@ -98,10 +98,10 @@ class QuizRepository:
                 option = question.get("options")
                 data = Question(
                     title=question.get("question"),
-                    option_1=option.get("option_1"),
-                    option_2=option.get("option_2"),
-                    option_3=option.get("option_3"),
-                    option_4=option.get("option_4"),
+                    option_1=option.get("option_1", None),
+                    option_2=option.get("option_2", None),
+                    option_3=option.get("option_3", None),
+                    option_4=option.get("option_4", None),
                     answer=question.get("answer"),
                     timer=question.get("timer"),
                     category=quiz.category,

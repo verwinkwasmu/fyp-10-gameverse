@@ -47,14 +47,13 @@ export const useQuizUpdateStore = defineStore('quizUpdate', {
       for (const question of questions) {
         let newQuestion = {
           question: question.question,
-          options: {
-            option_1: question.options.option_1,
-            option_2: question.options.option_2,
-            option_3: question.options.option_3,
-            option_4: question.options.option_4,
-          },
+          options: {},
           answer: question.answer,
           timer: question.timer,
+        }
+
+        for (const [key, val] of Object.entries(question.options)) {
+          newQuestion.options[key] = val
         }
         this.quiz.questions.push(newQuestion)
       }

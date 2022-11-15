@@ -3,7 +3,8 @@ import {useQuizObjectStore} from '../stores/quizObject'
 
 const API = () => {
   return axios.create({
-    baseURL: 'https://n08yph.deta.dev/api',
+    // baseURL: 'https://n08yph.deta.dev/api',
+    baseURL: 'http://localhost:8080/api',
   })
 }
 
@@ -42,7 +43,7 @@ export default {
       const response = await API().post('/create', payload)
       return response.data
     } catch (err) {
-      throw new Error(err)
+      throw err.response.data
     }
   },
   async updateQuiz(payload) {

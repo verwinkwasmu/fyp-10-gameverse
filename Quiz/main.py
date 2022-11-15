@@ -4,7 +4,6 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
 from entity.QuestionEntity import Question
-
 from repository.QuizRepository import QuizRepository
 from service.QuizService import QuizService
 from entity.QuizEntity import Quiz
@@ -53,7 +52,7 @@ async def get_quizzes():
     quizzes = quizService.get_quizzes()
 
     if quizzes is None:
-        raise HTTPException(status_code=500, detail="No quizzes found")
+        raise HTTPException(status_code=404, detail="No quizzes found")
 
     return quizzes
 
@@ -64,7 +63,7 @@ async def get_user_quizzes(user_id: int):
 
     if quizzes is None:
         raise HTTPException(
-            status_code=500, detail=f"No quizzes found for user with id: {user_id}"
+            status_code=404, detail=f"No quizzes found for user with id: {user_id}"
         )
 
     return quizzes
@@ -76,7 +75,7 @@ async def get_quiz(quiz_id: int):
 
     if quiz is None:
         raise HTTPException(
-            status_code=500, detail=f"quiz with id: {quiz_id} not found"
+            status_code=404, detail=f"quiz with id: {quiz_id} not found"
         )
 
     return quiz
@@ -85,10 +84,11 @@ async def get_quiz(quiz_id: int):
 @app.post("/api/create/", response_model=Quiz)
 async def create_quiz(quiz: Quiz):
     result = quizService.create_quiz(quiz)
-
+    
     if result == None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to create quiz for id: {quiz.id}"
+            status_code=404,
+            detail=f"Unable to create quiz: {quiz.title} already exists. Please choose a different title!",
         )
 
     return result
@@ -100,7 +100,7 @@ async def update_quiz(quiz: Quiz):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to update quiz with id: {quiz.id}"
+            status_code=404, detail=f"Unable to update quiz with id: {quiz.id}"
         )
 
     return result
@@ -112,7 +112,7 @@ async def delete_quiz(quiz_id: int):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"Unable to delete quiz for id: {quiz_id}"
+            status_code=404, detail=f"Unable to delete quiz for id: {quiz_id}"
         )
 
     return result
@@ -124,7 +124,7 @@ async def get_questions(category: str):
 
     if result is None:
         raise HTTPException(
-            status_code=500, detail=f"questions with category {category} not found"
+            status_code=404, detail=f"questions with category {category} not found"
         )
 
     return result
@@ -135,6 +135,6 @@ async def get_category(category: str = ""):
     results = quizService.get_category(category)
 
     if results is None:
-        raise HTTPException(status_code=500, detail="No category found")
+        raise HTTPException(status_code=404, detail="No category found")
 
     return results

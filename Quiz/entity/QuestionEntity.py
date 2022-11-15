@@ -7,10 +7,10 @@ from datetime import datetime
 class Question(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
-    option_1: str
-    option_2: str
-    option_3: str
-    option_4: str
+    option_1: Optional[str] = Field(default=None, nullable=True)
+    option_2: Optional[str] = Field(default=None, nullable=True)
+    option_3: Optional[str] = Field(default=None, nullable=True)
+    option_4: Optional[str] = Field(default=None, nullable=True)
     answer: str
     timer: int
     category: str

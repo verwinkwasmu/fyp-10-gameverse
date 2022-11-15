@@ -4,7 +4,6 @@ import {useQuizObjectStore} from '../stores/quizObject'
 const API = () => {
   return axios.create({
     baseURL: 'https://n08yph.deta.dev/api',
-    // baseURL: 'http://localhost:8080/api',
   })
 }
 

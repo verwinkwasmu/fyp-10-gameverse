@@ -272,14 +272,14 @@ const removeQuestion = (questionTitle) => {
                     v-if="
                       !questionBankStore.addedQuestions.includes(question.title)
                     "
-                    class="grid justify-items-end bg-cyan-600 px-8 py-3 text-white hover:bg-cyan-700"
+                    class="grid justify-items-end bg-cyan-600 px-8 py-3 text-white hover:bg-cyan-700 rounded-lg"
                     @click="addQuestion(question)"
                   >
                     Add Question
                   </button>
                   <button
                     v-else
-                    class="grid justify-items-end bg-red-600 px-8 py-3 text-base text-white hover:bg-red-700"
+                    class="grid justify-items-end bg-red-600 px-8 py-3 text-base text-white hover:bg-red-700 rounded-lg"
                     @click="removeQuestion(question.title)"
                   >
                     Remove Question

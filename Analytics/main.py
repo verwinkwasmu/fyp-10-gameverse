@@ -36,12 +36,20 @@ player_df = run_query("SELECT * from player;")
 top5_players = player_df.sort_values(by="total_points", ascending=False).head(5)
 
 # Workings for Top 5 Categories based on Number of Times Played
+# df_1 = run_query(
+#     "SELECT t.category, t.item ->> 'quiz' AS quiz, t.item ->> 'items' AS items FROM player, json_each(categories_played) AS t(category, item);"
+# )
 df_1 = run_query(
-    "SELECT t.category, t.item ->> 'count' AS count, t.item ->> 'points' AS points FROM player, json_each(categories_played) AS t(category, item);"
+    "SELECT categories_played FROM player;"
 )
+st.write(df_1)
+
+
+# user, cateogry, title, count, points
+
     # convert column datatype to int datatype
-df_1 = df_1.astype({"count": int, "points": int})
-top_categories = df_1.groupby("category").sum().sort_values(by="count", ascending=False).head(5)
+# df_1 = df_1.astype({"count": int, "points": int})
+# top_categories = df_1.groupby("category").sum().sort_values(by="count", ascending=False).head(5)
 
 
 # Workings for Average duration of quizzes played over time

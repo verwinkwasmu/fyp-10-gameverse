@@ -40,16 +40,35 @@ top5_players = player_df.sort_values(by="total_points", ascending=False).head(5)
 #     "SELECT t.category, t.item ->> 'quiz' AS quiz, t.item ->> 'items' AS items FROM player, json_each(categories_played) AS t(category, item);"
 # )
 df_1 = run_query(
-    "SELECT categories_played FROM player;"
+    "SELECT id, name, categories_played FROM player;"
 )
-st.write(df_1)
+# st.write(df_1)
 
+user_data = []
+def extract_json(row):
+    user_id = row["id"]
+    user_name = row["name"]
+    user_dict = row["categories_played"]
+    
+    for category, value_dict in user_dict.items():
+        for quiz, item in value_dict.items():
+            # st.write(user_id, quiz)
+            row_list = [user_id, user_name, category, quiz, item["count"], item["points"]]
+            # st.write(row_list)
+            user_data.append(row_list)
+        
+    return
 
-# user, cateogry, title, count, points
+df_1.apply(lambda row: extract_json(row), axis=1)
+user_df = pd.DataFrame(user_data)
+user_df.columns = ["id", "name", "category", "quiz", "count", "points"]
 
-    # convert column datatype to int datatype
-# df_1 = df_1.astype({"count": int, "points": int})
-# top_categories = df_1.groupby("category").sum().sort_values(by="count", ascending=False).head(5)
+# convert column datatype to int datatype
+user_df = user_df.astype({"count": int, "points": int})
+top_categories = user_df.groupby("category").sum().sort_values(by="count", ascending=False).head(5)
+
+top_quizzes = user_df.groupby("quiz").sum().sort_values(by="count", ascending=False).head(5)
+
 
 
 # Workings for Average duration of quizzes played over time
@@ -146,6 +165,38 @@ with col2:
     fig1.update_xaxes(title_text='Category Name')
     fig1.update_yaxes(title_text='Number of Times Played')
     st.plotly_chart(fig1, use_container_width=True)
+
+
+
+col3, col4 = st.columns((1, 1), gap="large")
+# PLOTTING TOP 5 QUIZZES BASED ON NUMBER OF TIMES PLAYED
+with col3:
+    st.subheader("Top 5 Quizzes based on Number of Times Played")
+    fig1=go.Figure(go.Bar(x=top_quizzes.index, y=top_quizzes["count"],
+                        hovertemplate =
+                        '<b>Quiz</b>: %{x}'+
+                        '<br><b># Times Played</b>: %{y}<extra></extra>',))
+    fig1.update_layout(
+        margin=dict(l=0, r=0, t=0, b=50),
+        height=300,
+        )
+    fig1.update_xaxes(title_text='Quiz Name')
+    fig1.update_yaxes(title_text='Number of Times Played')
+    st.plotly_chart(fig1, use_container_width=True)
+
+with col4:
+    st.subheader("Player Data")
+    st.caption("Scrollable table")
+
+    hide_dataframe_row_index = """
+            <style>
+            .row_heading.level0 {display:none}
+            .blank {display:none}
+            </style>
+            """
+    st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
+    st.dataframe(user_df, height=250, use_container_width=True)
+
 
 
 # PLOTTING THE AVERAGE DURATION OF QUIZZES PLAYED OVER TIME GRAPH 

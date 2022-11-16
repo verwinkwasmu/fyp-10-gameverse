@@ -27,7 +27,7 @@ const {
         <router-link to="/">
           <div class="text-5xl font-semibold col-span-2">GameVerse</div>
         </router-link>
-        <div class="text-2xl col-span-2">Leaderboard</div>
+        <div class="text-3xl col-span-2">Leaderboard</div>
       </div>
       <div
         v-if="isError"
@@ -59,7 +59,7 @@ const {
                 </thead>
                 <tbody v-for="(player, index) in players" :key="index">
                   <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700"
                   >
                     <th
                       scope="row"
@@ -81,5 +81,15 @@ const {
         </div>
       </div>
     </div>
+    <footer class="fixed left-10 bottom-5 flex ml-6">
+        <router-link to="/">
+          <button
+            class="btn-return"
+
+          >
+            Return
+          </button>
+        </router-link>
+      </footer>
   </div>
 </template>

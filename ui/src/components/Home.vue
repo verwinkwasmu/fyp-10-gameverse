@@ -37,9 +37,16 @@ const signOut = () => {
             My Quizzes
           </button>
         </router-link>
+        <router-link to="/Leaderboard" tag="button" class="flex justify-end">
+          <button
+            class="bg-teal-400 hover:bg-teal-600 text-black font-bold py-2 px-4 rounded w-80 hover:text-white"
+          >
+            Leaderboard
+          </button>
+        </router-link>
       </div>
 
-      <div class="flex justify-center items-center mt-7">
+      <div class="flex justify-center items-center mt-7 pt-10">
         <router-link to="/JoinGame" tag="button">
           <button
             class="bg-yellow-200 hover:bg-yellow-400 text-black hover:text-white font-bold py-8 px-12 mx-2 rounded w-64 h-80"

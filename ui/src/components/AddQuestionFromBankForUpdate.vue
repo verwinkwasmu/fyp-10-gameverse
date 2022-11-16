@@ -67,10 +67,11 @@ const removeQuestion = (questionTitle) => {
           Question from {{ route.params.category }}
         </div>
       </div>
-      <div class="mx-auto mt-16 max-w-xl rounded overflow-hidden">
+      <div class="mx-auto mt-16 max-w-xl rounded">
+        <div class="grid justify-center">
         <div class="grid grid-flow-col auto-cols-max gap-4">
           <div
-            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="w-80 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
           >
             Quiz Title
           </div>
@@ -82,7 +83,7 @@ const removeQuestion = (questionTitle) => {
         </div>
         <div class="grid grid-flow-col auto-cols-max gap-4 pt-4">
           <div
-            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="w-80 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
           >
             Number of Questions
           </div>
@@ -95,7 +96,7 @@ const removeQuestion = (questionTitle) => {
 
         <div class="grid grid-flow-col auto-cols-max gap-4 pt-4">
           <div
-            class="w-60 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
+            class="w-80 p-4 bg-blue-900 text-white items-center rounded justify-center text-center"
           >
             Category
           </div>
@@ -105,13 +106,11 @@ const removeQuestion = (questionTitle) => {
             {{ route.params.category }}
           </div>
         </div>
-
-        <div class="text-m row-span-2 flow-root">
+      </div>
+        <div v-if="isSuccess" class="grid justify-center">
           <div class="float-left mt-10 text-2xl font-bold">Questions</div>
-        </div>
-        <div v-if="isSuccess">
           <div v-for="(question, index) in data" :key="index">
-            <div class="text-sm">
+            <div class="text-sm pt-4">
               <p>Q{{ index + 1 }}.</p>
             </div>
             <div class="flex grid grid-flow-row auto-rows-max gap-4">
@@ -126,7 +125,26 @@ const removeQuestion = (questionTitle) => {
                 >
                   Time: {{ question.timer }}
                 </div>
+                <div>
+                  <button
+                    v-if="
+                      !questionBankStore.addedQuestions.includes(question.title)
+                    "
+                    class="grid justify-items-end bg-cyan-600 px-8 py-3 mt-6 text-white hover:bg-cyan-700 rounded-lg"
+                    @click="addQuestion(question)"
+                  >
+                    Add Question
+                  </button>
+                  <button
+                    v-else
+                    class="grid justify-items-end bg-red-600 px-8 py-3 mt-6 text-base text-white hover:bg-red-700 rounded-lg"
+                    @click="removeQuestion(question.title)"
+                  >
+                    Remove Question
+                  </button>
+                </div>
               </div>
+              
             </div>
 
             <div class="flex grid grid-flow-row auto-rows-max gap-4">
@@ -266,26 +284,26 @@ const removeQuestion = (questionTitle) => {
                   </div>
                 </div>
               </div>
-              <div class="basis-1/3 pb-4">
+              <!-- <div class="basis-1/3 pb-4">
                 <div>
                   <button
                     v-if="
                       !questionBankStore.addedQuestions.includes(question.title)
                     "
-                    class="grid justify-items-end bg-cyan-600 px-8 py-3 text-white hover:bg-cyan-700"
+                    class="grid justify-items-end bg-cyan-600 px-8 py-3 text-white hover:bg-cyan-700 rounded-lg"
                     @click="addQuestion(question)"
                   >
                     Add Question
                   </button>
                   <button
                     v-else
-                    class="grid justify-items-end bg-red-600 px-8 py-3 text-base text-white hover:bg-red-700"
+                    class="grid justify-items-end bg-red-600 px-8 py-3 text-base text-white hover:bg-red-700  rounded-lg"
                     @click="removeQuestion(question.title)"
                   >
                     Remove Question
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

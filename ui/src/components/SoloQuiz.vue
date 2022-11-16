@@ -141,7 +141,6 @@ const moveToScoreboard = () => {
             </p>
           </div>
         </div>
-
         <div v-if="!qnAnswered">
           <div
             class="h-24 w-screen bg-blue-600/50 -ml-16 mt-2 mb-8 text-center flex justify-center items-center"
@@ -156,7 +155,7 @@ const moveToScoreboard = () => {
               {{ timer }}
             </span>
 
-            <div class="col-start-2 col-span-4">
+            <div class="col-start-2 col-span-4 pb-4">
               <div
                 class="grid grid-rows-2 grid-cols-2 gap-0 place-content-stretch"
               >
@@ -171,6 +170,12 @@ const moveToScoreboard = () => {
                   :disabled="qnNumStore.user_id.includes('Host')"
                 ></button>
               </div>
+            </div>
+          </div>
+          <div class="grid justify-items-center">
+          <div v-if="qnNumStore.user_id.includes('Host')" 
+            class="grid justify-center pt-2 p-4 mb-4 text-xl text-amber-800 bg-amber-100 rounded-lg dark:bg-amber-200 dark:text-amber-800 w-max" >
+                    You do not need to answer the question!
             </div>
           </div>
         </div>

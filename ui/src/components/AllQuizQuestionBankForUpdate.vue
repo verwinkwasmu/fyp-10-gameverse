@@ -51,16 +51,15 @@ const {isLoading, isError, isFetching, data, error, refetch} = useQuery(
           </div>
         </div>
         <div
-          class="flex flex-row pt-5"
+          class="grid grid-cols-3 gap-4 pt-5"
           v-for="(category, index) in data"
           :key="index"
         >
-          <div class="basis-1/2 pr-4">
+          <div class="col-span-2">
             <div class="rounded-md shadow">
-              <a
-                href="#"
-                class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-1 md:px-10"
-                >{{ category }}</a
+              <div
+                class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white md:py-1 md:px-10" 
+                >{{ category }}</div
               >
             </div>
           </div>

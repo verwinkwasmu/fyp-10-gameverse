@@ -35,41 +35,43 @@ st.markdown('#')
 player_df = run_query("SELECT * from player;")
 top5_players = player_df.sort_values(by="total_points", ascending=False).head(5)
 
-# Workings for Top 5 Categories based on Number of Times Played
-# df_1 = run_query(
-#     "SELECT t.category, t.item ->> 'quiz' AS quiz, t.item ->> 'items' AS items FROM player, json_each(categories_played) AS t(category, item);"
-# )
+# Workings for Top 5 Categories and Top 5 Quizzes Based on Number of Times Played
+
 df_1 = run_query(
-    "SELECT id, name, categories_played FROM player;"
+    "SELECT name, categories_played FROM player;"
 )
-# st.write(df_1)
 
 user_data = []
+display_user_data = []
 def extract_json(row):
-    user_id = row["id"]
     user_name = row["name"]
     user_dict = row["categories_played"]
     
     for category, value_dict in user_dict.items():
         for quiz, item in value_dict.items():
             # st.write(user_id, quiz)
-            row_list = [user_id, user_name, category, quiz, item["count"], item["points"]]
+            row_list = [user_name, category, quiz, item["count"], item["points"]]
             # st.write(row_list)
+            row_list1 = [category, quiz, item["count"]]
             user_data.append(row_list)
+            display_user_data.append(row_list1)
         
     return
 
 df_1.apply(lambda row: extract_json(row), axis=1)
 user_df = pd.DataFrame(user_data)
-user_df.columns = ["id", "name", "category", "quiz", "count", "points"]
+display_user_df = pd.DataFrame(display_user_data)
+user_df.columns = ["name", "category", "quiz", "count", "points"]
+display_user_df.columns = ["Quiz Category", "Quiz Title", "Number of Times Played"]
 
 # convert column datatype to int datatype
 user_df = user_df.astype({"count": int, "points": int})
+display_user_df = display_user_df.astype({'Number of Times Played':int})
+
 top_categories = user_df.groupby("category").sum().sort_values(by="count", ascending=False).head(5)
-
 top_quizzes = user_df.groupby("quiz").sum().sort_values(by="count", ascending=False).head(5)
-
-
+display_user_df = display_user_df.groupby(["Quiz Category", "Quiz Title"]).sum().sort_values(by="Number of Times Played", ascending=False).reset_index()
+# display_user_df.columns = ["Quiz Category", "Quiz Title", "Number of Times Played"]
 
 # Workings for Average duration of quizzes played over time
 duration_df = run_query("SELECT id, start_times, end_times from player;")
@@ -128,8 +130,8 @@ new_sum = sum(log_df)/log_df.count()
 
 # PLOTTING 3 METRICS
 col1, col2, col3 = st.columns(3, gap="large")
-col1.metric("Total number of unique players so far", unique_players, "1")
-col2.metric("Total number of quizzes played so far", total_quizzes_played, "1")
+col1.metric("Total number of unique players so far", unique_players)
+col2.metric("Total number of quizzes played so far", total_quizzes_played)
 col3.metric("Average duration of quizzes played (in mins)", round(new_sum,2))
 st.markdown('#')
 
@@ -172,35 +174,32 @@ col3, col4 = st.columns((1, 1), gap="large")
 # PLOTTING TOP 5 QUIZZES BASED ON NUMBER OF TIMES PLAYED
 with col3:
     st.subheader("Top 5 Quizzes based on Number of Times Played")
-    fig1=go.Figure(go.Bar(x=top_quizzes.index, y=top_quizzes["count"],
+    fig2=go.Figure(go.Bar(x=top_quizzes.index, y=top_quizzes["count"],
                         hovertemplate =
                         '<b>Quiz</b>: %{x}'+
                         '<br><b># Times Played</b>: %{y}<extra></extra>',))
-    fig1.update_layout(
+    fig2.update_layout(
         margin=dict(l=0, r=0, t=0, b=50),
         height=300,
         )
-    fig1.update_xaxes(title_text='Quiz Name')
-    fig1.update_yaxes(title_text='Number of Times Played')
-    st.plotly_chart(fig1, use_container_width=True)
+    fig2.update_xaxes(title_text='Quiz Title')
+    fig2.update_yaxes(title_text='Number of Times Played')
+    st.plotly_chart(fig2, use_container_width=True)
 
 with col4:
-    st.subheader("Player Data")
-    st.caption("Scrollable table")
-
-    hide_dataframe_row_index = """
-            <style>
-            .row_heading.level0 {display:none}
-            .blank {display:none}
-            </style>
-            """
-    st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-    st.dataframe(user_df, height=250, use_container_width=True)
-
+    st.subheader("Quiz Game Statistics")
+    st.dataframe(display_user_df, height=250, use_container_width=True)
+    st.caption("This table is scrollable.")
 
 
 # PLOTTING THE AVERAGE DURATION OF QUIZZES PLAYED OVER TIME GRAPH 
 st.subheader("Average Duration of Quizzes Played Over Time")
+
+year_period = [2022, 2023, 2024]
+year_option = st.selectbox(
+    'Select the Year:',
+    year_period
+)
 
 month_name = list(calendar.month_name)[1:]
 months_choices = {}
@@ -212,8 +211,12 @@ month_option = st.selectbox(
     month_name
 )
 
+
 log_df = pd.DataFrame(log_list, columns= col_list)
+log_df = log_df[log_df["date"].dt.year == year_option]
+
 log_df = log_df[log_df["date"].dt.month == months_choices[month_option]]
+
 
 mean_duration = log_df.groupby([log_df['date'].dt.date])['duration'].mean()
 mean_df = pd.DataFrame(mean_duration)
@@ -234,14 +237,14 @@ fig3.update_layout(
         )
 fig3.update_xaxes(title_text='Day')
 fig3.update_yaxes(title_text='Average Duration Played (in minutes)')
-st.plotly_chart(fig3, use_container_width=True)
 
 
 def check_avail(mean_df):
     if mean_df.empty:
-        st.write('*There were no quizzes played in', month_option, '.', 'Please select another month.')
+        st.write('*There were no quizzes played in', month_option, str(year_option), '.', 'Please select another month.')
     else:
+        st.plotly_chart(fig3, use_container_width=True)
         avg_duration_per_month = sum(mean_df['duration'])/len(mean_df)
-        st.write('The total average duration of quizzes played in', month_option, 'is:', round(avg_duration_per_month,2), 'minutes')
+        st.write('The total average duration of quizzes played in', month_option, str(year_option), 'is:', round(avg_duration_per_month,2), 'minutes')
 
 check_avail(mean_df)

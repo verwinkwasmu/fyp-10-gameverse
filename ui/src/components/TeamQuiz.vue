@@ -174,6 +174,12 @@ const moveToScoreboard = () => {
               </div>
             </div>
           </div>
+          <div class="grid justify-items-center">
+          <div v-if="qnNumStore.user_id.includes('Host')" 
+            class="grid justify-center pt-2 p-4 mb-4 text-xl text-amber-800 bg-amber-100 rounded-lg dark:bg-amber-200 dark:text-amber-800 w-max" >
+                    You do not need to answer the question!
+            </div>
+          </div>
         </div>
 
         <div

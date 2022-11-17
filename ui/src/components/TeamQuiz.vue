@@ -49,6 +49,7 @@ window.websocket.onmessage = (event) => {
   if (JSON.parse(event.data).command == 'Team has answered') {
     qnAnswered.value = true
     qnCorrect.value = JSON.parse(event.data).correct
+    score.value = JSON.parse(event.data).teamScore
   } else if (JSON.parse(event.data).command == 'Show Team Scoreboard') {
     qnNumStore.qnNum += 1
     router.push({path: '/TeamScoreboard'})

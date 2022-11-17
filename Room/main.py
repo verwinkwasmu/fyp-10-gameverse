@@ -267,6 +267,7 @@ async def websocket_endpoint(
                         message = {
                             "command": "Team has answered",
                             "correct": data["correct"],
+                            "teamScore": data["score"],
                         }
                         await manager.broadcastTeam(message, team)
 

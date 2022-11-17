@@ -28,37 +28,48 @@ const signOut = () => {
     <div class="p-10 ml-6 mr-6">
       <!--Header-->
       <div class="grid grid-rows-2 grid-flow-col gap-2">
-        <div class="text-5xl font-semibold col-span-2">GameVerse</div>
-        <div class="text-2xl col-span-2">Home</div>
-        <router-link to="/MyQuizzes" tag="button" class="flex justify-end">
+          <div class="flex justify-start">
+            <div class="text-5xl font-semibold col-span-2">GameVerse</div>
+          </div>
+          <div class="text-2xl flex justify-start">Home</div>
+
+       <div class="flex justify-end pt-4">
+        <router-link to="/MyQuizzes" tag="button" class="pr-2">
           <button
-            class="bg-teal-400 hover:bg-teal-600 text-black font-bold py-2 px-4 rounded w-80 hover:text-white"
+            class="bg-teal-400 hover:bg-teal-600 text-black font-bold py-2 px-4 rounded w-40 hover:text-white"
           >
             My Quizzes
           </button>
         </router-link>
-        <router-link to="/Leaderboard" tag="button" class="flex justify-end">
+        <router-link to="/Leaderboard" tag="button">
           <button
-            class="bg-teal-400 hover:bg-teal-600 text-black font-bold py-2 px-4 rounded w-80 hover:text-white"
+            class="bg-teal-400 hover:bg-teal-600 text-black font-bold py-2 px-4 rounded w-40 hover:text-white"
           >
             Leaderboard
           </button>
         </router-link>
+        </div>
       </div>
 
-      <div class="flex justify-center items-center mt-7 pt-10">
+      <div class="flex justify-center items-center mt-7 pt-8">
         <router-link to="/JoinGame" tag="button">
           <button
             class="bg-yellow-200 hover:bg-yellow-400 text-black hover:text-white font-bold py-8 px-12 mx-2 rounded w-64 h-80"
           >
+          <img src="../assets/planet_red.png">
+          <div class="pt-10">
             Join Game
+          </div>
           </button>
         </router-link>
         <router-link to="/CreateQuiz" tag="button">
           <button
             class="bg-fuchsia-400 hover:bg-fuchsia-600 text-black hover:text-white font-bold py-8 px-12 mx-2 rounded w-64 h-80"
           >
+          <img src="../assets/planet_blue.png">
+          <div class="pt-10">
             Create Quiz
+          </div>
           </button>
         </router-link>
       </div>

@@ -12,12 +12,8 @@ from service.PlayerService import PlayerService
 from entity.PlayerEntity import Player
 
 # test db as of now, there are present issues connecting to db from docker container
-# engine = create_engine("postgresql://postgres@localhost:5432/testDB")
-
 pg_password = os.getenv("PG_PASSWORD")
-engine = create_engine(
-    "postgresql://postgres:8KLmNgNs502aodohKANd@containers-us-west-93.railway.app:6583/railway"
-    # f"postgresql://postgres:{pg_password}@containers-us-west-60.railway.app:5748/railway"
+engine = create_engine(###
 )
 
 def create_db_and_tables():

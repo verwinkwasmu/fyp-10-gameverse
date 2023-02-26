@@ -9,7 +9,7 @@ from service.QuizService import QuizService
 from entity.QuizEntity import Quiz
 
 engine = create_engine(
-    "postgresql://postgres:8KLmNgNs502aodohKANd@containers-us-west-93.railway.app:6583/railway"
+###
 )
 
 

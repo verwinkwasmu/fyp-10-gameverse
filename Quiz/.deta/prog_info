@@ -1,1 +1,0 @@
-{"id":"8bc066b0-fdcf-418f-aa26-59c2ce452bfe","space":28189,"runtime":"python3.9","name":"Quiz","path":"n08yph","project":"c00mug7j","account":"144798365827","region":"ap-southeast-1","deps":["fastapi==0.79.0","uvicorn==0.18.2","sqlmodel==0.0.6","psycopg2-binary==2.9.3","requests==2.28.1","pytest==7.1.2","pytest-cov==3.0.0"],"envs":null,"public":true,"log_level":"off","cron":""}
